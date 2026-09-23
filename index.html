@@ -1,123 +1,267 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#345574">
-<title>Ensino Lean | Lean Company</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-:root{--blue:#345574;--gray:#696969;--light:#E9E9E9;--bg:#f7f8f9;--text:#17202a;--muted:#6f7780;--line:#dfe3e6;--white:#fff;--title:'Barlow Condensed',Arial,sans-serif;--body:'Inter',Arial,sans-serif}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);font-size:15px;line-height:1.62}a{color:inherit;text-decoration:none}.shell{width:min(1220px,calc(100% - 40px));margin:auto}.header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}.head{height:70px;display:flex;align-items:center;gap:28px}.brand{font-family:var(--title);font-size:27px;font-weight:600;letter-spacing:.02em}.brand b{color:var(--blue)}.brand small{font-family:var(--body);font-size:10px;letter-spacing:.14em;color:#7b858e;margin-left:10px}.nav{margin-left:auto;display:flex;gap:4px}.nav a{font-size:13px;padding:9px 11px;border-radius:8px}.nav a:hover{background:#f1f3f5;color:var(--blue)}.searchbtn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:9px 12px;font-size:12px;cursor:pointer}.hero{background:#fff;border-bottom:1px solid var(--line)}.hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:64px;align-items:center;padding:68px 0}.eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:.13em;font-weight:600;color:var(--blue)}h1,h2,h3{font-family:var(--title);font-weight:600;margin:0;letter-spacing:-.005em}h1{font-size:clamp(40px,5.4vw,62px);line-height:1.03}h2{font-size:clamp(30px,4vw,40px);line-height:1.08}h3{font-size:22px;line-height:1.15}.hero h1 span{color:var(--blue)}p{color:var(--muted);margin:0}.hero p{font-size:16px;max-width:66ch;margin-top:18px}.searchbox{display:flex;gap:10px;border:1px solid #cfd5da;border-radius:11px;padding:5px 6px 5px 14px;margin-top:28px;max-width:680px}.searchbox input{border:0;outline:0;flex:1;min-width:0;font:inherit;background:transparent}.searchbox button{border:0;background:var(--blue);color:#fff;border-radius:8px;padding:10px 14px;font-weight:600;cursor:pointer}.side{border-left:1px solid var(--line);padding-left:40px}.side h3{margin-bottom:15px}.choice{display:grid;grid-template-columns:42px 1fr 20px;gap:12px;align-items:center;border:1px solid var(--line);padding:14px;border-radius:11px;margin-top:10px;background:#fff}.choice:hover{border-color:#b9c5ce}.ico{width:42px;height:42px;border-radius:9px;background:#eef3f7;color:var(--blue);display:grid;place-items:center;font-family:Georgia,serif}.choice strong{font-size:13px}.choice small{display:block;color:var(--muted);font-size:11px}.stats{background:#fff;border-bottom:1px solid var(--line)}.stats .shell{display:grid;grid-template-columns:repeat(4,1fr)}.stat{padding:20px 0;border-right:1px solid var(--line)}.stat:not(:first-child){padding-left:28px}.stat:last-child{border-right:0}.stat b{display:block;font-family:var(--title);font-size:29px;color:var(--blue)}.stat span{font-size:11px;color:#7d868d}.section{padding:68px 0 0}.section-head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:26px}.section-head p{max-width:65ch;margin-top:8px;font-size:13px}.link{color:var(--blue);font-size:12px;font-weight:600}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.card{border:1px solid var(--line);background:#fff;border-radius:13px;padding:20px;min-height:210px;display:flex;flex-direction:column}.card:hover{border-color:#bbc7d0;box-shadow:0 12px 30px rgba(27,43,55,.06);transform:translateY(-1px)}.card .n{font-family:Georgia,serif;color:#a6adb3;font-size:17px;margin-bottom:28px}.card p{font-size:12px;margin-top:7px}.card footer{margin-top:auto;padding-top:18px;display:flex;justify-content:space-between;font-size:10px;color:#808990}.journeys{display:grid;grid-template-columns:1fr 1fr;gap:17px}.journey{background:#fff;border:1px solid var(--line);border-top:3px solid var(--blue);border-radius:13px;padding:25px}.journey.oper{border-top-color:#7c8790}.journey p{font-size:12px;margin-top:7px}.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px}.chip{border:1px solid var(--line);border-radius:999px;padding:4px 8px;font-size:9px;text-transform:uppercase;letter-spacing:.05em;color:#65707a}.tracks{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.track{border:1px solid var(--line);background:#fff;border-radius:13px;padding:19px;min-height:185px;display:flex;flex-direction:column}.track .aud{font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);font-weight:600}.track h3{margin-top:15px}.track p{font-size:11px;margin-top:5px}.track footer{margin-top:auto;padding-top:16px;font-size:10px;color:#828a91}.catalog{display:none}.catalog.active{display:block}.lesson{display:none}.lesson.active{display:block}.lesson-top{background:#fff;border-bottom:1px solid var(--line);padding:42px 0 34px}.lesson-top p{font-size:13px;max-width:68ch;margin-top:10px}.lesson-meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:16px}.lesson-body{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:42px;padding:34px 0 70px}.lesson-section{padding:26px 0;border-bottom:1px solid var(--line)}.lesson-section:first-child{padding-top:0}.lesson-section h2{font-size:31px}.lesson-section p,.lesson-section li{font-size:13px;color:#53606a}.lesson-section ul{padding-left:20px}.lesson-section li+li{margin-top:5px}.role-switch{display:flex;gap:6px;margin:15px 0 12px}.role-switch button{border:1px solid var(--line);background:#fff;border-radius:7px;padding:8px 10px;font-size:10px;cursor:pointer}.role-switch button.on{background:var(--blue);border-color:var(--blue);color:#fff}.formula-box{border:1px solid var(--line);background:#fff;border-radius:10px;padding:16px;margin-top:13px;font-family:var(--title);font-size:21px;font-weight:600}.lesson-aside{position:sticky;top:92px;align-self:start;border:1px solid var(--line);background:#fff;border-radius:10px;padding:16px}.lesson-aside h3{font-size:20px}.lesson-aside a{display:block;padding:7px 0;border-bottom:1px solid #eef1f3;font-size:10px;color:#65717a}.planned{border:1px dashed #bfc9cf;background:#fff;border-radius:10px;padding:22px}.catalog-top{background:#fff;border-bottom:1px solid var(--line);padding:44px 0 38px}.catalog-top p{font-size:13px;max-width:68ch;margin-top:10px}.toolbar{margin-top:20px;display:flex;gap:8px;flex-wrap:wrap}.toolbar button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:8px 10px;font-size:11px;cursor:pointer}.toolbar button.on{background:var(--blue);color:#fff;border-color:var(--blue)}.layout{display:grid;grid-template-columns:210px 1fr;gap:30px;padding-top:32px}.aside{position:sticky;top:92px;align-self:start}.aside button{display:block;width:100%;border:0;background:transparent;text-align:left;padding:8px 9px;border-radius:7px;font-size:11px;color:#66717a;cursor:pointer}.aside button.on,.aside button:hover{background:#eaf0f4;color:var(--blue)}.topiclist{border-top:1px solid var(--line)}.topic{display:grid;grid-template-columns:40px 1fr auto;gap:12px;align-items:center;padding:13px 3px;border-bottom:1px solid var(--line)}.topic:hover{background:#fafbfc}.topic .num{font-family:Georgia,serif;color:#9da5ab}.topic strong{font-size:12px}.topic small{display:block;color:#8b939a;font-size:10px}.badges{display:flex;gap:5px}.badge{border:1px solid var(--line);border-radius:999px;padding:3px 7px;font-size:8px;text-transform:uppercase;letter-spacing:.05em;color:#68727b}.badge.blue{background:#eef3f7;color:var(--blue);border-color:#d8e2e9}.foot{margin-top:70px;background:#fff;border-top:1px solid var(--line)}.foot .shell{min-height:150px;display:flex;justify-content:space-between;align-items:center;gap:30px}.foot p{font-size:11px}.overlay{display:none;position:fixed;inset:0;background:rgba(17,24,32,.48);z-index:50;padding:8vh 16px}.overlay.open{display:block}.modal{max-width:760px;margin:auto;background:#fff;border-radius:14px;padding:23px;max-height:80vh;overflow:auto}.modal-head{display:flex;justify-content:space-between;gap:15px}.close{border:1px solid var(--line);background:#fff;border-radius:8px;width:36px;height:36px;cursor:pointer}.results{margin-top:15px;border-top:1px solid var(--line)}.result{display:block;padding:12px 3px;border-bottom:1px solid var(--line)}.result strong{font-size:12px}.result small{display:block;color:#8c949b;font-size:10px}
-@media(max-width:1000px){.hero-grid{grid-template-columns:1fr}.side{border-left:0;border-top:1px solid var(--line);padding-left:0;padding-top:25px}.grid{grid-template-columns:1fr 1fr}.tracks{grid-template-columns:1fr 1fr}}@media(max-width:760px){.lesson-body{grid-template-columns:1fr}.lesson-aside{position:static}.shell{width:calc(100% - 24px)}.nav{display:none}.brand small{display:none}.hero-grid{padding:44px 0}.stats .shell{grid-template-columns:1fr 1fr}.stat{border-bottom:1px solid var(--line)}.stat:nth-child(2){border-right:0}.stat:nth-child(3){padding-left:0}.journeys,.tracks,.grid{grid-template-columns:1fr}.layout{grid-template-columns:1fr}.aside{position:static;display:flex;overflow:auto}.aside button{min-width:max-content;border:1px solid var(--line);background:#fff}.topic{grid-template-columns:32px 1fr}.badges{grid-column:2}.foot .shell{align-items:flex-start;flex-direction:column;padding:30px 0}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#345574">
+  <meta name="description" content="Ensino Lean — plataforma de conhecimento aplicada à gestão para gestores e equipes operacionais.">
+  <title>Ensino Lean | Lean Company</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
-<header class="header"><div class="shell head"><a class="brand" href="#" data-go="home">LEAN <b>COMPANY</b><small>ENSINO</small></a><nav class="nav"><a href="#" data-go="catalog">Áreas</a><a href="#trilhas" data-go="home">Trilhas</a><a href="#biblioteca" data-go="home">Biblioteca</a><a href="#glossario" data-go="home">Glossário</a></nav><button class="searchbtn" id="openSearch">Buscar /</button></div></header>
+  <a class="skip-link" href="#mainContent">Pular para o conteúdo</a>
+  <header class="header">
+    <div class="shell header-inner">
+      <a class="brand-link" href="#home" aria-label="Ensino Lean — Início">
+        <img class="brand-logo" src="assets/logo.png" alt="Lean Company">
+        <span class="brand-divider" aria-hidden="true"></span>
+        <span class="brand-section">ENSINO</span>
+      </a>
+      <nav class="nav" aria-label="Navegação principal">
+        <a href="#home">Início</a>
+        <a href="#catalog/financeiro">Áreas</a>
+        <a href="#home/trilhas">Trilhas</a>
+        <a href="#home/biblioteca">Biblioteca</a>
+        <button id="openSearch" class="nav-search" type="button" aria-label="Abrir busca">Buscar <span aria-hidden="true">/</span></button>
+      </nav>
+    </div>
+  </header>
 
-<main id="home">
-<section class="hero"><div class="shell hero-grid"><div><span class="eyebrow">Ensino Lean · Gestão aplicada</span><h1>Conhecimento que vira <span>gestão.</span></h1><p>Aprenda a interpretar a empresa, executar processos com padrão e transformar dados em decisões melhores. Conteúdo estruturado para gestores e equipes operacionais.</p><form class="searchbox" id="heroSearch"><input id="heroQ" placeholder="O que você quer aprender?"><button>Buscar</button></form></div><aside class="side"><h3>Escolha por objetivo</h3><a class="choice" href="#trilhas"><span class="ico">G</span><span><strong>Sou gestor</strong><small>Interpretar, decidir e acompanhar.</small></span><span>→</span></a><a class="choice" href="#trilhas"><span class="ico">O</span><span><strong>Sou da operação</strong><small>Executar, conferir e padronizar.</small></span><span>→</span></a></aside></div></section>
+  <main id="mainContent">
+    <section id="homeView" class="view">
+      <div class="hero">
+        <div class="shell hero-grid">
+          <div>
+            <span class="eyebrow">Ensino Lean · Plataforma de conhecimento</span>
+            <h1>Conhecimento que vira <span class="accent">gestão</span>.</h1>
+            <p class="hero-copy">Aprenda a interpretar a empresa, executar processos com padrão e entender como um indicador se conecta ao outro. Conteúdo pensado para pessoas com diferentes níveis de familiaridade com gestão.</p>
+            <form id="heroSearchForm" class="searchbar" role="search">
+              <label class="sr-only" for="heroSearchInput">Buscar conteúdo</label>
+              <input id="heroSearchInput" placeholder="Ex.: tenho lucro mas falta caixa, DRE, NCG, estoque mínimo">
+              <button class="btn primary" type="submit">Buscar conteúdo</button>
+            </form>
+            <div class="hero-actions">
+              <a class="btn primary" href="#catalog/financeiro">Explorar catálogo</a>
+              <a class="btn secondary" href="#lesson/dre-gerencial">Ver uma aula completa</a>
+            </div>
+            <div id="continueCard" class="continue-card hidden" aria-live="polite"></div>
+          </div>
 
-<section class="stats"><div class="shell"><div class="stat"><b>8</b><span>áreas de conhecimento</span></div><div class="stat"><b id="topicCount">0</b><span>temas mapeados</span></div><div class="stat"><b>10</b><span>trilhas por função</span></div><div class="stat"><b>2</b><span>jornadas de aprendizagem</span></div></div></section>
+          <aside class="hero-side" aria-label="Escolha uma jornada">
+            <div class="audience-grid">
+              <a class="choice-card" href="#home/trilhas">
+                <span class="choice-icon">G</span>
+                <div><span class="eyebrow">Jornada</span><h3>Sou gestor</h3><p>Interpretar, comparar, decidir e acompanhar.</p></div>
+              </a>
+              <a class="choice-card" href="#home/trilhas">
+                <span class="choice-icon muted">O</span>
+                <div><span class="eyebrow">Jornada</span><h3>Sou da operação</h3><p>Executar, registrar, conferir, validar e reportar.</p></div>
+              </a>
+            </div>
+            <div class="hero-note">
+              <span class="eyebrow">V4 · Experiência de aprendizagem</span>
+              <h3>Comece pelo problema, não pelo jargão.</h3>
+              <p>A busca entende temas e também situações comuns da empresa. Dentro das aulas, termos menos comuns possuem explicação contextual, exemplos e conexões com o próximo assunto.</p>
+            </div>
+          </aside>
+        </div>
+      </div>
 
-<section class="section"><div class="shell"><div class="section-head"><div><span class="eyebrow">Áreas de conhecimento</span><h2>Encontre o assunto pela área da empresa</h2><p>A estrutura acompanha a forma como uma empresa é gerida: finanças, vendas, produção, estoque, processos, indicadores, liderança e tecnologia.</p></div><a class="link" href="#" data-go="catalog">Ver catálogo completo →</a></div><div class="grid" id="areaCards"></div></div></section>
+      <div class="shell stats-wrap">
+        <div class="stats">
+          <div class="stat"><strong>8</strong><span>áreas de conhecimento</span></div>
+          <div class="stat"><strong id="statTopics">0</strong><span>temas mapeados</span></div>
+          <div class="stat"><strong>10</strong><span>trilhas por função</span></div>
+          <div class="stat"><strong id="statPublished">0</strong><span>conteúdos completos</span></div>
+        </div>
+      </div>
 
-<section class="section" id="trilhas"><div class="shell"><div class="section-head"><div><span class="eyebrow">Duas jornadas, um método</span><h2>O conteúdo muda conforme a responsabilidade</h2><p>Gestor e operador podem estudar o mesmo tema, mas com objetivos diferentes.</p></div></div><div class="journeys"><article class="journey"><span class="eyebrow">Jornada do gestor</span><h3>Interpretar → comparar → investigar → decidir → acompanhar</h3><p>Leitura dos indicadores, conexão entre áreas, perguntas gerenciais, tomada de decisão e cobrança da execução.</p><div class="chips"><span class="chip">Indicadores</span><span class="chip">Análise</span><span class="chip">Decisão</span><span class="chip">Estratégia</span></div></article><article class="journey oper"><span class="eyebrow">Jornada operacional</span><h3>Executar → registrar → conferir → validar → reportar</h3><p>Rotinas, critérios de lançamento, conferências, controles, padronização e qualidade dos dados.</p><div class="chips"><span class="chip">Rotina</span><span class="chip">Processo</span><span class="chip">Controle</span><span class="chip">Padrão</span></div></article></div></div></section>
+      <section class="section" id="problemsSection">
+        <div class="shell">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Comece por um problema</span>
+              <h2>O que você está tentando entender ou resolver?</h2>
+              <p>Para quem ainda não domina os termos técnicos, este é o caminho mais simples de entrada.</p>
+            </div>
+          </div>
+          <div id="problemCards" class="problem-grid"></div>
+        </div>
+      </section>
 
-<section class="section"><div class="shell"><div class="section-head"><div><span class="eyebrow">Trilhas</span><h2>Aprendizado orientado pela função</h2></div></div><div class="tracks" id="trackCards"></div></div></section>
+      <section class="section">
+        <div class="shell">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Áreas de conhecimento</span>
+              <h2>Aprender pela área da empresa</h2>
+              <p>Para quem já sabe onde está o problema, cada área reúne os temas, conceitos, exemplos e conexões mais relevantes.</p>
+            </div>
+            <a class="text-link" href="#catalog/financeiro">Ver catálogo completo →</a>
+          </div>
+          <div id="areaCards" class="area-grid"></div>
+        </div>
+      </section>
 
-<section class="section" id="biblioteca"><div class="shell"><div class="section-head"><div><span class="eyebrow">Materiais de apoio</span><h2>Biblioteca</h2><p>Templates, checklists, playbooks, modelos e guias rápidos para transformar aprendizado em rotina.</p></div></div><div class="grid"><article class="card"><span class="n">01</span><h3>DRE Gerencial</h3><p>Modelo de estrutura e conferência.</p><footer><span>Template</span><span>Financeiro</span></footer></article><article class="card"><span class="n">02</span><h3>Fechamento Mensal</h3><p>Checklist da rotina financeira.</p><footer><span>Checklist</span><span>Financeiro</span></footer></article><article class="card"><span class="n">03</span><h3>Plano de Ação 5W2H</h3><p>Modelo para transformar desvios em execução.</p><footer><span>Template</span><span>Processos</span></footer></article><article class="card"><span class="n">04</span><h3>Reunião de Indicadores</h3><p>Pauta para cadência gerencial.</p><footer><span>Modelo</span><span>Indicadores</span></footer></article></div></div></section>
+      <section class="section" id="home-trilhas">
+        <div class="shell">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Duas responsabilidades</span>
+              <h2>O mesmo assunto pode exigir aprendizados diferentes</h2>
+              <p>A plataforma não duplica o tema: ela muda o foco conforme a responsabilidade de quem está estudando.</p>
+            </div>
+          </div>
+          <div class="journey-grid">
+            <article class="journey-card manager">
+              <span class="eyebrow">Gestor</span>
+              <h3>Interpretar → comparar → investigar → decidir → acompanhar</h3>
+              <p>Leitura gerencial, perguntas certas, análise de desvios e decisões sobre preço, caixa, estoque, pessoas e operação.</p>
+              <div class="chips"><span>indicadores</span><span>análise</span><span>priorização</span><span>decisão</span></div>
+            </article>
+            <article class="journey-card operator">
+              <span class="eyebrow">Operacional</span>
+              <h3>Executar → registrar → conferir → validar → reportar</h3>
+              <p>Rotinas, critérios, qualidade do dado, padronização, conferências e execução correta do processo.</p>
+              <div class="chips"><span>rotina</span><span>processo</span><span>conferência</span><span>padrão</span></div>
+            </article>
+          </div>
+        </div>
+      </section>
 
-<section class="section" id="glossario"><div class="shell"><div class="section-head"><div><span class="eyebrow">Referência rápida</span><h2>Glossário de gestão</h2><p>DRE, EBITDA, NCG, PMR, PMP, PME, CMV, CPV, OEE, Lead Time, Takt Time, Kanban, VSM, CAC, LTV, Churn e outros termos utilizados nas análises.</p></div></div></div></section>
-</main>
+      <section class="section" id="trilhas">
+        <div class="shell">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Trilhas por função</span>
+              <h2>Aprendizado com uma sequência recomendada</h2>
+              <p>Trilhas ajudam quem não sabe por onde começar e reduzem a sensação de “biblioteca infinita”.</p>
+            </div>
+          </div>
+          <div id="trackCards" class="track-grid"></div>
+        </div>
+      </section>
 
-<main id="catalog" class="catalog"><section class="catalog-top"><div class="shell"><span class="eyebrow">Catálogo completo</span><h1>Áreas de conhecimento</h1><p>Navegue pelos temas previstos para o Ensino Lean. O mesmo tema pode atender gestor e operação com recortes diferentes.</p><div class="toolbar"><button class="on" data-aud="todos">Todos</button><button data-aud="gestor">Gestor</button><button data-aud="operacional">Operacional</button></div></div></section><div class="shell layout"><aside class="aside" id="areaNav"></aside><section><div class="section-head"><div><span class="eyebrow" id="catEyebrow">Área</span><h2 id="catTitle">Financeiro</h2><p id="catDesc"></p></div></div><div class="topiclist" id="topicList"></div></section></div></main>
+      <section class="section" id="knowledgeMapSection">
+        <div class="shell">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Conexão entre conteúdos</span>
+              <h2>Um indicador raramente existe sozinho</h2>
+              <p>Exemplo: os prazos médios ajudam a formar o ciclo financeiro, que influencia a NCG e pressiona ou alivia o fluxo de caixa.</p>
+            </div>
+          </div>
+          <div class="knowledge-map" aria-label="Mapa de conexão entre indicadores financeiros">
+            <a href="#lesson/pme">PME</a><span>+</span><a href="#lesson/pmr">PMR</a><span>−</span><a href="#lesson/pmp">PMP</a><span>→</span><a class="emphasis" href="#lesson/ciclo-financeiro">Ciclo Financeiro</a><span>→</span><a href="#lesson/ncg">NCG</a><span>→</span><a href="#lesson/fluxo-de-caixa">Fluxo de Caixa</a>
+          </div>
+        </div>
+      </section>
 
-<main id="lesson" class="lesson"><section class="lesson-top"><div class="shell"><div id="lessonCrumb" class="eyebrow"></div><h1 id="lessonTitle"></h1><p id="lessonSummary"></p><div id="lessonMeta" class="lesson-meta"></div></div></section><div class="shell lesson-body"><article id="lessonContent"></article><aside class="lesson-aside"><h3>Nesta página</h3><a href="#" data-jump="conceito">O que é</a><a href="#" data-jump="papel">Gestor x operacional</a><a href="#" data-jump="estrutura">Estrutura</a><a href="#" data-jump="erros">Erros comuns</a><a href="#" data-jump="decisoes">Decisões</a></aside></div></main>
+      <section class="section" id="home-biblioteca">
+        <div class="shell">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Recursos de apoio</span>
+              <h2>Aprender, consultar e aplicar</h2>
+              <p>Nem tudo precisa ser uma aula. Alguns conteúdos funcionam melhor como consulta rápida, checklist, caso ou ferramenta.</p>
+            </div>
+          </div>
+          <div class="resource-grid">
+            <article><span class="resource-icon">T</span><h3>Templates</h3><p>Modelos de DRE, 5W2H, fechamento e reuniões.</p></article>
+            <article><span class="resource-icon">?</span><h3>Glossário</h3><p>Termos técnicos disponíveis no contexto e para consulta rápida.</p></article>
+            <article><span class="resource-icon">C</span><h3>Casos práticos</h3><p>Situações empresariais para treinar interpretação e decisão.</p></article>
+            <article><span class="resource-icon">F</span><h3>Ferramentas</h3><p>Calculadoras e simuladores serão conectados ao conteúdo correspondente.</p></article>
+          </div>
+        </div>
+      </section>
+    </section>
 
-<footer class="foot"><div class="shell"><div><div class="brand">ENSINO <b>LEAN</b></div><p>Conhecimento aplicado à gestão.</p></div><p>Lean Company · Soluções em Gestão</p></div></footer>
+    <section id="catalogView" class="view hidden">
+      <div class="page-hero">
+        <div class="shell">
+          <nav class="breadcrumb" aria-label="Breadcrumb"><a href="#home">Início</a><span>›</span><span>Áreas</span><span>›</span><strong id="catalogCrumb"></strong></nav>
+          <span class="eyebrow">Catálogo do Ensino Lean</span>
+          <h1 id="catalogTitle"></h1>
+          <p id="catalogDesc"></p>
+          <div class="filter-bar" role="group" aria-label="Filtrar por público">
+            <button type="button" data-audience="todos" class="on">Todos</button>
+            <button type="button" data-audience="gestor">Gestor</button>
+            <button type="button" data-audience="operacional">Operacional</button>
+            <label class="compact-toggle"><input id="publishedOnly" type="checkbox"> <span>Somente conteúdos publicados</span></label>
+          </div>
+        </div>
+      </div>
+      <div class="shell catalog-layout">
+        <aside class="area-nav" id="areaNav" aria-label="Áreas do conhecimento"></aside>
+        <div>
+          <div class="catalog-summary" id="catalogSummary"></div>
+          <div id="topicList" class="topic-list"></div>
+        </div>
+      </div>
+    </section>
 
-<div class="overlay" id="overlay"><section class="modal"><div class="modal-head"><div><span class="eyebrow">Busca global</span><h2>O que você quer aprender?</h2></div><button class="close" id="closeSearch">×</button></div><form class="searchbox" id="modalForm"><input id="modalQ" placeholder="Ex.: DRE, estoque mínimo, OEE, curva ABC..."><button>Buscar</button></form><div class="results" id="results"></div></section></div>
+    <section id="lessonView" class="view hidden">
+      <div class="page-hero lesson-hero">
+        <div class="shell">
+          <nav id="lessonBreadcrumb" class="breadcrumb" aria-label="Breadcrumb"></nav>
+          <div class="lesson-heading-grid">
+            <div>
+              <span id="lessonStatus" class="eyebrow"></span>
+              <h1 id="lessonTitle"></h1>
+              <p id="lessonSummary"></p>
+              <div id="lessonMeta" class="meta-row"></div>
+            </div>
+            <div id="lessonProgressBox" class="lesson-progress-box"></div>
+          </div>
+        </div>
+      </div>
+      <div class="shell lesson-layout">
+        <article id="lessonArticle" class="lesson-article"></article>
+        <aside class="lesson-sidebar">
+          <div class="side-card">
+            <span class="eyebrow">Navegação</span>
+            <h3>Nesta aula</h3>
+            <nav id="lessonToc"></nav>
+          </div>
+          <div class="side-card" id="lessonTermsCard"></div>
+          <div class="side-card" id="lessonSequenceCard"></div>
+        </aside>
+      </div>
+    </section>
+  </main>
 
-<script>
-const A=[
-{id:'financeiro',title:'Financeiro',desc:'Resultado, caixa, margem, capital de giro, prazos, orçamento, fechamento e precificação.',topics:['DRE Gerencial','Fluxo de Caixa','Margem de Contribuição','Custos Fixos e Variáveis','Custos Diretos e Indiretos','CMV / CPV / CSP','Ponto de Equilíbrio','Capital de Giro','Necessidade de Capital de Giro (NCG)','Prazo Médio de Recebimento (PMR)','Prazo Médio de Pagamento (PMP)','Prazo Médio de Estoque (PME)','Ciclo Operacional','Ciclo Financeiro','Liquidez','Endividamento','Rentabilidade','Lucratividade','EBITDA','Orçamento Empresarial','Orçado x Realizado','Forecast Financeiro','Contas a Pagar','Contas a Receber','Inadimplência','Conciliação Bancária','Fechamento Financeiro','Centros de Custo','Plano de Contas','Precificação','Markup','Política de Descontos','Tributação na Precificação','Comissões','Frete e Margem','Formação de Caixa']},
-{id:'comercial',title:'Comercial',desc:'Carteira, vendas, recorrência, ABC, rentabilidade, metas, funil e previsão.',topics:['Faturamento','Ticket Médio','Volume de Vendas','Clientes Ativos','Clientes Inativos','Recorrência','Churn de Clientes','Curva ABC de Clientes','Curva ABC de Produtos','Representatividade','Mix de Produtos','Rentabilidade por Cliente','Rentabilidade por Produto','Rentabilidade por Vendedor','Metas Comerciais','Forecast de Vendas','Funil Comercial','Taxa de Conversão','Frequência de Compra','Intervalo Médio de Compra','Dias sem Compra','Primeira e Última Compra','Carteira de Clientes','Cross-sell','Upsell','Comissão Comercial','Desconto Comercial','CAC','LTV','Indicadores Comerciais']},
-{id:'producao',title:'Produção & PCP',desc:'Demanda, capacidade, programação, gargalos, tempos, produtividade e melhoria.',topics:['Fundamentos do PCP','Demanda','Plano Mestre de Produção','Programação da Produção','Ordem de Produção','Capacidade Produtiva','Carga Máquina','Carga de Trabalho','Gargalos','Sequenciamento','Lead Time','Tempo de Ciclo','Takt Time','Setup','Balanceamento de Linha','Produtividade','Eficiência','OEE','Refugo','Retrabalho','Paradas','Capacidade x Demanda','WIP — Estoque em Processo','Kanban','Produção Puxada','Produção Empurrada','VSM — Mapeamento do Fluxo de Valor','5S','Kaizen','Indicadores de Produção']},
-{id:'estoque',title:'Estoque',desc:'Níveis, giro, cobertura, inventário, acuracidade, compras, ruptura e capital parado.',topics:['Gestão de Estoques','Estoque Mínimo','Estoque Máximo','Ponto de Pedido','Estoque de Segurança','Cobertura de Estoque','Giro de Estoque','Curva ABC de Estoque','Inventário','Acuracidade','Entradas de Estoque','Saídas de Estoque','Transferências','Perdas','Obsolescência','Estoque sem Giro','Ruptura','Excesso de Estoque','Compras e Reposição','Lote de Compra','Prazo de Fornecedor','Estoque de Matéria-prima','Estoque em Processo','Produto Acabado','Indicadores de Estoque']},
-{id:'processos',title:'Processos',desc:'Mapeamento, responsabilidades, padrão, desperdícios, análise de causa e melhoria contínua.',topics:['Gestão por Processos','Mapeamento de Processos','Fluxograma','SIPOC','POP — Procedimento Operacional Padrão','Checklists','RACI','Matriz de Responsabilidade','Padronização','Gargalos de Processo','Retrabalho em Processos','Desperdícios','Automação de Processos','Indicadores de Processo','SLA','Auditoria de Processo','Gestão à Vista','PDCA','5W2H','A3','Diagrama de Ishikawa','5 Porquês','VSM em Processos','Melhoria Contínua']},
-{id:'indicadores',title:'Indicadores & Dados',desc:'KPIs, metas, qualidade de dados, dashboards, tendências, desvios e plano de ação.',topics:['O que é KPI','Indicador x Métrica','Indicador de Resultado','Indicador de Processo','Leading x Lagging Indicators','Metas','Baseline','Benchmark','Frequência de Medição','Responsável pelo Indicador','Fonte de Dados','Qualidade dos Dados','Dashboard','Leitura de Dashboard','Análise de Tendência','Comparativos','Análise de Desvios','Causa x Sintoma','Indicadores Financeiros','Indicadores Comerciais','Indicadores Produtivos','Indicadores de Estoque','Indicadores de Processo','Reunião de Indicadores','Plano de Ação a partir de Indicadores']},
-{id:'gestao',title:'Gestão & Liderança',desc:'Metas, responsabilidades, delegação, reuniões, priorização, rotina e decisão.',topics:['Gestão por Metas','Desdobramento de Metas','Responsabilidades','Delegação','Cobrança e Acompanhamento','Feedback','Reunião Diária','Reunião Semanal','Reunião Mensal','Reunião Gerencial','Reunião Executiva','Gestão à Vista','Plano de Ação','Priorização','Matriz GUT','5W2H na Gestão','PDCA na Gestão','Gestão do Tempo','Rotina de Gestão','Responsabilidade por Indicadores','Cultura de Dados','Tomada de Decisão']},
-{id:'tecnologia',title:'Tecnologia aplicada',desc:'Excel, Power Query, Power BI, ERP, SQL, APIs, automação e governança de dados.',topics:['Excel para Gestão','Tabelas no Excel','Tabela Dinâmica','PROCX / PROCV','SOMASES','Power Query','Power BI','Modelagem de Dados','ERP','Cadastro de Dados','ODBC','SQL','APIs','Google Sheets','Automação','IA aplicada à Gestão','Boas Práticas de Dados','Governança de Dados']}
-];
-const T=[
-['Dono / Diretor','gestor','Leitura executiva da empresa para decisões com previsibilidade.'],
-['Gestor Financeiro','gestor','Resultado, caixa, capital de giro, orçamento e acompanhamento.'],
-['Financeiro Operacional','operacional','Rotinas que garantem dados e fechamentos confiáveis.'],
-['Gestor Comercial','gestor','Carteira, rentabilidade, recorrência, metas e forecast.'],
-['Gestor Industrial','gestor','Capacidade, perdas, fluxo e desempenho da operação.'],
-['PCP','operacional','Planejamento, programação, sequenciamento e controle.'],
-['Estoque / Almoxarifado','operacional','Movimentação, inventário, acuracidade e disciplina.'],
-['Gestor de Operações','gestor','Processos, produtividade, indicadores e melhoria.'],
-['Liderança','gestor','Metas, reuniões, delegação e execução.'],
-['Dados & BI','operacional','Coleta, tratamento, qualidade e disponibilização de dados.']
-];
-const LESSONS={"DRE Gerencial":{"level":"Fundamentos","time":"18 min","summary":"Como organizar e interpretar receitas, custos, despesas e resultado para transformar números em decisões.","concept":"A DRE Gerencial organiza o resultado econômico de um período e permite entender onde a empresa gera ou perde resultado.","manager":["Acompanhar margens e despesas como percentual da receita","Comparar realizado, histórico e meta","Investigar variações antes de decidir cortes ou investimentos","Conectar resultado com preço, volume, mix e produtividade"],"operator":["Manter classificação consistente entre períodos","Respeitar competência e critérios de fechamento","Conferir receitas, impostos, custos e despesas","Manter rastreabilidade dos ajustes"],"structure":"Receita Líquida – Custos e Despesas Variáveis = Margem de Contribuição; Margem – Despesas Fixas = Resultado Operacional.","errors":["Misturar regime de caixa e competência","Mudar categorias de um mês para outro","Analisar apenas o lucro final","Não separar eventos não recorrentes"],"decisions":["Reprecificação","Revisão de despesas","Mudança de mix","Metas de margem"]},"Fluxo de Caixa":{"level":"Fundamentos","time":"16 min","summary":"Como organizar entradas, saídas e projeções para antecipar necessidades financeiras.","concept":"Fluxo de Caixa é a visão organizada das entradas e saídas financeiras, realizadas e previstas, ao longo do tempo.","manager":["Analisar saldo projetado, não só o saldo atual","Conectar caixa com crescimento, estoque e prazos","Antecipar déficit antes que ele ocorra","Avaliar cenários de recebimento, pagamento e investimento"],"operator":["Atualizar movimentações na frequência definida","Conferir saldos com os bancos","Manter previsões de contas a pagar e receber","Tratar divergências entre previsto e realizado"],"structure":"Saldo Final = Saldo Inicial + Entradas – Saídas.","errors":["Confundir lucro com caixa","Não atualizar datas previstas","Projetar recebimentos sem compromissos futuros","Usar fluxo sem conciliação"],"decisions":["Renegociação de prazo","Compras","Capital de giro","Cobrança"]},"Margem de Contribuição":{"level":"Fundamentos","time":"14 min","summary":"Quanto sobra da venda depois dos gastos variáveis e como usar isso em preço, desconto e mix.","concept":"Margem de Contribuição é o valor que sobra da receita depois dos custos e despesas variáveis associados à venda.","manager":["Definir limites de desconto","Analisar mix de vendas","Priorizar produtos e clientes com contribuição saudável","Relacionar margem com estrutura fixa"],"operator":["Classificar impostos, comissões, fretes e custos variáveis","Validar custos e preços cadastrados","Atualizar parâmetros quando houver mudanças","Sinalizar vendas fora da política"],"structure":"MC = Receita – Custos e Despesas Variáveis. MC% = MC ÷ Receita × 100.","errors":["Confundir margem com markup","Esquecer impostos e comissões","Usar custo desatualizado","Olhar percentual sem considerar volume"],"decisions":["Preço","Desconto","Comissão","Mix"]},"Ponto de Equilíbrio":{"level":"Intermediário","time":"13 min","summary":"Qual faturamento mínimo é necessário para sustentar a estrutura da empresa.","concept":"Ponto de Equilíbrio é o nível de receita em que a margem gerada cobre os custos e despesas fixas.","manager":["Definir faturamento mínimo","Avaliar risco da estrutura fixa","Simular contratações e expansão","Acompanhar margem de segurança"],"operator":["Manter estrutura fixa e margem atualizadas","Separar gastos fixos e variáveis","Validar dados usados no cálculo","Atualizar simulações quando houver mudanças"],"structure":"Ponto de Equilíbrio = Custos e Despesas Fixas ÷ Margem de Contribuição %.","errors":["Usar margem bruta no lugar da contribuição","Classificar gastos incorretamente","Ignorar sazonalidade","Tratar equilíbrio como meta ideal"],"decisions":["Meta mínima de vendas","Estrutura","Expansão","Preço"]},"Necessidade de Capital de Giro (NCG)":{"level":"Intermediário","time":"17 min","summary":"Quanto dinheiro a operação exige para financiar estoque, clientes e fornecedores.","concept":"A NCG representa os recursos necessários para sustentar o ciclo operacional quando o dinheiro sai antes de retornar pelas vendas.","manager":["Definir metas de redução de capital empatado","Negociar prazos","Avaliar crescimento considerando caixa adicional","Conectar NCG à política de estoque"],"operator":["Manter saldos de clientes, estoques e fornecedores confiáveis","Validar vencimentos e classificações","Monitorar inconsistências","Apoiar o fechamento periódico"],"structure":"Modelo simplificado: NCG = Contas a Receber + Estoques – Fornecedores operacionais.","errors":["Analisar NCG sem ciclo financeiro","Usar datas-base diferentes","Ignorar inadimplência","Confundir dívida financeira com fonte operacional"],"decisions":["Prazo de venda","Prazo de compra","Estoque","Crescimento"]},"Prazo Médio de Recebimento (PMR)":{"level":"Intermediário","time":"10 min","summary":"Em quantos dias, em média, a empresa transforma vendas em recebimento.","concept":"O PMR estima o tempo médio entre a venda e a entrada financeira correspondente.","manager":["Revisar política de parcelamento","Comparar prazo negociado e realizado","Definir metas de recebimento","Avaliar impacto no capital de giro"],"operator":["Manter vencimentos e baixas atualizados","Tratar atrasos corretamente","Garantir datas consistentes","Acompanhar títulos vencidos"],"structure":"Relaciona o saldo médio de clientes às vendas médias do período, convertido em dias.","errors":["Usar apenas prazo negociado","Misturar bases incompatíveis","Ignorar atraso real","Desconsiderar sazonalidade"],"decisions":["Crédito","Condição comercial","Cobrança","Capital de giro"]},"Prazo Médio de Pagamento (PMP)":{"level":"Intermediário","time":"10 min","summary":"Em quantos dias, em média, a empresa paga seus fornecedores.","concept":"O PMP representa o tempo médio entre a compra e o pagamento dos fornecedores ligados à operação.","manager":["Negociar prazo sem deteriorar custo","Comparar PMP com PMR e PME","Avaliar concentração de vencimentos","Definir estratégia de compras"],"operator":["Cadastrar vencimentos corretamente","Registrar renegociações","Evitar antecipações fora da política","Conferir pagamentos"],"structure":"Relaciona o saldo médio de fornecedores às compras médias do período, convertido em dias.","errors":["Buscar prazo máximo sem avaliar preço","Misturar dívida financeira e fornecedor","Usar datas inconsistentes","Ignorar compras à vista"],"decisions":["Fornecedores","Compras","Capital de giro","Pagamentos"]},"Prazo Médio de Estoque (PME)":{"level":"Intermediário","time":"11 min","summary":"Por quantos dias, em média, o capital permanece imobilizado em estoque.","concept":"O PME estima o tempo médio que os itens permanecem em estoque antes de serem consumidos ou vendidos.","manager":["Definir metas por categoria","Priorizar itens de alto valor e baixo giro","Revisar política de compras","Equilibrar ruptura e excesso"],"operator":["Manter entradas, saídas e saldos corretos","Executar inventários","Tratar perdas e transferências","Sinalizar itens sem giro"],"structure":"Relaciona o estoque médio ao custo ou consumo médio do período, convertido em dias.","errors":["Usar valor de venda no lugar de custo","Ignorar obsolescência","Analisar apenas a média total","Reduzir estoque sem critério"],"decisions":["Compras","Estoque de segurança","Lote","Capital de giro"]},"Ciclo Financeiro":{"level":"Intermediário","time":"14 min","summary":"Por quantos dias a empresa precisa financiar sua própria operação.","concept":"O Ciclo Financeiro mede o intervalo entre a saída de caixa para financiar a operação e a entrada do dinheiro das vendas.","manager":["Priorizar ações de maior impacto no caixa","Comparar crescimento e financiamento necessário","Definir metas para estoque e prazos","Negociar condições comerciais e de compra"],"operator":["Garantir dados confiáveis de estoque, recebimentos e pagamentos","Manter datas atualizadas","Apoiar análise das variações","Separar situações excepcionais"],"structure":"Ciclo Financeiro = PME + PMR – PMP.","errors":["Usar médias de períodos diferentes","Não investigar composição","Ignorar sazonalidade","Analisar prazo sem contexto"],"decisions":["Estoque","Crédito","Compras","Financiamento do crescimento"]},"Precificação":{"level":"Intermediário","time":"19 min","summary":"Como estruturar preço considerando custos, impostos, comissão, frete e margem.","concept":"Precificação é o processo de formar e validar preços para que a venda seja comercialmente viável e economicamente sustentável.","manager":["Definir política de margem e desconto","Segmentar preço por produto, canal ou cliente","Avaliar posicionamento sem abandonar economia unitária","Acompanhar erosão de margem"],"operator":["Atualizar custos, impostos, comissão e frete","Manter parâmetros por produto","Aplicar regras de desconto aprovadas","Registrar exceções"],"structure":"O preço precisa absorver os gastos variáveis e gerar margem suficiente para sustentar a estrutura e o retorno esperado.","errors":["Usar apenas custo + percentual","Ignorar impostos ou comissão","Trabalhar com custo desatualizado","Copiar concorrente sem conhecer a própria estrutura"],"decisions":["Preço de tabela","Preço mínimo","Desconto","Comissão","Mix"]}};
-let active=A[0],aud='todos';
-const total=A.reduce((s,a)=>s+a.topics.length,0);
-topicCount.textContent=total;
-areaCards.innerHTML=A.map((a,i)=>`<a class="card" href="#" data-area="${a.id}"><span class="n">${String(i+1).padStart(2,'0')}</span><h3>${a.title}</h3><p>${a.desc}</p><footer><span>${a.topics.length} temas</span><span>Explorar →</span></footer></a>`).join('');
-trackCards.innerHTML=T.map(t=>`<article class="track"><span class="aud">${t[1]==='gestor'?'Gestor':'Operacional'}</span><h3>${t[0]}</h3><p>${t[2]}</p><footer>Trilha planejada</footer></article>`).join('');
-areaNav.innerHTML=A.map(a=>`<button data-cat="${a.id}">${a.title}</button>`).join('');
-function renderCatalog(){
-  catEyebrow.textContent='Área de conhecimento';catTitle.textContent=active.title;catDesc.textContent=active.desc;
-  [...areaNav.children].forEach(b=>b.classList.toggle('on',b.dataset.cat===active.id));
-  const items=active.topics.filter(t=>aud==='todos'||audienceOf(t).includes(aud));
-  topicList.innerHTML=items.map((t,i)=>{const roles=audienceOf(t);const ready=!!LESSONS[t];return `<a class="topic" href="#" data-topic="${encodeURIComponent(t)}" data-topic-area="${active.id}"><span class="num">${String(i+1).padStart(2,'0')}</span><span><strong>${t}</strong><small>${ready?'Conteúdo-base publicado':'Tema planejado para desenvolvimento'}</small></span><span class="badges">${roles.includes('gestor')?'<span class="badge blue">Gestor</span>':''}${roles.includes('operacional')?'<span class="badge">Operacional</span>':''}</span></a>`}).join('');
-}
-function audienceOf(t){
-  const op=['Contas a Pagar','Contas a Receber','Conciliação Bancária','Fechamento Financeiro','Ordem de Produção','Sequenciamento','Setup','Inventário','Acuracidade','Entradas de Estoque','Saídas de Estoque','Transferências','Cadastro de Dados','ODBC','SQL','APIs'];
-  const mg=['Endividamento','Rentabilidade','Lucratividade','EBITDA','Orçamento Empresarial','Orçado x Realizado','Forecast Financeiro','Formação de Caixa','Metas Comerciais','Forecast de Vendas','CAC','LTV','Reunião Executiva','Tomada de Decisão'];
-  return op.includes(t)?['operacional']:mg.includes(t)?['gestor']:['gestor','operacional'];
-}
-function showCatalog(id){
-  active=A.find(x=>x.id===id)||active;home.style.display='none';lesson.classList.remove('active');catalog.classList.add('active');renderCatalog();scrollTo(0,0)
-}
-function showHome(){catalog.classList.remove('active');lesson.classList.remove('active');home.style.display='block';scrollTo(0,0)}
-function showLesson(areaId,name){
-  const area=A.find(x=>x.id===areaId)||A.find(x=>x.topics.includes(name))||active;const data=LESSONS[name];
-  home.style.display='none';catalog.classList.remove('active');lesson.classList.add('active');
-  lessonCrumb.textContent=area.title+' · '+(data?'Conteúdo publicado':'Tema planejado');lessonTitle.textContent=name;
-  lessonSummary.textContent=data?data.summary:'Este tema já faz parte da arquitetura oficial do Ensino Lean e seguirá o template editorial padrão.';
-  lessonMeta.innerHTML=(data?`<span class="badge blue">${data.level}</span><span class="badge">${data.time}</span>`:'<span class="badge">Planejado</span>')+audienceOf(name).map(r=>`<span class="badge ${r==='gestor'?'blue':''}">${r==='gestor'?'Gestor':'Operacional'}</span>`).join('');
-  if(!data){lessonContent.innerHTML='<div class="planned"><h3>Estrutura já definida</h3><p>Conceito, aplicação, visão por responsabilidade, cálculo ou processo, erros comuns, decisões e conteúdos relacionados.</p></div>';scrollTo(0,0);return}
-  let role=audienceOf(name).includes('gestor')?'gestor':'operacional';
-  const roleHtml=()=>`<div class="role-switch">${audienceOf(name).includes('gestor')?'<button data-role="gestor">Visão do gestor</button>':''}${audienceOf(name).includes('operacional')?'<button data-role="operacional">Execução operacional</button>':''}</div><ul>${(role==='gestor'?data.manager:data.operator).map(x=>`<li>${x}</li>`).join('')}</ul>`;
-  lessonContent.innerHTML=`<section class="lesson-section" id="conceito"><span class="eyebrow">01 · Conceito</span><h2>O que é</h2><p>${data.concept}</p></section><section class="lesson-section" id="papel"><span class="eyebrow">02 · Aplicação</span><h2>Seu papel nesse tema</h2><div id="roleBox"></div></section><section class="lesson-section" id="estrutura"><span class="eyebrow">03 · Estrutura</span><h2>Como pensar</h2><div class="formula-box">${data.structure}</div></section><section class="lesson-section" id="erros"><span class="eyebrow">04 · Controle</span><h2>Erros comuns</h2><ul>${data.errors.map(x=>`<li>${x}</li>`).join('')}</ul></section><section class="lesson-section" id="decisoes"><span class="eyebrow">05 · Gestão</span><h2>Decisões relacionadas</h2><div class="chips">${data.decisions.map(x=>`<span class="chip">${x}</span>`).join('')}</div></section>`;
-  const paintRole=()=>{roleBox.innerHTML=roleHtml();roleBox.querySelectorAll('[data-role]').forEach(b=>{b.classList.toggle('on',b.dataset.role===role);b.addEventListener('click',()=>{role=b.dataset.role;paintRole()})})};paintRole();scrollTo(0,0)
-}
-document.addEventListener('click',e=>{
-  const a=e.target.closest('[data-area]');if(a){e.preventDefault();showCatalog(a.dataset.area)}
-  const c=e.target.closest('[data-cat]');if(c){active=A.find(x=>x.id===c.dataset.cat)||active;renderCatalog()}
-  const g=e.target.closest('[data-go]');if(g){e.preventDefault();g.dataset.go==='catalog'?showCatalog(active.id):showHome()}
-  const ab=e.target.closest('[data-aud]');if(ab){[...document.querySelectorAll('[data-aud]')].forEach(x=>x.classList.remove('on'));ab.classList.add('on');aud=ab.dataset.aud;renderCatalog()}
-  const tp=e.target.closest('[data-topic]');if(tp){e.preventDefault();showLesson(tp.dataset.topicArea,decodeURIComponent(tp.dataset.topic))}
-  const jump=e.target.closest('[data-jump]');if(jump){e.preventDefault();document.getElementById(jump.dataset.jump)?.scrollIntoView({behavior:'smooth',block:'start'})}
-});
-function search(q){
- const s=q.trim().toLowerCase();const found=[];A.forEach(a=>a.topics.forEach(t=>{if(!s||(`${t} ${a.title}`).toLowerCase().includes(s))found.push([t,a.title,a.id])}));
- results.innerHTML=(found.slice(0,20).map(x=>`<a class="result" href="#" data-search-area="${x[2]}" data-search-topic="${encodeURIComponent(x[0])}"><strong>${x[0]}</strong><small>${x[1]} · ${LESSONS[x[0]]?'publicado':'planejado'}</small></a>`).join('')||'<p style="padding:20px 0">Nenhum conteúdo encontrado.</p>');
-}
-function openSearch(q=''){overlay.classList.add('open');modalQ.value=q;search(q);setTimeout(()=>modalQ.focus(),30)}
-openSearch.onclick=()=>openSearch('');
-closeSearch.onclick=()=>overlay.classList.remove('open');
-overlay.addEventListener('click',e=>{if(e.target===overlay)overlay.classList.remove('open');const x=e.target.closest('[data-search-area]');if(x){e.preventDefault();overlay.classList.remove('open');x.dataset.searchTopic?showLesson(x.dataset.searchArea,decodeURIComponent(x.dataset.searchTopic)):showCatalog(x.dataset.searchArea)}});
-modalQ.addEventListener('input',()=>search(modalQ.value));
-modalForm.addEventListener('submit',e=>{e.preventDefault();search(modalQ.value)});
-heroSearch.addEventListener('submit',e=>{e.preventDefault();openSearch(heroQ.value)});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')overlay.classList.remove('open');if(e.key==='/'&&!['INPUT','TEXTAREA'].includes(document.activeElement.tagName)){e.preventDefault();openSearch('')}});
-renderCatalog();
-</script>
-</body></html>
+  <footer class="footer">
+    <div class="shell footer-inner">
+      <img class="footer-logo" src="assets/logo.png" alt="Lean Company">
+      <p>Ensino Lean · conhecimento aplicado à gestão</p>
+    </div>
+  </footer>
+
+  <div id="searchOverlay" class="overlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="searchTitle">
+      <div class="modal-head">
+        <div>
+          <span class="eyebrow">Busca global</span>
+          <h2 id="searchTitle">O que você quer aprender?</h2>
+          <p>Você pode pesquisar pelo nome do indicador ou escrever o problema em linguagem comum.</p>
+        </div>
+        <button id="closeSearch" class="close" type="button" aria-label="Fechar busca">×</button>
+      </div>
+      <form id="modalSearchForm" class="searchbar modal-search" role="search">
+        <label class="sr-only" for="modalSearchInput">Pesquisar</label>
+        <input id="modalSearchInput" placeholder="Ex.: vendo mais e falta caixa; como calcular margem; prazo médio">
+        <button class="btn primary" type="submit">Buscar</button>
+      </form>
+      <div id="searchResults" class="search-results"></div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="data/content.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
