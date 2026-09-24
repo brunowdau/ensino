@@ -1,250 +1,211 @@
-window.ENSINO_DATA = {
+window.ENSINO_V7 = {
   glossary: {
-    dre:{title:'DRE',desc:'Demonstração do Resultado do Exercício. Organiza receitas, custos, despesas e resultado de um período.',link:'dre-gerencial'},
-    competencia:{title:'Data de competência',desc:'Data em que a receita ou despesa pertence economicamente ao período, mesmo que o dinheiro seja pago ou recebido em outra data.',link:'caixa-x-competencia'},
-    caixa:{title:'Regime de caixa',desc:'Visão baseada no momento em que o dinheiro efetivamente entra ou sai da conta.',link:'fluxo-de-caixa'},
+    competencia:{title:'Data de competência',desc:'É o período ao qual uma receita ou despesa pertence economicamente. Pode ser diferente da data em que o dinheiro foi pago ou recebido.',link:'caixa-x-competencia'},
+    caixa:{title:'Regime de caixa',desc:'É a visão baseada no momento em que o dinheiro efetivamente entra ou sai da conta.',link:'fluxo-de-caixa'},
+    dre:{title:'DRE Gerencial',desc:'Relatório que organiza receitas, custos, despesas e resultado de um período para apoiar a gestão.',link:'dre-gerencial'},
     plano:{title:'Plano de contas',desc:'Estrutura padronizada usada para classificar receitas, custos e despesas de acordo com sua natureza.',link:'plano-de-contas'},
-    mc:{title:'Margem de contribuição',desc:'Valor que sobra da receita após custos e despesas variáveis e que ajuda a pagar a estrutura fixa e gerar resultado.',link:'margem-de-contribuicao'},
-    ncg:{title:'NCG',desc:'Necessidade de Capital de Giro. Recursos que a operação precisa enquanto mantém estoque e espera receber dos clientes, descontado o financiamento operacional dos fornecedores.',link:'ncg'},
-    pmr:{title:'PMR',desc:'Prazo Médio de Recebimento. Tempo médio entre vender e receber.',link:'pmr'},
-    pmp:{title:'PMP',desc:'Prazo Médio de Pagamento. Tempo médio entre comprar e pagar fornecedores.',link:'pmp'},
-    pme:{title:'PME',desc:'Prazo Médio de Estoque. Tempo médio que o capital permanece no estoque antes de girar.',link:'pme'},
-    ciclo:{title:'Ciclo financeiro',desc:'Quantidade de dias em que a empresa precisa financiar a operação entre desembolsar e receber pelas vendas.',link:'ciclo-financeiro'},
-    markup:{title:'Markup',desc:'Índice usado na formação de preço para transformar custo em preço de venda considerando variáveis e margem.',link:'precificacao'}
+    margem:{title:'Margem de contribuição',desc:'É o que sobra da receita depois dos custos e despesas variáveis. Essa sobra ajuda a pagar a estrutura fixa e gerar resultado.',link:'dre-gerencial'},
+    pmr:{title:'PMR',desc:'Prazo Médio de Recebimento. Indica, em média, quanto tempo a empresa leva para transformar uma venda em dinheiro recebido.'},
+    pmp:{title:'PMP',desc:'Prazo Médio de Pagamento. Indica, em média, quanto tempo a empresa leva para pagar seus fornecedores.'},
+    pme:{title:'PME',desc:'Prazo Médio de Estoque. Indica por quanto tempo, em média, o dinheiro fica imobilizado em estoque antes de girar.'},
+    ciclo:{title:'Ciclo financeiro',desc:'Tempo em que a empresa precisa financiar a operação entre pagar/estocar e efetivamente receber pelas vendas.'},
+    ncg:{title:'NCG',desc:'Necessidade de Capital de Giro. Representa quanto recurso a operação exige para sustentar clientes e estoques, descontado o financiamento operacional de fornecedores.'}
   },
-  areas: [
-    {id:'financeiro',title:'Financeiro',desc:'Resultado, caixa, capital de giro, preço e qualidade das rotinas financeiras.',groups:[
-      {title:'Fundamentos',desc:'Antes de analisar, entenda como o dado é formado.',topics:['caixa-x-competencia','plano-de-contas','custos-fixos-x-variaveis','receita-x-recebimento','despesa-x-pagamento']},
-      {title:'Resultado',desc:'Entenda se a operação gera resultado e onde ele se perde.',topics:['dre-gerencial','margem-de-contribuicao','cmv-cpv-csp','ponto-de-equilibrio','lucratividade','rentabilidade']},
-      {title:'Caixa e capital de giro',desc:'Entenda por que lucro e caixa podem andar em direções diferentes.',topics:['fluxo-de-caixa','pmr','pmp','pme','ciclo-financeiro','ncg','inadimplencia']},
-      {title:'Rotina financeira',desc:'Garanta que a informação analisada seja confiável.',topics:['contas-a-pagar','contas-a-receber','conciliacao-bancaria','fechamento-financeiro','centros-de-custo']},
-      {title:'Preço',desc:'Forme preço e proteja margem.',topics:['precificacao','markup','politica-de-descontos','comissoes','frete-e-margem']}
-    ]},
-    {id:'comercial',title:'Comercial',desc:'Carteira, recorrência, mix, metas e rentabilidade.',groups:[
-      {title:'Resultado comercial',desc:'O que está acontecendo com vendas.',topics:['faturamento','ticket-medio','volume-de-vendas','metas-comerciais','forecast-de-vendas']},
-      {title:'Clientes',desc:'Qualidade e concentração da carteira.',topics:['clientes-ativos','clientes-inativos','recorrencia','churn-de-clientes','curva-abc-de-clientes']},
-      {title:'Produtos e margem',desc:'Mix e qualidade da venda.',topics:['curva-abc-de-produtos','mix-de-produtos','rentabilidade-por-produto','rentabilidade-por-cliente','desconto-comercial']}
-    ]},
-    {id:'producao',title:'Produção & PCP',desc:'Capacidade, programação, gargalos, produtividade e perdas.',groups:[
-      {title:'Planejamento e capacidade',desc:'O que produzir, quando e com qual capacidade.',topics:['fundamentos-do-pcp','demanda','plano-mestre-de-producao','programacao-da-producao','capacidade-produtiva','carga-maquina']},
-      {title:'Fluxo e tempo',desc:'Onde o processo trava e quanto tempo consome.',topics:['gargalos','lead-time','tempo-de-ciclo','takt-time','setup','sequenciamento']},
-      {title:'Desempenho',desc:'Eficiência, qualidade e perdas.',topics:['produtividade','eficiencia','oee','refugo','retrabalho','paradas']}
-    ]},
-    {id:'estoque',title:'Estoque',desc:'Giro, cobertura, ruptura, acuracidade e capital parado.',groups:[
-      {title:'Política de estoque',desc:'Quanto manter e quando comprar.',topics:['estoque-minimo','estoque-maximo','ponto-de-pedido','estoque-de-seguranca','cobertura-de-estoque']},
-      {title:'Desempenho',desc:'Quanto gira e quanto capital consome.',topics:['giro-de-estoque','curva-abc-de-estoque','estoque-sem-giro','obsolescencia','excesso-de-estoque','ruptura']},
-      {title:'Qualidade do dado',desc:'Se o sistema representa a realidade.',topics:['inventario','acuracidade','entradas-de-estoque','saidas-de-estoque','transferencias']}
-    ]},
-    {id:'processos',title:'Processos',desc:'Mapear, padronizar e melhorar a execução.',groups:[
-      {title:'Estrutura',desc:'Entender como o trabalho acontece.',topics:['mapeamento-de-processos','fluxograma','sipoc','raci','matriz-de-responsabilidade']},
-      {title:'Padronização',desc:'Reduzir variação e dependência de pessoas.',topics:['pop','checklists','padronizacao','sla','auditoria-de-processo']},
-      {title:'Melhoria',desc:'Encontrar causa e acompanhar ação.',topics:['pdca','5w2h','ishikawa','5-porques','melhoria-continua']}
-    ]},
-    {id:'indicadores',title:'Indicadores & Dados',desc:'Transformar dados em acompanhamento e decisão.',groups:[
-      {title:'Fundamentos',desc:'O que medir e por quê.',topics:['o-que-e-kpi','indicador-x-metrica','indicador-de-resultado','indicador-de-processo','leading-x-lagging']},
-      {title:'Qualidade e leitura',desc:'Garantir dado confiável e interpretação correta.',topics:['qualidade-dos-dados','dashboard','leitura-de-dashboard','analise-de-tendencia','analise-de-desvios']},
-      {title:'Gestão',desc:'Transformar leitura em ação.',topics:['metas','reuniao-de-indicadores','plano-de-acao-a-partir-de-indicadores']}
-    ]},
-    {id:'gestao',title:'Gestão & Liderança',desc:'Metas, responsabilidades, reuniões, priorização e decisão.',groups:[
-      {title:'Metas e responsabilidade',desc:'Quem responde pelo quê.',topics:['gestao-por-metas','desdobramento-de-metas','responsabilidades','delegacao']},
-      {title:'Ritmos de gestão',desc:'Cadência para acompanhar e decidir.',topics:['reuniao-diaria','reuniao-semanal','reuniao-mensal','reuniao-gerencial','reuniao-executiva']},
-      {title:'Execução',desc:'Transformar decisão em ação.',topics:['plano-de-acao','priorizacao','matriz-gut','tomada-de-decisao']}
-    ]},
-    {id:'tecnologia',title:'Tecnologia aplicada',desc:'Ferramentas que sustentam análise, integração e automação.',groups:[
-      {title:'Dados',desc:'Organizar e tratar dados.',topics:['excel-para-gestao','power-query','modelagem-de-dados','sql']},
-      {title:'Visualização',desc:'Disponibilizar informação para decisão.',topics:['power-bi','dashboard']},
-      {title:'Integração',desc:'Conectar sistemas e reduzir trabalho manual.',topics:['erp','odbc','apis','automacao','ia-aplicada-a-gestao']}
-    ]}
+
+  financeSequence:[
+    {slug:'caixa-x-competencia',title:'Caixa x Competência',why:'Aprenda a diferença entre quando algo pertence ao resultado e quando o dinheiro realmente entra ou sai.',kind:'Conceito'},
+    {slug:'plano-de-contas',title:'Plano de Contas',why:'Entenda por que classificar corretamente cada receita e despesa é o que torna os relatórios confiáveis.',kind:'Conceito operacional'},
+    {slug:'fechamento-financeiro',title:'Fechamento Financeiro',why:'Veja como transformar movimentações do mês em uma base estável para análise gerencial.',kind:'Procedimento'},
+    {slug:'dre-gerencial',title:'DRE Gerencial',why:'Aprenda a ler o resultado da empresa sem parar no faturamento ou no lucro final.',kind:'Análise'},
+    {slug:'fluxo-de-caixa',title:'Fluxo de Caixa',why:'Entenda por que lucro e caixa são diferentes e como antecipar falta de dinheiro.',kind:'Análise'},
+    {slug:'caixa-ruim',title:'Meu caixa está ruim',why:'Use um roteiro de investigação para separar prejuízo, prazos, estoque, investimentos e crescimento.',kind:'Diagnóstico',diagnostic:true}
   ],
-  titles:{
-    'receita-x-recebimento':'Receita x Recebimento','despesa-x-pagamento':'Despesa x Pagamento','cmv-cpv-csp':'CMV / CPV / CSP','ponto-de-equilibrio':'Ponto de Equilíbrio','lucratividade':'Lucratividade','rentabilidade':'Rentabilidade','inadimplencia':'Inadimplência','contas-a-pagar':'Contas a Pagar','contas-a-receber':'Contas a Receber','centros-de-custo':'Centros de Custo','markup':'Markup','politica-de-descontos':'Política de Descontos','comissoes':'Comissões','frete-e-margem':'Frete e Margem','faturamento':'Faturamento','ticket-medio':'Ticket Médio','volume-de-vendas':'Volume de Vendas','metas-comerciais':'Metas Comerciais','forecast-de-vendas':'Forecast de Vendas','clientes-ativos':'Clientes Ativos','clientes-inativos':'Clientes Inativos','recorrencia':'Recorrência','churn-de-clientes':'Churn de Clientes','curva-abc-de-clientes':'Curva ABC de Clientes','curva-abc-de-produtos':'Curva ABC de Produtos','mix-de-produtos':'Mix de Produtos','rentabilidade-por-produto':'Rentabilidade por Produto','rentabilidade-por-cliente':'Rentabilidade por Cliente','desconto-comercial':'Desconto Comercial','fundamentos-do-pcp':'Fundamentos do PCP','demanda':'Demanda','plano-mestre-de-producao':'Plano Mestre de Produção','programacao-da-producao':'Programação da Produção','capacidade-produtiva':'Capacidade Produtiva','carga-maquina':'Carga Máquina','gargalos':'Gargalos','lead-time':'Lead Time','tempo-de-ciclo':'Tempo de Ciclo','takt-time':'Takt Time','setup':'Setup','sequenciamento':'Sequenciamento','produtividade':'Produtividade','eficiencia':'Eficiência','oee':'OEE','refugo':'Refugo','retrabalho':'Retrabalho','paradas':'Paradas','estoque-minimo':'Estoque Mínimo','estoque-maximo':'Estoque Máximo','ponto-de-pedido':'Ponto de Pedido','estoque-de-seguranca':'Estoque de Segurança','cobertura-de-estoque':'Cobertura de Estoque','giro-de-estoque':'Giro de Estoque','curva-abc-de-estoque':'Curva ABC de Estoque','estoque-sem-giro':'Estoque sem Giro','obsolescencia':'Obsolescência','excesso-de-estoque':'Excesso de Estoque','ruptura':'Ruptura','inventario':'Inventário','acuracidade':'Acuracidade','entradas-de-estoque':'Entradas de Estoque','saidas-de-estoque':'Saídas de Estoque','transferencias':'Transferências','mapeamento-de-processos':'Mapeamento de Processos','fluxograma':'Fluxograma','sipoc':'SIPOC','raci':'RACI','matriz-de-responsabilidade':'Matriz de Responsabilidade','pop':'POP','checklists':'Checklists','padronizacao':'Padronização','sla':'SLA','auditoria-de-processo':'Auditoria de Processo','pdca':'PDCA','5w2h':'5W2H','ishikawa':'Ishikawa','5-porques':'5 Porquês','melhoria-continua':'Melhoria Contínua','o-que-e-kpi':'O que é KPI','indicador-x-metrica':'Indicador x Métrica','indicador-de-resultado':'Indicador de Resultado','indicador-de-processo':'Indicador de Processo','leading-x-lagging':'Leading x Lagging','qualidade-dos-dados':'Qualidade dos Dados','dashboard':'Dashboard','leitura-de-dashboard':'Leitura de Dashboard','analise-de-tendencia':'Análise de Tendência','analise-de-desvios':'Análise de Desvios','metas':'Metas','reuniao-de-indicadores':'Reunião de Indicadores','plano-de-acao-a-partir-de-indicadores':'Plano de Ação a partir de Indicadores','gestao-por-metas':'Gestão por Metas','desdobramento-de-metas':'Desdobramento de Metas','responsabilidades':'Responsabilidades','delegacao':'Delegação','reuniao-diaria':'Reunião Diária','reuniao-semanal':'Reunião Semanal','reuniao-mensal':'Reunião Mensal','reuniao-gerencial':'Reunião Gerencial','reuniao-executiva':'Reunião Executiva','plano-de-acao':'Plano de Ação','priorizacao':'Priorização','matriz-gut':'Matriz GUT','tomada-de-decisao':'Tomada de Decisão','excel-para-gestao':'Excel para Gestão','power-query':'Power Query','modelagem-de-dados':'Modelagem de Dados','sql':'SQL','power-bi':'Power BI','erp':'ERP','odbc':'ODBC','apis':'APIs','automacao':'Automação','ia-aplicada-a-gestao':'IA aplicada à Gestão'
-  },
-  problems:[
-    {id:'caixa-negativo',title:'Meu caixa está negativo ou sempre apertado',summary:'O problema pode estar no resultado, nos prazos, no estoque, na inadimplência, em investimentos ou no crescimento.',causes:[
-      ['A operação está dando prejuízo?','Primeiro confirme se a empresa está gerando resultado econômico suficiente.',['dre-gerencial','margem-de-contribuicao','ponto-de-equilibrio']],
-      ['O dinheiro demora para entrar?','Prazos de venda longos ou clientes atrasados aumentam a necessidade de caixa.',['pmr','inadimplencia','contas-a-receber']],
-      ['O dinheiro está parado em estoque?','Estoque elevado ou de baixo giro consome capital antes da venda acontecer.',['pme','giro-de-estoque','estoque-sem-giro']],
-      ['Pagamos antes de receber?','O descasamento entre prazos forma o ciclo financeiro.',['pmr','pmp','pme','ciclo-financeiro']],
-      ['A operação cresceu e passou a exigir mais capital?','Crescimento pode aumentar clientes a receber e estoque mais rápido que fornecedores.',['ncg','ciclo-financeiro','fluxo-de-caixa']],
-      ['Houve saída extraordinária?','Investimentos, amortização de dívidas e distribuição de lucros afetam caixa sem necessariamente piorar a DRE.',['fluxo-de-caixa']]
-    ]},
-    {id:'lucro-sem-caixa',title:'Minha DRE mostra lucro, mas o dinheiro não aparece',summary:'Lucro e caixa medem coisas diferentes. A investigação precisa olhar o ciclo financeiro e os movimentos fora da DRE.',causes:[
-      ['Clientes estão levando mais tempo para pagar?','Receita pode existir na DRE antes de o dinheiro entrar.',['pmr','contas-a-receber']],
-      ['Estoque aumentou?','Comprar ou produzir estoque consome caixa antes de virar resultado.',['pme','giro-de-estoque']],
-      ['Fornecedores são pagos antes do recebimento?','O ciclo financeiro pode consumir caixa mesmo com lucro.',['pmp','ciclo-financeiro']],
-      ['A NCG aumentou?','Crescimento pode exigir mais capital de giro.',['ncg']],
-      ['Houve investimento ou pagamento de dívida?','Algumas saídas de caixa não passam pelo resultado operacional do período.',['fluxo-de-caixa']]
-    ]},
-    {id:'margem-caindo',title:'Meu faturamento cresce, mas minha margem cai',summary:'Pode haver mudança de preço, desconto, custo, mix, comissão ou frete.',causes:[
-      ['O preço líquido caiu?','Descontos, negociação e tributação podem reduzir a receita líquida por venda.',['precificacao','politica-de-descontos']],
-      ['Os custos variáveis subiram?','Matéria-prima, frete, comissão ou impostos podem consumir a margem.',['margem-de-contribuicao','cmv-cpv-csp']],
-      ['O mix mudou?','Crescimento concentrado em produtos menos rentáveis reduz a margem média.',['mix-de-produtos','rentabilidade-por-produto']],
-      ['O volume aumentou em clientes pouco rentáveis?','Mais faturamento não significa melhor resultado.',['rentabilidade-por-cliente','dre-gerencial']]
-    ]},
-    {id:'estoque-alto',title:'Tenho muito estoque, mas ainda falta produto',summary:'O problema pode ser mix, acuracidade, política de reposição ou itens sem giro.',causes:[
-      ['O estoque está concentrado nos itens errados?','Valor total alto pode esconder ruptura nos itens críticos.',['curva-abc-de-estoque','ruptura']],
-      ['O saldo do sistema é confiável?','Sem acuracidade, toda política de estoque parte de uma informação errada.',['inventario','acuracidade']],
-      ['Existem itens sem giro?','Capital parado em itens obsoletos não ajuda a atender a demanda.',['estoque-sem-giro','obsolescencia']],
-      ['A reposição está mal parametrizada?','Ponto de pedido, segurança e cobertura precisam refletir demanda e prazo.',['ponto-de-pedido','estoque-de-seguranca','cobertura-de-estoque']]
-    ]},
-    {id:'producao-atrasada',title:'Minha produção atrasa mesmo com equipe e máquinas',summary:'Capacidade aparente não garante fluxo. Gargalo, setup, sequência e carga podem explicar o atraso.',causes:[
-      ['Existe um gargalo real?','Uma etapa pode limitar todo o fluxo.',['gargalos','capacidade-produtiva']],
-      ['A programação respeita capacidade?','Prometer mais carga do que cabe gera fila e atraso.',['programacao-da-producao','carga-maquina']],
-      ['Setup consome tempo demais?','Muitas trocas podem reduzir capacidade disponível.',['setup','sequenciamento']],
-      ['O lead time está sendo medido?','Sem decompor espera e processamento, a causa fica escondida.',['lead-time','tempo-de-ciclo']]
-    ]},
-    {id:'dados-nao-confiaveis',title:'Os números mudam e ninguém confia nos indicadores',summary:'Normalmente o problema está antes do dashboard: cadastro, processo, competência, fechamento ou integração.',causes:[
-      ['Classificação muda entre períodos?','Plano de contas inconsistente destrói comparabilidade.',['plano-de-contas']],
-      ['Competência está incorreta?','Lançar pelo pagamento distorce a DRE do período.',['caixa-x-competencia','dre-gerencial']],
-      ['O fechamento não possui validação?','Sem uma rotina clara, ajustes continuam acontecendo depois da análise.',['fechamento-financeiro']],
-      ['Sistemas não conciliam?','Diferenças entre banco, ERP e controles paralelos geram versões conflitantes.',['conciliacao-bancaria','qualidade-dos-dados']]
-    ]}
-  ],
-  trainings:[
-    {id:'fundamentos-financeiros-operacao',title:'Fundamentos Financeiros para quem alimenta o processo',desc:'Base para produzir informações financeiras confiáveis antes de qualquer análise gerencial.',audience:'Quem alimenta o processo',time:'55 min',steps:['caixa-x-competencia','plano-de-contas','custos-fixos-x-variaveis','conciliacao-bancaria','fechamento-financeiro']},
-    {id:'leitura-gerencial-financeira',title:'Leitura Gerencial Financeira',desc:'Sequência recomendada para gestores entenderem resultado, caixa e capital de giro.',audience:'Quem analisa',time:'2 h 05 min',steps:['dre-gerencial','margem-de-contribuicao','fluxo-de-caixa','pmr','pmp','pme','ciclo-financeiro','ncg']},
-    {id:'fechamento-confiavel',title:'Fechamento Financeiro Confiável',desc:'Treinamento para reduzir distorções entre lançamento, conciliação, fechamento e DRE.',audience:'Financeiro operacional',time:'50 min',steps:['plano-de-contas','caixa-x-competencia','conciliacao-bancaria','fechamento-financeiro','dre-gerencial']},
-    {id:'gestao-do-caixa',title:'Gestão do Caixa e Capital de Giro',desc:'Trilha para investigar por que a empresa gera ou consome caixa.',audience:'Gestores financeiros e direção',time:'1 h 40 min',steps:['fluxo-de-caixa','pmr','pmp','pme','ciclo-financeiro','ncg']}
-  ],
-  content:{
+
+  lessons:{
     'caixa-x-competencia':{
-      type:'concept',area:'financeiro',title:'Caixa x Competência',level:'Fundamental',time:'8 min',audience:['Quem analisa','Quem alimenta o processo'],
-      summary:'Entenda por que a data em que o dinheiro entra ou sai pode ser diferente do período em que a receita ou despesa pertence.',
-      quick:'Na DRE, a pergunta é “a qual período isso pertence?”. No fluxo de caixa, a pergunta é “quando o dinheiro entrou ou saiu?”.',
-      objectives:['Diferenciar caixa e {{competencia|competência}}.','Escolher a data correta para análise gerencial.','Entender como um erro de data distorce a DRE.'],
-      simple:['{{competencia|Competência}} mostra quando o fato econômico aconteceu.','{{caixa|Caixa}} mostra quando o dinheiro entrou ou saiu.'],
-      example:{title:'Conta de energia',scenario:'Energia consumida em março, com vencimento e pagamento em abril.',rows:[['Competência','Março'],['Caixa','Abril']],insight:'Na DRE gerencial, a despesa pertence a março. No fluxo de caixa, a saída acontece em abril.'},
-      operator:['Ao lançar uma despesa, identifique o período em que o consumo ou serviço aconteceu.','Não use automaticamente a data de pagamento como competência.','Em caso de documento abrangendo mais de um período, siga o critério definido no fechamento.'],
-      manager:['Antes de comparar meses, confirme se o fechamento respeitou competência.','Uma variação pode ser apenas deslocamento de lançamento entre meses, não mudança real do negócio.'],
-      errorChain:['Despesa de março lançada em abril','Março fica artificialmente melhor','Abril fica artificialmente pior','O gestor interpreta uma oscilação que não aconteceu'],
-      mistakes:['Usar sempre a data de pagamento.','Confundir data de emissão da nota com competência sem entender o fato gerador.','Corrigir um mês sem revisar o outro.'],
-      next:['plano-de-contas','dre-gerencial'],
-      quiz:{q:'Uma manutenção foi realizada em maio e paga em junho. Em qual mês ela deve aparecer na DRE?',options:['Junho, porque foi quando pagou','Maio, porque foi quando o serviço aconteceu','Nos dois meses'],answer:1,explain:'A DRE usa competência. O caixa registra a saída em junho.'}
-    },
-    'plano-de-contas':{
-      type:'concept',area:'financeiro',title:'Plano de Contas',level:'Fundamental',time:'10 min',audience:['Quem alimenta o processo','Quem analisa'],
-      summary:'Aprenda por que classificar pela natureza da despesa é essencial para uma DRE confiável.',
-      quick:'Plano de contas é a estrutura que organiza receitas, custos e despesas. Classificação errada gera análise errada.',
-      objectives:['Entender para que serve um {{plano|plano de contas}}.','Classificar pela natureza do gasto, não apenas pelo fornecedor.','Perceber como uma classificação errada chega até a decisão gerencial.'],
-      simple:['Fornecedor não é categoria. O mesmo fornecedor pode gerar despesas de naturezas diferentes.','A classificação deve responder: “que tipo de gasto é este para a empresa?”'],
-      example:{title:'Mesmo fornecedor, naturezas diferentes',scenario:'Pagamentos ao Google podem ter finalidades distintas.',rows:[['Google Ads','Marketing / mídia'],['Google Workspace','Software administrativo'],['Google Cloud','Infraestrutura / tecnologia']],insight:'Classificar tudo como “Google” ou “Marketing” elimina a qualidade gerencial do dado.'},
-      operator:['Leia o documento e entenda a natureza do gasto.','Use a estrutura padronizada da empresa.','Em caso de dúvida, não crie uma categoria nova sem critério.','Evite categorias genéricas como “Outros” quando o gasto é recorrente e relevante.'],
-      manager:['Acompanhe se as categorias permitem comparar períodos e identificar desvios.','Evite solicitar mudanças frequentes de estrutura sem avaliar impacto histórico.'],
-      errorChain:['Despesa classificada na conta errada','Linha da DRE fica distorcida','Comparação entre meses perde sentido','Gestor investiga a causa errada'],
-      mistakes:['Classificar pelo nome do fornecedor.','Criar contas demais.','Usar “Outros” como padrão.','Mudar de conta a cada mês.'],
-      next:['caixa-x-competencia','fechamento-financeiro','dre-gerencial'],
-      quiz:{q:'Um fornecedor de tecnologia emitiu cobrança referente a anúncios e outra referente a licença de software. O correto é:',options:['Classificar as duas em Tecnologia','Classificar as duas pelo nome do fornecedor','Classificar cada uma pela natureza da despesa'],answer:2,explain:'A natureza econômica do gasto é o que sustenta a análise gerencial.'}
-    },
-    'custos-fixos-x-variaveis':{
-      type:'concept',area:'financeiro',title:'Custos Fixos x Variáveis',level:'Fundamental',time:'9 min',audience:['Quem analisa','Quem alimenta o processo'],
-      summary:'Entenda quais gastos variam com venda ou produção e quais sustentam a estrutura.',
-      quick:'Variável acompanha a atividade; fixo sustenta a estrutura dentro de uma faixa de operação.',
-      objectives:['Diferenciar gastos fixos e variáveis.','Entender por que a classificação afeta margem e ponto de equilíbrio.'],
-      simple:['Gasto variável tende a aumentar quando venda ou produção aumenta.','Gasto fixo não varia diretamente com cada unidade vendida, embora possa mudar por decisão de estrutura.'],
-      example:{title:'Exemplo simples',scenario:'Uma empresa vende produtos com comissão de 5% e possui aluguel mensal de R$ 12 mil.',rows:[['Comissão','Variável'],['Aluguel','Fixo']],insight:'Se a comissão for tratada como fixa, a margem de contribuição ficará superestimada.'},
-      operator:['Use o critério definido na estrutura gerencial.','Separe gastos que variam com venda dos que sustentam a estrutura.'],
-      manager:['Use essa classificação para interpretar margem e ponto de equilíbrio.'],
-      errorChain:['Gasto variável classificado como fixo','Margem parece maior','Ponto de equilíbrio fica errado','Decisão de preço ou meta pode ser inadequada'],
-      mistakes:['Achar que “fixo” significa que nunca muda.','Classificar tudo de produção como variável.'],
-      next:['margem-de-contribuicao','ponto-de-equilibrio'],
-      quiz:{q:'Comissão de 4% sobre venda é normalmente classificada como:',options:['Fixa','Variável','Investimento'],answer:1,explain:'Ela varia diretamente com o valor vendido.'}
-    },
-    'dre-gerencial':{
-      type:'analysis',area:'financeiro',title:'DRE Gerencial',level:'Fundamental',time:'20 min',audience:['Quem analisa','Quem alimenta o processo'],
-      summary:'Aprenda a ler a formação do resultado e investigar onde a empresa ganha ou perde margem.',
-      quick:'A {{dre|DRE}} responde se a operação gera resultado e quais linhas explicam a mudança entre períodos.',
-      objectives:['Ler a DRE na ordem correta.','Comparar receita, margem, estrutura e resultado.','Evitar conclusões precipitadas.','Entender quais rotinas operacionais sustentam a qualidade da DRE.'],
-      prerequisites:['caixa-x-competencia','plano-de-contas','custos-fixos-x-variaveis'],
-      responds:['A empresa está gerando resultado?','A margem melhorou ou piorou?','As despesas cresceram mais rápido que a receita?','Qual linha explica a mudança do resultado?'],
-      before:['Mês fechado e sem lançamentos pendentes relevantes.','{{competencia|Competência}} revisada.','{{plano|Plano de contas}} aplicado de forma consistente.','Receitas, impostos e custos conferidos.'],
-      when:'Após o fechamento mensal. Em negócios com alta velocidade de mudança, algumas linhas podem ser acompanhadas semanalmente, mas a leitura consolidada deve usar um período confiável.',
-      frequency:'Mensal para gestão. Comparações trimestrais e anuais ajudam a enxergar tendência e sazonalidade.',
-      analysis:[
-        ['1. Receita','Compare volume e valor. Entenda se a mudança veio de preço, quantidade, mix ou perda de clientes.'],
-        ['2. Margem','Verifique se custos e despesas variáveis cresceram na mesma proporção da receita.'],
-        ['3. Estrutura fixa','Analise despesas em valor e também como percentual da receita.'],
-        ['4. Resultado','Entenda o efeito combinado de receita, margem e estrutura.'],
-        ['5. Variação','Só depois procure a causa e defina ação.']
+      title:'Caixa x Competência',type:'concept',time:'8–12 min',audience:'Operação e gestão',
+      summary:'Entenda por que uma despesa pode pertencer a março na DRE e só sair do banco em abril — e por que misturar essas duas datas distorce a gestão.',
+      inOneSentence:'Competência responde “a qual período isso pertence?”. Caixa responde “quando o dinheiro entrou ou saiu?”.',
+      definitions:[
+        ['Competência','A receita ou despesa é reconhecida no período em que foi gerada ou consumida, mesmo que o recebimento ou pagamento aconteça depois.'],
+        ['Caixa','A movimentação aparece quando o dinheiro efetivamente entra ou sai da conta.']
       ],
-      compare:[['Mês anterior','Mostra mudanças recentes.'],['Mesmo mês do ano anterior','Ajuda a separar efeito sazonal.'],['Orçado x realizado','Mostra desvio em relação ao plano.'],['% da receita','Evita olhar despesas apenas em valor absoluto.']],
-      cross:[['margem-de-contribuicao','Ajuda a entender se a qualidade econômica das vendas mudou.'],['fluxo-de-caixa','Mostra se o resultado está se convertendo em dinheiro.'],['ciclo-financeiro','Explica por que lucro pode não virar caixa no mesmo ritmo.'],['precificacao','Ajuda a investigar erosão de margem.']],
-      manager:['Leia a DRE em sequência, sem pular direto para o lucro.','Investigue variações relevantes antes de definir ação.','Cruze resultado com volume, mix, preço e caixa.'],
-      operator:['Garanta plano de contas consistente.','Use competência corretamente.','Conclua o fechamento antes da análise.','Documente reclassificações relevantes.'],
-      errorChain:['Lançamento classificado ou datado incorretamente','Linha da DRE fica distorcida','Comparação aponta uma variação falsa','Gestor investiga o problema errado','Decisão perde qualidade'],
-      example:{title:'Empresa fictícia — Indústria Alfa',scenario:'Comparação do mês atual.',rows:[['Receita líquida','R$ 450 mil'],['Margem de contribuição','R$ 200 mil'],['Despesas fixas','R$ 140 mil'],['Resultado operacional','R$ 60 mil']],insight:'O lucro isolado diz pouco. A próxima pergunta é: a margem e a estrutura melhoraram ou pioraram em relação ao histórico e à meta?'},
-      attention:'{{dre|DRE}} positiva não significa necessariamente caixa positivo. Lucro e caixa precisam ser analisados juntos.',
-      notConclude:['“Lucro caiu, então precisamos cortar despesas.” A queda pode ter vindo de margem, preço, custo, mix ou volume.','“Faturamento cresceu, então o mês foi melhor.” A qualidade econômica da venda pode ter piorado.'],
-      next:['margem-de-contribuicao','fluxo-de-caixa'],
-      quiz:{q:'O faturamento cresceu 15%, mas a margem de contribuição caiu de 42% para 34%. Qual investigação deve vir antes de cortar despesas fixas?',options:['Entender preço, desconto, custo e mix','Reduzir folha imediatamente','Olhar apenas o saldo bancário'],answer:0,explain:'A deterioração da margem sugere que o problema pode estar na qualidade das vendas ou nos custos variáveis.'}
+      example:{
+        title:'Conta de energia de março paga em abril',
+        intro:'A empresa consumiu energia durante março. A fatura venceu e foi paga em abril.',
+        rows:[['Na DRE','Março'],['No Fluxo de Caixa','Abril']],
+        insight:'A despesa pertence ao resultado de março, porque foi nesse mês que a empresa consumiu o recurso. O dinheiro saiu em abril, então o efeito financeiro aparece em abril.'
+      },
+      whyMatters:[
+        ['DRE confiável','Se a competência estiver errada, um mês pode parecer melhor e outro pior sem que isso tenha realmente acontecido.'],
+        ['Comparação válida','Mês contra mês só faz sentido quando receitas e despesas seguem o mesmo critério.'],
+        ['Decisão correta','O gestor pode cortar custo, rever preço ou cobrar resultado com base em uma variação que foi criada apenas por erro de data.']
+      ],
+      rules:[
+        ['Pergunte primeiro','“Em qual mês essa receita ou despesa foi gerada?”'],
+        ['Depois registre o caixa','“Em qual dia o dinheiro entrou ou saiu?”'],
+        ['Não use pagamento como atalho','A data do banco não define automaticamente a competência.']
+      ],
+      errorChain:['Despesa de março lançada em abril','Março fica artificialmente melhor','Abril fica artificialmente pior','A DRE mostra uma variação inexistente','O gestor pode investigar a causa errada'],
+      operator:['Identifique o período real da receita ou despesa.','Use documentos, notas, contratos e período de consumo como evidência.','Não altere o critério entre meses semelhantes.','Em dúvida material, sinalize antes do fechamento.'],
+      manager:['Entenda que DRE e banco não precisam “bater por mês”.','Ao ver uma variação forte, confirme se houve mudança de competência.','Não conclua que despesa subiu apenas olhando a data de pagamento.'],
+      exercise:{q:'Uma manutenção foi executada em 28 de junho e paga em 10 de julho. Em qual mês a despesa deve aparecer na DRE?',options:['Junho','Julho','Nos dois meses'],answer:0,feedback:'A manutenção foi realizada em junho. Por isso, a competência é junho. O pagamento em julho afeta o fluxo de caixa de julho.'},
+      next:['plano-de-contas','fechamento-financeiro','dre-gerencial']
     },
-    'margem-de-contribuicao':{
-      type:'indicator',area:'financeiro',title:'Margem de Contribuição',level:'Fundamental',time:'14 min',audience:['Quem analisa','Quem alimenta o processo'],
-      summary:'Entenda quanto sobra da venda após os gastos variáveis e como isso afeta preço, desconto e resultado.',
-      quick:'A {{mc|margem de contribuição}} mostra quanto cada venda ajuda a pagar a estrutura fixa e gerar resultado.',
-      objectives:['Calcular a margem em valor e percentual.','Interpretar mudança de margem.','Cruzar margem com preço, custo e mix.'],
-      formula:'MC = Receita − Custos e Despesas Variáveis · MC% = MC ÷ Receita × 100',
-      data:['Receita líquida','Impostos sobre venda','Comissões','Fretes variáveis','Custos variáveis do produto ou serviço'],
-      when:'Acompanhe mensalmente e também sempre que houver mudança relevante de preço, custo, desconto ou comissão.',
-      analysis:[['1. Compare a %','Veja se a margem percentual mudou.'],['2. Abra os componentes','Separe preço, imposto, comissão, frete e custo variável.'],['3. Analise mix','Verifique se cresceu a venda de itens menos rentáveis.'],['4. Conecte à DRE','Veja se a margem gerada sustenta a estrutura fixa.']],
-      cross:[['dre-gerencial','Mostra o efeito da margem no resultado total.'],['precificacao','Ajuda a entender se o preço está absorvendo as variáveis.'],['ponto-de-equilibrio','Usa a margem para estimar faturamento mínimo.']],
-      manager:['Defina limites de desconto.','Analise margem por produto, cliente e canal.','Não confunda aumento de faturamento com melhora econômica.'],
-      operator:['Mantenha custos, impostos e comissões atualizados.','Classifique corretamente gastos variáveis.'],
-      example:{title:'Produto fictício',scenario:'Venda unitária de R$ 100.',rows:[['Preço','R$ 100'],['Impostos + comissão','R$ 18'],['Custo variável','R$ 42'],['Margem de contribuição','R$ 40 / 40%']],insight:'Cada venda contribui com R$ 40 para pagar a estrutura fixa e gerar lucro.'},
-      attention:'Margem percentual alta não garante bom resultado se o volume for insuficiente ou a estrutura fixa for muito alta.',
-      notConclude:['“O produto com maior margem percentual é sempre o melhor.” Volume, capacidade e capital necessário também importam.'],
-      next:['ponto-de-equilibrio','precificacao'],
-      quiz:{q:'Se um produto vende por R$ 200 e possui R$ 130 de gastos variáveis, qual a margem de contribuição em valor?',options:['R$ 70','R$ 130','35%'],answer:0,explain:'R$ 200 − R$ 130 = R$ 70. O percentual seria 35%.'}
+
+    'plano-de-contas':{
+      title:'Plano de Contas',type:'concept',time:'10–15 min',audience:'Principalmente operação',
+      summary:'Aprenda a classificar receitas e despesas pela natureza correta — e entenda por que uma classificação errada muda a leitura gerencial da empresa.',
+      inOneSentence:'Plano de contas é a estrutura que diz “que tipo de receita, custo ou despesa é esta?”.',
+      why:'Sem uma classificação consistente, a DRE pode até fechar matematicamente, mas o gestor não sabe onde o dinheiro foi realmente consumido.',
+      principle:'Classifique pela natureza da movimentação, não apenas pelo nome do fornecedor.',
+      example:{
+        title:'O mesmo fornecedor pode gerar despesas diferentes',
+        intro:'Imagine que a empresa recebeu três cobranças do Google.',
+        rows:[['Google Ads','Marketing / mídia'],['Google Workspace','Software / administrativo'],['Google Cloud','Tecnologia / infraestrutura']],
+        insight:'O fornecedor é o mesmo, mas a natureza da despesa é diferente. Classificar tudo como “Google” ou “Marketing” destrói a qualidade da análise.'
+      },
+      steps:[
+        ['1. Entenda o que foi comprado','Pergunte qual produto, serviço ou recurso a empresa realmente consumiu.'],
+        ['2. Identifique a natureza','Marketing? Software? Frete? Manutenção? Matéria-prima?'],
+        ['3. Use a conta padronizada','Evite criar uma nova conta quando uma classificação existente já representa bem a natureza.'],
+        ['4. Seja consistente','Situações iguais devem receber tratamento igual ao longo do tempo.'],
+        ['5. Trate exceções conscientemente','Se uma classificação precisar mudar, documente o motivo e preserve comparabilidade quando possível.']
+      ],
+      whyMatters:[
+        ['DRE','Despesas mal classificadas alteram a leitura das linhas gerenciais.'],
+        ['Orçamento','O gestor compara realizado x planejado por categorias.'],
+        ['Centro de custo','Uma despesa pode estar na natureza certa e ainda assim alocada à área errada.'],
+        ['Decisão','Se “Marketing” parece caro porque recebeu despesas de software, o gestor pode cortar o lugar errado.']
+      ],
+      commonMistakes:['Classificar pelo fornecedor em vez da natureza.','Criar contas novas para cada pequena variação.','Usar “Outros” como destino frequente.','Mudar a conta usada para a mesma despesa sem motivo.','Lançar tudo que é pago no cartão em uma conta genérica.'],
+      errorChain:['Despesa classificada na conta errada','A linha da DRE fica distorcida','Comparações e orçamento ficam inconsistentes','O gestor identifica a área errada como problema','A decisão ataca a causa errada'],
+      operator:['Leia o documento antes de classificar.','Use uma regra de classificação documentada.','Peça contexto quando a descrição não for suficiente.','Revise contas genéricas e exceções no fechamento.'],
+      manager:['Ao analisar uma linha inesperada, peça abertura dos lançamentos.','Evite avaliar desempenho de uma área sem confirmar a qualidade da classificação.'],
+      exercise:{q:'Uma cobrança da Microsoft é referente ao Microsoft 365 usado pelo administrativo. Qual lógica é mais adequada?',options:['Classificar como “Microsoft”','Classificar pela natureza, como software/administrativo','Classificar como marketing porque é uma empresa de tecnologia'],answer:1,feedback:'O fornecedor não define a natureza. O que importa é o recurso consumido e sua finalidade.'},
+      next:['fechamento-financeiro','dre-gerencial']
     },
-    'fluxo-de-caixa':{
-      type:'analysis',area:'financeiro',title:'Fluxo de Caixa',level:'Fundamental',time:'16 min',audience:['Quem analisa','Quem alimenta o processo'],
-      summary:'Aprenda a acompanhar entradas, saídas e projeções para antecipar falta ou sobra de caixa.',
-      quick:'Fluxo de caixa responde quando o dinheiro entra, quando sai e se a empresa terá recursos para cumprir os compromissos.',
-      objectives:['Diferenciar caixa realizado e projetado.','Identificar períodos futuros de pressão.','Cruzar caixa com DRE e capital de giro.'],
-      prerequisites:['caixa-x-competencia'],
-      responds:['Quanto dinheiro temos hoje?','Quanto teremos nas próximas semanas?','Quais compromissos pressionam o caixa?','A queda do caixa é operacional ou extraordinária?'],
-      before:['Saldos conciliados com bancos.','Contas a pagar e receber atualizadas.','Datas previstas revisadas.'],
-      when:'Diariamente ou semanalmente para operação; semanal e mensalmente para gestão, dependendo do porte e volatilidade.',
-      frequency:'A projeção deve ser atualizada continuamente. A análise gerencial pode usar horizontes de 30, 60 e 90 dias.',
-      analysis:[['1. Comece pelo saldo','Confirme o caixa disponível real.'],['2. Olhe o futuro','Liste entradas e saídas previstas.'],['3. Encontre vales','Identifique períodos em que o saldo fica próximo de zero ou negativo.'],['4. Explique a causa','Separe operação normal, investimento, dívida e evento não recorrente.']],
-      compare:[['Previsto x realizado','Mostra qualidade da previsão.'],['Semana x semana','Mostra mudança de curto prazo.'],['Caixa x DRE','Separa resultado econômico de movimento financeiro.']],
-      cross:[['dre-gerencial','Mostra se a operação gera lucro.'],['pmr','Ajuda a explicar atraso na entrada do dinheiro.'],['pmp','Mostra quanto o fornecedor financia a operação.'],['pme','Mostra capital preso em estoque.'],['ncg','Resume a pressão operacional sobre capital de giro.']],
-      manager:['Antecipe decisões antes de o saldo ficar crítico.','Separe problema estrutural de falta pontual.'],
-      operator:['Concilie bancos.','Mantenha vencimentos atualizados.','Atualize previsões e baixas.'],
-      errorChain:['Conta prevista não atualizada','Projeção mostra saldo que não existe','Gestor posterga uma decisão','Caixa entra em situação crítica sem aviso'],
-      example:{title:'Semana projetada',scenario:'Empresa começa com R$ 80 mil.',rows:[['Saldo inicial','R$ 80 mil'],['Entradas','R$ 55 mil'],['Saídas','R$ 92 mil'],['Saldo projetado','R$ 43 mil']],insight:'O saldo ainda é positivo, mas a queda pode exigir revisão de pagamentos, cobrança ou compras.'},
-      attention:'Saldo bancário de hoje não substitui fluxo projetado. A gestão precisa enxergar o que vai acontecer antes de acontecer.',
-      notConclude:['“O caixa está positivo, então estamos tranquilos.” Os próximos vencimentos podem consumir o saldo rapidamente.'],
-      next:['pmr','pmp','pme','ciclo-financeiro'],
-      quiz:{q:'Uma empresa tem lucro na DRE, mas o caixa caiu. Qual é a próxima atitude mais adequada?',options:['Concluir que a DRE está errada','Cruzar com prazos, estoque, investimentos e NCG','Ignorar porque lucro é mais importante'],answer:1,explain:'Lucro e caixa medem coisas diferentes. O ciclo operacional e movimentos extraordinários podem explicar a diferença.'}
-    },
-    'pmr':{
-      type:'indicator',area:'financeiro',title:'Prazo Médio de Recebimento (PMR)',level:'Intermediário',time:'10 min',audience:['Quem analisa','Quem alimenta o processo'],
-      summary:'Entenda em quantos dias, em média, as vendas viram dinheiro recebido.',quick:'{{pmr|PMR}} maior normalmente significa mais dinheiro financiando clientes.',objectives:['Entender o significado do PMR.','Relacionar prazo com caixa e NCG.'],formula:'PMR ≈ prazo médio em que as vendas permanecem em contas a receber',data:['Contas a receber','Vendas a prazo','Datas de vencimento e baixa'],when:'Mensalmente e quando houver mudança de política comercial ou inadimplência.',analysis:[['1. Veja a tendência','Compare o prazo ao histórico.'],['2. Abra a carteira','Separe prazo comercial de atraso.'],['3. Cruze com caixa','Meça o impacto no capital de giro.']],cross:[['inadimplencia','Distingue prazo negociado de atraso.'],['ciclo-financeiro','PMR é parte do ciclo.'],['ncg','Recebimento mais lento aumenta capital necessário.']],manager:['Revise condições comerciais e cobrança.'],operator:['Mantenha vencimentos e baixas corretos.'],example:{title:'Exemplo',scenario:'Prazo médio atual.',rows:[['PMR anterior','32 dias'],['PMR atual','48 dias']],insight:'A empresa passou a esperar 16 dias a mais para transformar venda em caixa.'},attention:'PMR pode subir por prazo comercial ou por atraso. As ações são diferentes.',notConclude:['“PMR alto significa necessariamente inadimplência.” Pode ser uma decisão comercial de parcelamento.'],next:['pmp','pme','ciclo-financeiro'],quiz:{q:'O PMR subiu de 30 para 50 dias. Qual hipótese deve ser investigada?',options:['Prazo comercial e atraso de clientes','Somente custo fixo','Somente estoque físico'],answer:0,explain:'O aumento pode vir de condições de venda ou atraso real.'}
-    },
-    'pmp':{
-      type:'indicator',area:'financeiro',title:'Prazo Médio de Pagamento (PMP)',level:'Intermediário',time:'10 min',audience:['Quem analisa','Quem alimenta o processo'],summary:'Entenda em quantos dias, em média, a empresa paga seus fornecedores.',quick:'{{pmp|PMP}} representa quanto tempo o fornecedor ajuda a financiar a operação.',objectives:['Entender o PMP.','Relacionar prazo de fornecedor com ciclo financeiro.'],formula:'PMP ≈ prazo médio entre compra e pagamento aos fornecedores',data:['Fornecedores a pagar','Compras','Vencimentos e pagamentos'],when:'Mensalmente e durante negociações de compra.',analysis:[['1. Veja a tendência','Compare prazo com histórico.'],['2. Analise preço x prazo','Prazo maior não compensa qualquer aumento de custo.'],['3. Cruze com PMR/PME','Veja o descasamento total.']],cross:[['pmr','Compara prazo de recebimento.'],['pme','Completa o ciclo operacional.'],['ciclo-financeiro','PMP reduz o tempo financiado pela empresa.']],manager:['Negocie prazo considerando também preço e relacionamento.'],operator:['Cadastre vencimentos e renegociações corretamente.'],example:{title:'Exemplo',scenario:'PMP atual.',rows:[['PMP','32 dias']],insight:'Se a empresa recebe em 45 dias e paga em 32, parte do ciclo precisa ser financiada pelo próprio caixa.'},attention:'Aumentar PMP não é sempre melhor se o fornecedor aumentar preço, reduzir desconto ou restringir fornecimento.',notConclude:['“Quanto maior o PMP, melhor.” O custo total da compra também importa.'],next:['pme','ciclo-financeiro'],quiz:{q:'Ao negociar mais prazo com fornecedor, o gestor também deve avaliar:',options:['Preço, desconto e risco de fornecimento','Somente o número de dias','A cor da nota fiscal'],answer:0,explain:'Prazo é apenas uma dimensão da negociação.'}
-    },
-    'pme':{
-      type:'indicator',area:'financeiro',title:'Prazo Médio de Estoque (PME)',level:'Intermediário',time:'11 min',audience:['Quem analisa','Quem alimenta o processo'],summary:'Entenda por quantos dias, em média, o capital fica parado em estoque antes de girar.',quick:'{{pme|PME}} maior significa mais tempo com dinheiro imobilizado em estoque.',objectives:['Entender PME.','Relacionar estoque com caixa e ciclo financeiro.'],formula:'PME ≈ dias de estoque equivalentes ao consumo/custo do período',data:['Estoque médio','Custo/consumo do período'],when:'Mensalmente, por categoria ou família quando necessário.',analysis:[['1. Veja a tendência','PME está aumentando?'],['2. Abra por categoria','A média total pode esconder itens críticos.'],['3. Separe excesso e ruptura','Estoque alto não garante disponibilidade do item certo.']],cross:[['giro-de-estoque','Outra forma de enxergar velocidade.'],['ciclo-financeiro','PME aumenta o ciclo.'],['ncg','Estoque maior tende a aumentar capital necessário.']],manager:['Defina metas por categoria.'],operator:['Garanta acuracidade das entradas, saídas e inventários.'],example:{title:'Exemplo',scenario:'PME atual.',rows:[['PME anterior','24 dias'],['PME atual','37 dias']],insight:'Mais capital permanece em estoque por mais tempo.'},attention:'A média total pode esconder itens sem giro e ruptura simultaneamente.',notConclude:['“PME menor é sempre melhor.” Redução excessiva pode gerar ruptura.'],next:['ciclo-financeiro','ncg'],quiz:{q:'Estoque total aumentou, mas itens importantes continuam faltando. Qual análise é útil?',options:['Abrir PME/giro por categoria e curva ABC','Olhar somente valor total','Aumentar todos os estoques'],answer:0,explain:'O mix do estoque importa tanto quanto o total.'}
-    },
-    'ciclo-financeiro':{
-      type:'indicator',area:'financeiro',title:'Ciclo Financeiro',level:'Intermediário',time:'14 min',audience:['Quem analisa','Quem alimenta o processo'],summary:'Entenda por quantos dias a empresa precisa financiar sua própria operação.',quick:'{{ciclo|Ciclo financeiro}} = PME + PMR − PMP.',objectives:['Calcular o ciclo.','Entender como estoque e prazos pressionam caixa.'],formula:'Ciclo Financeiro = PME + PMR − PMP',data:['PME','PMR','PMP'],when:'Mensalmente e durante mudanças de política comercial, compras ou estoque.',analysis:[['1. Calcule','Junte PME, PMR e PMP.'],['2. Identifique o maior componente','Descubra onde está a maior oportunidade.'],['3. Simule melhorias','Veja o efeito de reduzir estoque ou recebimento e negociar prazo.']],cross:[['pmr','Entrada de caixa.'],['pmp','Saída de caixa.'],['pme','Tempo em estoque.'],['ncg','Traduz o ciclo em necessidade de recursos.']],manager:['Use o ciclo para definir prioridades de capital de giro.'],operator:['Garanta dados confiáveis de estoque, clientes e fornecedores.'],example:{title:'Exemplo',scenario:'Prazos médios fictícios.',rows:[['PME','28 dias'],['PMR','45 dias'],['PMP','32 dias'],['Ciclo financeiro','41 dias']],insight:'Durante aproximadamente 41 dias, a empresa precisa financiar a operação.'},attention:'Não reduza um prazo de forma isolada sem entender impacto comercial e operacional.',notConclude:['“Basta aumentar PMP.” Pode haver custo comercial ou risco de abastecimento.'],next:['ncg','fluxo-de-caixa'],quiz:{q:'PME 20 dias + PMR 40 dias − PMP 30 dias resulta em:',options:['30 dias','60 dias','90 dias'],answer:0,explain:'20 + 40 − 30 = 30 dias.'}
-    },
-    'ncg':{
-      type:'indicator',area:'financeiro',title:'Necessidade de Capital de Giro (NCG)',level:'Intermediário',time:'17 min',audience:['Quem analisa','Quem alimenta o processo'],summary:'Entenda quanto recurso a operação precisa para sustentar clientes, estoque e fornecedores.',quick:'{{ncg|NCG}} aumenta quando clientes e estoques crescem mais do que o financiamento operacional dos fornecedores.',objectives:['Entender a lógica da NCG.','Relacionar crescimento e caixa.'],formula:'NCG simplificada = Contas a Receber + Estoques − Fornecedores Operacionais',data:['Contas a receber','Estoque','Fornecedores operacionais'],when:'Mensalmente e durante crescimento acelerado ou mudança de prazos.',analysis:[['1. Veja o valor','Quanto capital está preso na operação?'],['2. Abra os componentes','Clientes, estoque ou fornecedores explicam a mudança?'],['3. Relacione ao crescimento','A NCG está crescendo mais rápido que a geração de caixa?']],cross:[['ciclo-financeiro','Explica a dinâmica dos prazos.'],['fluxo-de-caixa','Mostra a consequência financeira.'],['dre-gerencial','Mostra se existe resultado para sustentar crescimento.']],manager:['Planeje crescimento considerando capital adicional necessário.'],operator:['Mantenha saldos e classificações corretos.'],example:{title:'Exemplo',scenario:'Empresa fictícia.',rows:[['Clientes','R$ 220 mil'],['Estoques','R$ 180 mil'],['Fornecedores','R$ 140 mil'],['NCG','R$ 260 mil']],insight:'A operação exige R$ 260 mil para financiar a diferença entre recursos presos e financiamento de fornecedores.'},attention:'Crescimento pode aumentar lucro e, ao mesmo tempo, consumir caixa se a NCG subir rapidamente.',notConclude:['“Venda maior sempre melhora caixa.” O crescimento pode exigir mais estoque e contas a receber.'],next:['fluxo-de-caixa'],quiz:{q:'Clientes e estoques aumentam enquanto fornecedores permanecem estáveis. A tendência da NCG é:',options:['Aumentar','Diminuir','Ficar sempre igual'],answer:0,explain:'Mais recursos ficam presos na operação sem aumento do financiamento dos fornecedores.'}
-    },
-    'conciliacao-bancaria':{
-      type:'procedure',area:'financeiro',title:'Conciliação Bancária',level:'Fundamental',time:'12 min',audience:['Quem alimenta o processo'],summary:'Passo a passo para garantir que o sistema financeiro represente o que realmente aconteceu no banco.',quick:'Conciliação é comparar banco x sistema e resolver diferenças antes de usar os dados para análise.',objectives:['Executar a conferência.','Identificar diferenças.','Evitar que o fluxo e fechamento sejam construídos sobre saldo errado.'],when:'Preferencialmente diária ou em frequência compatível com o volume de movimentações.',prerequisites:['contas-a-pagar','contas-a-receber'],steps:[['1. Obtenha os extratos','Use todas as contas bancárias do período.'],['2. Compare movimentações','Verifique entradas, saídas, tarifas, transferências e estornos.'],['3. Identifique diferenças','Liste lançamentos ausentes, duplicados ou com valor/data incorretos.'],['4. Corrija com rastreabilidade','Ajuste no sistema mantendo histórico e justificativa.'],['5. Valide o saldo final','Sistema e banco devem representar a mesma realidade.']],controls:['Todas as contas conciliadas.','Diferenças justificadas.','Tarifas e juros lançados.','Transferências internas sem duplicidade.'],downstream:['Fluxo de caixa','Fechamento financeiro','DRE quando houver efeitos de despesa/receita financeira'],mistakes:['Conciliar apenas o saldo final sem conferir movimentações.','Criar lançamento genérico para “fechar a diferença”.','Ignorar tarifas pequenas recorrentes.'],next:['fechamento-financeiro'],quiz:{q:'O saldo do sistema está R$ 500 acima do banco. O correto é:',options:['Criar uma despesa “Ajuste” de R$ 500','Investigar quais movimentações explicam a diferença','Ignorar se for menos de 1%'],answer:1,explain:'A conciliação deve explicar a diferença, não mascará-la.'}
-    },
+
     'fechamento-financeiro':{
-      type:'procedure',area:'financeiro',title:'Fechamento Financeiro Mensal',level:'Fundamental',time:'18 min',audience:['Quem alimenta o processo','Quem analisa'],summary:'Rotina para encerrar o mês com dados confiáveis antes da análise gerencial.',quick:'O fechamento transforma movimentações operacionais em uma base estável para DRE, fluxo e indicadores.',objectives:['Executar o fechamento em ordem.','Saber quais validações fazer.','Entender quando o mês está pronto para análise.'],prerequisites:['caixa-x-competencia','plano-de-contas','conciliacao-bancaria'],when:'Após o encerramento do mês, seguindo prazo definido pela empresa.',steps:[['1. Concilie bancos','Garanta que saldos e movimentações estejam corretos.'],['2. Revise contas a pagar e receber','Baixas, vencimentos e pendências.'],['3. Revise competência','Despesas e receitas pertencem ao período correto?'],['4. Revise classificação','Plano de contas e centros de custo.'],['5. Valide receitas e impostos','Confronte com faturamento e documentos fiscais.'],['6. Feche custos e despesas','Verifique provisões e itens relevantes.'],['7. Trave a versão de análise','Evite mudanças sem rastreabilidade depois da reunião gerencial.']],controls:['Bancos conciliados.','Pendências materiais resolvidas.','Competência revisada.','Plano de contas consistente.','Receita e impostos validados.','Ajustes documentados.'],downstream:['DRE Gerencial','Fluxo de Caixa','Indicadores Financeiros'],mistakes:['Entregar DRE antes de fechar o mês.','Continuar alterando períodos já apresentados sem controle.','Usar competência diferente entre contas semelhantes.'],next:['dre-gerencial'],quiz:{q:'Qual condição deve existir antes de a DRE mensal ser usada para decisão?',options:['O mês deve estar fechado e validado','Basta o faturamento estar lançado','Basta o saldo bancário estar correto'],answer:0,explain:'A DRE depende de várias fontes e critérios, não apenas do banco ou faturamento.'}
+      title:'Fechamento Financeiro',type:'procedure',time:'15–20 min',audience:'Operação com validação da gestão',
+      summary:'Um roteiro para encerrar o mês com dados suficientemente confiáveis antes de transformar números em análise e decisão.',
+      objective:'O fechamento não existe para “gerar um relatório”. Ele existe para garantir que o mês analisado represente a realidade da empresa com critérios consistentes.',
+      before:['Todas as contas bancárias acessíveis e atualizadas.','Contas a pagar e a receber lançadas e baixadas.','Documentos principais disponíveis.','Regras de {{competencia|competência}} e {{plano|plano de contas}} definidas.'],
+      steps:[
+        ['1. Concilie os bancos','Compare cada movimentação relevante do sistema com o extrato. Diferenças precisam ser explicadas, não mascaradas por uma conta “Ajuste”.'],
+        ['2. Revise contas a pagar','Procure títulos duplicados, vencidos sem baixa, pagamentos sem lançamento e renegociações não atualizadas.'],
+        ['3. Revise contas a receber','Valide baixas, inadimplência, recebimentos antecipados, estornos e títulos em aberto.'],
+        ['4. Revise competência','Confirme se receitas e despesas pertencem ao mês correto, independentemente da data do pagamento.'],
+        ['5. Revise classificação','Abra contas genéricas, “outros” e linhas que variaram muito. Verifique {{plano|plano de contas}} e centros de custo.'],
+        ['6. Valide faturamento e impostos','Confronte o que entrou na análise com os documentos e relatórios de origem.'],
+        ['7. Valide custos e eventos relevantes','Confirme custos do período, provisões materiais e acontecimentos extraordinários.'],
+        ['8. Registre ajustes e feche a versão','Após a validação, mudanças no período devem ter rastreabilidade.']
+      ],
+      finishCriteria:['Bancos conciliados.','Pendências materiais resolvidas ou explicitadas.','Competência revisada.','Contas genéricas revisadas.','Receita, impostos e custos relevantes validados.','Ajustes documentados.','Versão pronta para análise gerencial.'],
+      notReady:['Existem diferenças bancárias sem explicação.','O mês ainda muda toda vez que alguém lança uma nota antiga.','Receitas ou custos relevantes ainda não foram conferidos.','A equipe sabe que há lançamentos em “Outros” que não foram abertos.'],
+      errorChain:['Mês é apresentado antes do fechamento','DRE usa dados incompletos','Gestor discute uma variação que depois desaparece','Reunião perde confiança','A equipe passa a desacreditar dos indicadores'],
+      operator:['Execute o checklist sempre na mesma ordem.','Documente pendências que permanecerem abertas.','Não “force” saldo ou categoria para fazer o relatório fechar.'],
+      manager:['Não comece a reunião gerencial sem saber se o mês está fechado.','Pergunte quais pendências ou estimativas ainda existem.','Separe erro de dado de problema real de gestão.'],
+      exercise:{q:'O saldo final do sistema bate com o banco, mas várias movimentações foram lançadas como “Ajuste”. O fechamento está confiável?',options:['Sim, porque o saldo final bate','Não, porque a conciliação precisa explicar as movimentações','Sim, desde que o valor de “Ajuste” seja pequeno'],answer:1,feedback:'Bater saldo não basta. O objetivo é garantir que cada movimentação esteja corretamente registrada e classificada.'},
+      next:['dre-gerencial','fluxo-de-caixa']
     },
-    'precificacao':{
-      type:'analysis',area:'financeiro',title:'Precificação',level:'Intermediário',time:'19 min',audience:['Quem analisa','Quem alimenta o processo'],summary:'Entenda como custos, impostos, comissão, frete e margem formam um preço sustentável.',quick:'Preço precisa funcionar para o mercado e para a economia da empresa.',objectives:['Entender componentes do preço.','Definir limite de desconto.','Relacionar preço à margem.'],prerequisites:['margem-de-contribuicao','custos-fixos-x-variaveis'],responds:['Qual o preço mínimo sustentável?','Quanto desconto posso conceder?','Quais variáveis mais consomem margem?'],before:['Custos atualizados.','Tributação conhecida.','Comissões e fretes definidos.'],when:'Sempre que custo, imposto, comissão, frete ou estratégia comercial mudar.',frequency:'Revisão periódica e monitoramento de exceções comerciais.',analysis:[['1. Atualize custos','Preço calculado sobre custo antigo não é confiável.'],['2. Inclua variáveis','Imposto, comissão e frete precisam estar no cálculo.'],['3. Defina margem','Quanto a venda precisa contribuir?'],['4. Compare ao mercado','Valide competitividade sem abandonar a economia unitária.']],compare:[['Preço atual x preço sustentável','Mostra erosão ou folga.'],['Margem real x meta','Mostra qualidade da venda.']],cross:[['margem-de-contribuicao','Valida contribuição real.'],['dre-gerencial','Mostra efeito agregado no resultado.']],manager:['Defina política de desconto e margem.'],operator:['Mantenha parâmetros e custos atualizados.'],errorChain:['Custo novo não atualizado','Preço parece rentável','Desconto é aprovado','Venda gera margem menor que o esperado'],example:{title:'Exemplo',scenario:'Custo variável total de R$ 62.',rows:[['Custo variável','R$ 62'],['Margem desejada','38%'],['Preço indicativo','~ R$ 100']],insight:'Preço precisa absorver variáveis e ainda gerar contribuição.'},attention:'Copiar preço do concorrente não garante que ele sustente sua estrutura.',notConclude:['“Concorrente vende por esse preço, então também podemos.” As estruturas podem ser diferentes.'],next:['dre-gerencial'],quiz:{q:'Antes de aprovar um desconto, o gestor deve saber:',options:['Qual margem sobra após o desconto','Somente o preço do concorrente','Somente o volume esperado'],answer:0,explain:'O desconto precisa ser avaliado pelo efeito na contribuição da venda.'}
+
+    'dre-gerencial':{
+      title:'DRE Gerencial',type:'analysis',time:'25–35 min',audience:'Gestão e operação financeira',
+      summary:'Aprenda a transformar a DRE de uma sequência de números em um raciocínio: o que mudou, por que mudou e qual parte do negócio precisa ser investigada.',
+      inOneSentence:'A DRE mostra como o faturamento de um período vai sendo consumido até chegar ao resultado.',
+      responds:['A empresa está gerando resultado?','O resultado melhorou ou piorou?','A mudança veio de faturamento, margem ou estrutura?','As despesas cresceram mais rápido que a receita?','O crescimento está trazendo resultado ou apenas volume?'],
+      before:['Mês fechado e validado.','{{competencia|Competência}} aplicada de forma consistente.','{{plano|Plano de contas}} revisado.','Receita e impostos conferidos.','Custos relevantes atualizados.','Eventos extraordinários identificados.'],
+      anatomy:[
+        ['Receita Bruta','Quanto a empresa vendeu antes das deduções.'],
+        ['(-) Impostos e deduções','O que reduz a receita até chegar ao valor líquido.'],
+        ['= Receita Líquida','Base efetiva para sustentar custos e estrutura.'],
+        ['(-) Custos e despesas variáveis','Gastos que acompanham diretamente a venda.'],
+        ['= Margem de Contribuição','Quanto sobra para pagar a estrutura fixa e gerar resultado.'],
+        ['(-) Despesas fixas','Estrutura administrativa, comercial e operacional.'],
+        ['= Resultado Operacional','O que a operação gerou depois de sustentar sua estrutura.']
+      ],
+      analysisSteps:[
+        ['1. Comece pela receita','Pergunte quanto mudou em valor e percentual. Depois descubra se a mudança veio de preço, volume, mix ou cliente. Não pare no “vendeu mais”.'],
+        ['2. Vá imediatamente para a margem','Receita maior com margem praticamente igual pode indicar deterioração de preço, custo, desconto, mix, comissão ou frete. Crescimento sem qualidade aparece aqui.'],
+        ['3. Analise a estrutura fixa','Não olhe apenas valor absoluto. Compare também como percentual da receita e contra orçamento. Uma despesa pode subir em reais e ainda melhorar proporcionalmente.'],
+        ['4. Leia o resultado como consequência','O lucro final é resultado do que aconteceu antes. Evite começar a análise pelo lucro e procurar culpados depois.'],
+        ['5. Explique as maiores variações','Toda variação relevante deve ter uma hipótese concreta. Se não existe explicação, volte à qualidade do dado antes de concluir.']
+      ],
+      compare:[
+        ['Mês anterior','Bom para identificar mudança recente, mas cuidado com sazonalidade.'],
+        ['Mesmo mês do ano anterior','Ajuda quando existe sazonalidade anual.'],
+        ['Orçado x realizado','Mostra onde a execução ficou diferente do plano.'],
+        ['% da receita','Ajuda a enxergar eficiência e peso relativo das linhas.'],
+        ['Acumulado do ano','Reduz o risco de reagir demais a um único mês.']
+      ],
+      scenario1:{
+        title:'Receita cresce, mas a margem quase não acompanha',
+        rows:[['Receita — Janeiro','R$ 500 mil'],['Receita — Fevereiro','R$ 600 mil'],['Margem — Janeiro','R$ 200 mil'],['Margem — Fevereiro','R$ 204 mil']],
+        insight:'A receita cresceu 20%, mas a margem cresceu apenas 2%. O crescimento perdeu qualidade. Antes de comemorar a venda, investigue preço, custo, desconto, mix, frete e comissão.'
+      },
+      scenario2:{
+        title:'Despesa aumentou em reais, mas melhorou proporcionalmente',
+        rows:[['Receita — Janeiro','R$ 1,0 mi'],['Despesa Adm. — Janeiro','R$ 100 mil (10%)'],['Receita — Fevereiro','R$ 1,5 mi'],['Despesa Adm. — Fevereiro','R$ 120 mil (8%)']],
+        insight:'A despesa subiu R$ 20 mil, mas caiu de 10% para 8% da receita. Concluir apenas “a despesa aumentou” seria uma leitura incompleta.'
+      },
+      investigations:[
+        ['Faturamento caiu','Abra volume, ticket, clientes ativos, frequência, mix e sazonalidade.'],
+        ['Faturamento subiu e margem caiu','Investigue preço, descontos, custos, mix, comissões, impostos e frete.'],
+        ['Margem está boa e resultado piorou','Abra despesas fixas por grupo e procure novas estruturas, contratações ou gastos extraordinários.'],
+        ['DRE dá lucro, mas caixa piora','Não procure resposta só na DRE. Vá para {{caixa|Fluxo de Caixa}}, {{pmr|PMR}}, {{pmp|PMP}}, {{pme|PME}}, {{ciclo|Ciclo Financeiro}} e {{ncg|NCG}}.']
+      ],
+      notConclude:['“Faturamento cresceu, então estamos melhores.”','“Lucro caiu, então precisamos cortar despesas.”','“Despesa aumentou em reais, então piorou.”','“A DRE está positiva, então o caixa deveria estar positivo.”'],
+      operator:['Garanta competência correta.','Classifique lançamentos pela natureza.','Revise contas genéricas e variações relevantes.','Mantenha critérios estáveis entre períodos.','Documente eventos extraordinários.'],
+      manager:['Comece pela pergunta “o que mudou?”.','Abra as linhas que explicam a maior parte da variação.','Cruze resultado com indicadores operacionais antes de agir.','Separe problema real de distorção de dado.'],
+      errorChain:['Despesa classificada no mês errado','DRE de um mês melhora artificialmente','Mês seguinte piora artificialmente','Gestor interpreta tendência inexistente','Ação é tomada sobre um problema que não ocorreu'],
+      exercise:{q:'A receita subiu 20%, mas a margem de contribuição subiu apenas 2%. Qual é a melhor próxima investigação?',options:['Comemorar o crescimento e encerrar a análise','Abrir preço, custo, desconto, mix, frete e comissão','Cortar despesas administrativas imediatamente'],answer:1,feedback:'O principal sinal está na qualidade da venda. Antes de olhar a estrutura fixa, investigue por que a margem não acompanhou a receita.'},
+      next:['fluxo-de-caixa','caixa-x-competencia','fechamento-financeiro']
+    },
+
+    'fluxo-de-caixa':{
+      title:'Fluxo de Caixa',type:'analysis',time:'20–25 min',audience:'Gestão e operação financeira',
+      summary:'Aprenda a enxergar quando o dinheiro entra e sai, antecipar faltas de caixa e separar problema operacional de investimento ou evento extraordinário.',
+      inOneSentence:'DRE mostra resultado; fluxo de caixa mostra dinheiro e tempo.',
+      responds:['Quanto dinheiro temos de fato?','Quais entradas e saídas estão previstas?','Em que data o caixa pode ficar crítico?','A falta de caixa vem da operação ou de um evento extraordinário?'],
+      before:['Bancos conciliados.','Contas a pagar e a receber atualizadas.','Datas de vencimento revisadas.','Movimentos extraordinários identificados.'],
+      analysisSteps:[
+        ['1. Confirme o saldo real','O ponto de partida precisa bater com os bancos.'],
+        ['2. Projete o futuro','Liste entradas e saídas previstas nas datas em que realmente devem acontecer.'],
+        ['3. Procure os vales de caixa','Não olhe apenas o saldo final do mês. Identifique dias ou semanas em que o caixa fica pressionado.'],
+        ['4. Explique a causa','Separe operação normal, investimento, pagamento de dívida, distribuição de lucro e eventos não recorrentes.'],
+        ['5. Cruze com a operação','Se o caixa piora continuamente, investigue resultado, recebimento, estoque, pagamento e crescimento.']
+      ],
+      example:{
+        title:'A empresa ainda tem caixa, mas a projeção já mostra pressão',
+        rows:[['Saldo inicial','R$ 80 mil'],['Entradas previstas','R$ 55 mil'],['Saídas previstas','R$ 92 mil'],['Saldo final projetado','R$ 43 mil']],
+        insight:'O saldo continua positivo, mas caiu quase pela metade. A decisão deve acontecer antes de chegar a zero: cobrança, compras, pagamentos ou capital de giro podem precisar de ajuste.'
+      },
+      profitVsCash:[
+        ['Venda a prazo','Pode aumentar receita e lucro hoje, mas o dinheiro só entra depois.'],
+        ['Compra de máquina','Pode reduzir caixa agora sem aparecer integralmente como despesa operacional da DRE.'],
+        ['Estoque crescendo','Consome caixa antes de virar venda.'],
+        ['Pagamento de dívida','Reduz caixa, mas não significa necessariamente piora operacional.']
+      ],
+      notConclude:['“Tenho dinheiro no banco hoje, então o caixa está saudável.”','“A DRE tem lucro, então não deveria faltar dinheiro.”','“Caixa negativo significa necessariamente prejuízo.”'],
+      operator:['Concilie bancos.','Atualize vencimentos e baixas.','Revise previsões quando datas mudarem.','Separe transferências internas para não duplicar movimentações.'],
+      manager:['Analise projeção, não apenas saldo atual.','Pergunte qual evento explica a queda de caixa.','Cruze com DRE, prazos, estoque e crescimento.'],
+      exercise:{q:'A DRE mostra lucro, mas o caixa caiu durante três meses. Qual é a atitude mais adequada?',options:['Concluir que a DRE está errada','Investigar prazos, estoque, investimentos, dívidas e capital de giro','Ignorar o caixa porque lucro é mais importante'],answer:1,feedback:'Lucro e caixa medem coisas diferentes. A diferença pode estar no tempo de recebimento/pagamento, estoque ou movimentos extraordinários.'},
+      next:['dre-gerencial','caixa-x-competencia','caixa-ruim']
     }
   },
-  cases:[
-    {id:'crescimento-sem-caixa',title:'Caso: crescimento sem caixa',area:'financeiro',summary:'Uma empresa fictícia cresce 25% em vendas, mantém lucro positivo e ainda assim fica sem caixa.',scenario:'A Indústria Horizonte aumentou vendas a prazo, elevou estoque para atender demanda e manteve o prazo dos fornecedores estável. A DRE mostra lucro, mas o caixa caiu por três meses.',questions:['Quais indicadores você analisaria primeiro?','Que hipótese explicaria o problema sem assumir prejuízo?','Quais ações podem melhorar o caixa sem simplesmente cortar despesas?'],answer:'Cruzar PMR, PME, PMP, ciclo financeiro e NCG. O crescimento pode ter aumentado o capital preso em clientes e estoque. A ação deve atacar prazos, estoque e planejamento do crescimento, não apenas despesas.',links:['pmr','pme','pmp','ciclo-financeiro','ncg','fluxo-de-caixa']},
-    {id:'dre-distorcida',title:'Caso: DRE distorcida por competência',area:'financeiro',summary:'Uma empresa fictícia parece ter melhorado em março e piorado em abril, mas parte da variação é apenas classificação de data.',scenario:'Uma despesa relevante de manutenção realizada em março foi lançada em abril porque o pagamento aconteceu nesse mês.',questions:['Qual mês está superestimado?','Qual mês está subestimado?','Que rotina deveria evitar esse problema?'],answer:'Março ficou artificialmente melhor e abril artificialmente pior. A competência deveria ser março e o fechamento precisa revisar datas e classificação.',links:['caixa-x-competencia','fechamento-financeiro','dre-gerencial']}
-  ]
+
+  diagnostic:{
+    id:'caixa-ruim',title:'Meu caixa está ruim',summary:'Use esta página como um roteiro de investigação. Caixa ruim é um sintoma: antes de agir, descubra qual mecanismo está consumindo o dinheiro.',
+    intro:'Evite começar pela solução (“precisamos cortar despesas”, “precisamos pegar empréstimo”). Primeiro teste hipóteses. Uma empresa pode estar sem caixa por prejuízo, por crescimento, por clientes demorando a pagar, por estoque, por investimento ou por várias causas ao mesmo tempo.',
+    branches:[
+      {q:'1. A operação está dando prejuízo?',why:'Se a empresa não gera resultado suficiente, o problema pode ser econômico antes de ser financeiro.',look:'Abra a DRE. Veja receita, margem, despesas fixas e resultado. Se o resultado é negativo de forma recorrente, descubra qual linha explica a perda.',links:[['dre-gerencial','Analisar DRE']]},
+      {q:'2. A empresa dá lucro, mas demora para receber?',why:'Vender a prazo pode gerar resultado antes de gerar dinheiro.',look:'Analise carteira de clientes, inadimplência e {{pmr|PMR}}. Compare o prazo real recebido com a condição comercial prevista.',links:[['fluxo-de-caixa','Ver efeito no caixa']]},
+      {q:'3. O dinheiro está parado em estoque?',why:'Estoque é dinheiro convertido em mercadoria ou matéria-prima. Enquanto não gira, o caixa não retorna.',look:'Analise valor de estoque, itens sem giro, cobertura, compras e {{pme|PME}}. Estoque alto pode coexistir com falta de itens importantes.',links:[['fluxo-de-caixa','Ver efeito no caixa']]},
+      {q:'4. Pagamos antes de receber?',why:'Mesmo empresas lucrativas podem financiar a operação por muitos dias.',look:'Compare {{pmr|PMR}}, {{pmp|PMP}} e {{pme|PME}}. A combinação forma o {{ciclo|ciclo financeiro}} e ajuda a explicar quanto tempo o caixa precisa sustentar a operação.',links:[['fluxo-de-caixa','Analisar fluxo de caixa']]},
+      {q:'5. Houve investimento ou saída extraordinária?',why:'Máquinas, obras, pagamento de dívida ou distribuição de lucros podem reduzir caixa sem significar prejuízo operacional.',look:'Abra o fluxo e separe operação normal de movimentos extraordinários. O diagnóstico muda completamente.',links:[['fluxo-de-caixa','Analisar fluxo de caixa'],['dre-gerencial','Comparar com resultado']]},
+      {q:'6. A empresa cresceu rápido?',why:'Crescimento pode exigir mais clientes a receber e mais estoque antes de gerar dinheiro.',look:'Observe se contas a receber e estoque cresceram mais rápido do que fornecedores. Isso tende a aumentar a {{ncg|NCG}}.',links:[['dre-gerencial','Confirmar qualidade do crescimento'],['fluxo-de-caixa','Ver pressão financeira']]}
+    ],
+    finish:'Depois de testar as hipóteses, a pergunta deixa de ser “como melhorar o caixa?” e passa a ser específica: reduzir estoque? receber mais rápido? renegociar fornecedores? recuperar margem? planejar investimento? A ação deve atacar a causa encontrada.'
+  }
 };
