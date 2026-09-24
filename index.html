@@ -13,6 +13,7 @@
 </head>
 <body>
   <a class="skip-link" href="#app">Pular para o conteúdo</a>
+
   <header class="header">
     <div class="shell header-inner">
       <a class="brand" href="#home" aria-label="Ensino Lean — Início">
@@ -22,9 +23,8 @@
       </a>
       <nav class="nav" aria-label="Navegação principal">
         <a href="#home">Início</a>
-        <a href="#areas">Áreas</a>
-        <a href="#diagnosticos">Problemas</a>
-        <a href="#treinamentos">Treinamentos</a>
+        <a href="#financeiro">Financeiro</a>
+        <a href="#diagnostico/caixa-ruim">Resolver um problema</a>
         <button id="openSearch" class="nav-search" type="button">Buscar <span aria-hidden="true">/</span></button>
       </nav>
     </div>
@@ -35,7 +35,7 @@
   <footer class="footer">
     <div class="shell footer-inner">
       <span class="brand-wordmark footer-wordmark">LEAN <b>COMPANY</b></span>
-      <p>Ensino Lean · capacitação e apoio à gestão dos clientes Lean Company</p>
+      <p>Ensino Lean · aprender, executar e analisar melhor</p>
     </div>
   </footer>
 
@@ -43,15 +43,15 @@
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="searchTitle">
       <div class="modal-head">
         <div>
-          <span class="eyebrow">Busca global</span>
-          <h2 id="searchTitle">O que você quer entender, executar ou resolver?</h2>
-          <p>Pesquise pelo termo ou descreva o problema com suas palavras.</p>
+          <span class="eyebrow">Busca</span>
+          <h2 id="searchTitle">O que você quer entender?</h2>
+          <p>Você pode buscar um termo ou escrever a dúvida como ela aparece no dia a dia.</p>
         </div>
         <button id="closeSearch" class="close" type="button" aria-label="Fechar busca">×</button>
       </div>
       <form id="searchForm" class="searchbar searchbar-modal" role="search">
         <label class="sr-only" for="searchInput">Buscar no Ensino Lean</label>
-        <input id="searchInput" placeholder="Ex.: conta paga em abril referente a março; lucro mas falta caixa; DRE">
+        <input id="searchInput" placeholder="Ex.: conta de março paga em abril; lucro mas falta caixa; DRE">
         <button class="btn primary" type="submit">Buscar</button>
       </form>
       <div id="searchResults" class="search-results"></div>
@@ -59,7 +59,6 @@
   </div>
 
   <div id="termPopover" class="term-popover hidden" role="dialog" aria-live="polite"></div>
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
   <script src="data/content.js"></script>
   <script src="assets/app.js"></script>
