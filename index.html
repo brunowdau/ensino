@@ -27,7 +27,16 @@
         <a href="#diagnostico/caixa-ruim">Resolver um problema</a>
         <button id="openSearch" class="nav-search" type="button">Buscar <span aria-hidden="true">/</span></button>
       </nav>
+      <button id="mobileMenuBtn" class="mobile-menu-btn" type="button" aria-expanded="false" aria-controls="mobileNav">Menu</button>
     </div>
+    <nav id="mobileNav" class="mobile-nav" aria-label="Navegação mobile">
+      <div class="shell">
+        <a href="#home">Início</a>
+        <a href="#financeiro">Financeiro</a>
+        <a href="#diagnostico/caixa-ruim">Resolver um problema</a>
+        <button type="button" onclick="document.getElementById('openSearch').click()">Buscar</button>
+      </div>
+    </nav>
   </header>
 
   <main id="app" tabindex="-1"></main>
@@ -35,7 +44,7 @@
   <footer class="footer">
     <div class="shell footer-inner">
       <span class="brand-wordmark footer-wordmark">LEAN <b>COMPANY</b></span>
-      <p>Ensino Lean · aprender, executar e analisar melhor</p>
+      <p>Ensino Lean · aprender, executar, analisar e decidir melhor</p>
     </div>
   </footer>
 
@@ -44,14 +53,14 @@
       <div class="modal-head">
         <div>
           <span class="eyebrow">Busca</span>
-          <h2 id="searchTitle">O que você quer entender?</h2>
+          <h2 id="searchTitle">O que você quer entender ou resolver?</h2>
           <p>Você pode buscar um termo ou escrever a dúvida como ela aparece no dia a dia.</p>
         </div>
         <button id="closeSearch" class="close" type="button" aria-label="Fechar busca">×</button>
       </div>
       <form id="searchForm" class="searchbar searchbar-modal" role="search">
         <label class="sr-only" for="searchInput">Buscar no Ensino Lean</label>
-        <input id="searchInput" placeholder="Ex.: conta de março paga em abril; lucro mas falta caixa; DRE">
+        <input id="searchInput" placeholder="Ex.: vendo mais e falta dinheiro; cliente demora a pagar; conta de março paga em abril">
         <button class="btn primary" type="submit">Buscar</button>
       </form>
       <div id="searchResults" class="search-results"></div>
