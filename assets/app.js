@@ -36,33 +36,141 @@ function renderExercise(ex){
   return `<div class="exercise" data-exercise><span class="eyebrow">Aplicação</span><h4>${ex.q}</h4>${ctx}<div class="exercise-options">${ex.options.map((o,i)=>`<button type="button" data-answer="${i}">${o}</button>`).join('')}</div><div class="exercise-feedback"></div><input type="hidden" data-correct="${ex.answer}" data-feedback="${esc(ex.feedback)}"></div>`;
 }
 
+
+const PROGRESS_KEY='ensinoLeanV8Progress';
+
+function learningItems(){
+  const items=[];
+  (DATA.financeStages||[]).forEach((stage,stageIndex)=>{
+    (stage.items||[]).forEach(item=>{
+      items.push({
+        ...item,
+        key:item.slug,
+        stageIndex,
+        stageTitle:stage.title,
+        href:item.diagnostic?'#diagnostico/caixa-ruim':`#lesson/${item.slug}`,
+        time:item.diagnostic?'Prática aplicada':(DATA.lessons[item.slug]?.time||'')
+      });
+    });
+  });
+  return items;
+}
+function getProgress(){
+  try{
+    const parsed=JSON.parse(localStorage.getItem(PROGRESS_KEY)||'{}');
+    return {completed:Array.isArray(parsed.completed)?parsed.completed:[],lastVisited:parsed.lastVisited||null};
+  }catch(_){return {completed:[],lastVisited:null}}
+}
+function saveProgress(state){
+  try{localStorage.setItem(PROGRESS_KEY,JSON.stringify(state))}catch(_){}
+}
+function isCompleted(key){return getProgress().completed.includes(key)}
+function markCompleted(key){
+  const state=getProgress();
+  if(!state.completed.includes(key))state.completed.push(key);
+  state.lastVisited=key;
+  saveProgress(state);
+}
+function rememberLast(key){
+  if(!learningItems().some(x=>x.key===key))return;
+  const state=getProgress();state.lastVisited=key;saveProgress(state);
+}
+function progressStats(items=learningItems()){
+  const done=new Set(getProgress().completed);
+  const total=items.length;
+  const completed=items.filter(x=>done.has(x.key)).length;
+  return {total,completed,percent:total?Math.round((completed/total)*100):0};
+}
+function recommendedItem(){
+  const items=learningItems(),state=getProgress(),done=new Set(state.completed);
+  const last=items.find(x=>x.key===state.lastVisited);
+  if(last && !done.has(last.key))return last;
+  return items.find(x=>!done.has(x.key))||items[0];
+}
+function learningPosition(key){
+  const items=learningItems();
+  const idx=items.findIndex(x=>x.key===key);
+  if(idx<0)return null;
+  const item=items[idx];
+  const lessons=items.filter(x=>!x.diagnostic);
+  const lessonIndex=lessons.findIndex(x=>x.key===key);
+  return {items,idx,item,prev:items[idx-1]||null,next:items[idx+1]||null,lessonIndex,lessonTotal:lessons.length};
+}
+function progressBar(percent,compact=false){
+  return `<div class="course-progress ${compact?'compact':''}"><div class="course-progress-track"><span style="width:${percent}%"></span></div><strong>${percent}%</strong></div>`;
+}
+function renderLearningTop(key){
+  const pos=learningPosition(key);if(!pos)return'';
+  const stats=progressStats();
+  const label=pos.item.diagnostic?'Prática final':`Aula ${pos.lessonIndex+1} de ${pos.lessonTotal}`;
+  return `<div class="learning-strip"><div class="shell learning-strip-inner"><div><a href="#financeiro">Trilha Financeiro</a><span>›</span><strong>Módulo ${pos.item.stageIndex+1}: ${pos.item.stageTitle}</strong><span>·</span><span>${label}</span></div><div class="learning-strip-progress">${progressBar(stats.percent,true)}</div></div></div>`;
+}
+function renderLearningBottom(key){
+  const pos=learningPosition(key);if(!pos)return'';
+  const done=isCompleted(key);
+  const prev=pos.prev?`<a class="lesson-nav-link prev" href="${pos.prev.href}"><span>Anterior</span><strong>← ${pos.prev.title}</strong></a>`:'<span></span>';
+  const next=pos.next?`<a class="lesson-nav-link next" href="${pos.next.href}"><span>Próximo</span><strong>${pos.next.title} →</strong></a>`:`<a class="lesson-nav-link next" href="#financeiro"><span>Trilha</span><strong>Ver visão geral →</strong></a>`;
+  return `<section class="lesson-completion"><div class="lesson-completion-head"><span class="eyebrow">Sua jornada</span><h2>${done?'Conteúdo concluído':'Concluiu este conteúdo?'}</h2><p>${done?'O progresso ficou salvo neste dispositivo. Você pode revisar esta aula quando quiser.':'Marque como concluído para acompanhar sua evolução na trilha Financeiro.'}</p></div><button class="btn primary complete-btn ${done?'done':''}" type="button" data-complete="${key}" data-next="${pos.next?pos.next.href:'#financeiro'}">${done?'✓ Concluída — continuar':'Concluir e continuar →'}</button><div class="lesson-nav">${prev}${next}</div></section>`;
+}
+function courseDashboard(){
+  const items=learningItems(),stats=progressStats(items),next=recommendedItem(),state=getProgress();
+  const started=state.completed.length>0||state.lastVisited;
+  return `<section class="learning-dashboard"><div class="course-card-main"><div class="course-card-top"><div><span class="eyebrow">Trilha em destaque</span><h2>Financeiro — do dado à decisão</h2><p>Aprenda a registrar corretamente, validar a informação, interpretar DRE e Fluxo e investigar capital de giro.</p></div><span class="course-count">5 módulos · 13 aulas · 1 prática</span></div>${progressBar(stats.percent)}<div class="course-card-meta"><span>${stats.completed} de ${stats.total} atividades concluídas</span><span>Progresso salvo neste dispositivo</span></div><div class="course-actions"><a class="btn primary" href="${next?.href||'#financeiro'}">${started?'Continuar aprendizado':'Começar trilha'} →</a><a class="btn secondary" href="#financeiro">Ver módulos</a></div></div><aside class="course-side"><span class="eyebrow">Precisa consultar?</span><h3>Use o Ensino também no trabalho</h3><p>Você não precisa seguir a trilha para tirar uma dúvida. Busque um termo ou comece por um problema real.</p><a href="#diagnostico/caixa-ruim">Investigar “Meu caixa está ruim” →</a><button type="button" data-open-search>Buscar um assunto →</button></aside></section>`;
+}
+function renderCourseModules(){
+  const done=new Set(getProgress().completed);
+  let globalIndex=0;
+  return (DATA.financeStages||[]).map((stage,si)=>{
+    const stageItems=stage.items||[];
+    const stats=progressStats(stageItems.map(x=>({...x,key:x.slug})));
+    const rows=stageItems.map(item=>{
+      globalIndex++;
+      const completed=done.has(item.slug);
+      const d=item.diagnostic?null:DATA.lessons[item.slug];
+      const label=item.diagnostic?'Prática final':`Aula ${globalIndex}`;
+      const meta=[item.kind,d?.time].filter(Boolean).join(' · ');
+      return `<a class="course-lesson-row ${completed?'completed':''}" href="${item.diagnostic?'#diagnostico/caixa-ruim':`#lesson/${item.slug}`}"><span class="lesson-status">${completed?'✓':globalIndex}</span><div class="course-lesson-copy"><div class="course-lesson-kicker">${label} · ${meta}</div><strong>${item.title}</strong><p>${item.why}</p></div><span class="course-lesson-arrow">→</span></a>`;
+    }).join('');
+    return `<section class="course-module"><div class="course-module-head"><div><span class="eyebrow">Módulo ${si+1}</span><h2>${stage.title}</h2><p>${stage.desc}</p></div><div class="module-progress"><span>${stats.completed}/${stats.total}</span>${progressBar(stats.percent,true)}</div></div><div class="course-lesson-list">${rows}</div></section>`;
+  }).join('');
+}
+
 function renderHome(){
+  const next=recommendedItem();
   app.innerHTML=`
-    <section class="hero"><div class="shell"><div class="hero-inner">
+    <section class="hero platform-hero"><div class="shell"><div class="hero-inner">
       <span class="eyebrow">Ensino Lean</span>
-      <h1>Aprenda para executar certo. <span class="accent">Entenda para decidir melhor.</span></h1>
-      <p class="hero-copy">Material de treinamento e consulta para os clientes da Lean Company. Aqui, operação e gestão aprendem como o dado nasce, como validar a informação e como transformar números em análise.</p>
-      <form id="heroSearch" class="searchbar" role="search"><label class="sr-only" for="heroQ">Buscar</label><input id="heroQ" placeholder="Escreva a dúvida como ela aparece no dia a dia"><button class="btn primary" type="submit">Buscar</button></form>
-      <div class="hero-note">Ex.: “cliente demora a pagar”, “onde classifico esta despesa?”, “vendi mais e falta dinheiro”.</div>
+      <h1>Aprenda. Pratique. Consulte. <span class="accent">Aplique na empresa.</span></h1>
+      <p class="hero-copy">Uma plataforma de treinamento e apoio para os clientes da Lean Company. Estude em sequência quando estiver aprendendo e volte diretamente ao conteúdo quando precisar executar ou analisar algo no dia a dia.</p>
+      <form id="heroSearch" class="searchbar" role="search"><label class="sr-only" for="heroQ">Buscar</label><input id="heroQ" placeholder="O que você quer aprender ou resolver?"><button class="btn primary" type="submit">Buscar</button></form>
+      <div class="hero-note">Ex.: “cliente demora a pagar”, “como classificar esta despesa?”, “vendi mais e falta dinheiro”.</div>
     </div></div></section>
-    <section class="section"><div class="shell">
-      <div class="section-head"><span class="eyebrow">Comece por aqui</span><h2>O que você precisa agora?</h2></div>
-      <div class="entry-list">
-        <a class="entry-row" href="#financeiro"><span class="entry-n">01</span><div><div class="entry-title">Aprender ou consultar Financeiro</div><p>Do lançamento correto à DRE, Fluxo, prazos e capital de giro.</p></div><span class="entry-arrow">→</span></a>
-        <a class="entry-row" href="#diagnostico/caixa-ruim"><span class="entry-n">02</span><div><div class="entry-title">Tenho um problema e não sei onde olhar</div><p>Comece pelo sintoma e siga uma ordem de investigação até chegar à causa mais provável.</p></div><span class="entry-arrow">→</span></a>
+    <section class="section learning-home"><div class="shell">
+      ${courseDashboard()}
+    </div></section>
+    <section class="section home-method"><div class="shell">
+      <div class="section-head"><span class="eyebrow">Como o Ensino Lean funciona</span><h2>Aprendizado conectado ao trabalho real</h2><p>O objetivo não é apenas conhecer conceitos. É conseguir executar corretamente, confiar no dado, interpretar o que aconteceu e escolher a próxima investigação.</p></div>
+      <div class="learning-principles">
+        <div><span>01</span><strong>Aprender</strong><p>Entenda conceitos e ferramentas com exemplos.</p></div>
+        <div><span>02</span><strong>Executar</strong><p>Veja passo a passo, critérios e validações.</p></div>
+        <div><span>03</span><strong>Analisar</strong><p>Aprenda a ler sinais, cruzar indicadores e evitar conclusões erradas.</p></div>
+        <div><span>04</span><strong>Aplicar</strong><p>Use casos e diagnósticos para transformar dado em decisão.</p></div>
       </div>
-      <div class="chain"><strong>Executar</strong><span>→</span><strong>Validar</strong><span>→</span><strong>Entender</strong><span>→</span><strong>Analisar</strong><span>→</span><strong>Diagnosticar</strong><span>→</span><strong>Decidir</strong></div>
     </div></section>`;
-  setTimeout(()=>document.getElementById('heroSearch')?.addEventListener('submit',e=>{e.preventDefault();openSearch(document.getElementById('heroQ').value)}),0);
+  setTimeout(()=>{
+    document.getElementById('heroSearch')?.addEventListener('submit',e=>{e.preventDefault();openSearch(document.getElementById('heroQ').value)});
+  },0);
 }
 
 function renderFinance(){
-  app.innerHTML=`${pageHero('Financeiro','Financeiro','Uma sequência para aprender como a informação é formada, validada, analisada e conectada às decisões.',[['Início','#home'],['Financeiro','#financeiro']])}
-  <div class="shell finance-wrap">
-    <p class="finance-intro">Se você está aprendendo do início, siga as etapas. Se veio consultar uma dúvida específica, abra diretamente o tema. A ordem recomendada mostra por que um indicador só é tão bom quanto o processo que o alimenta.</p>
-    <div class="case-intro"><span class="eyebrow">Caso contínuo</span><h3>${DATA.companyCase.name}</h3><p>${DATA.companyCase.description} ${DATA.companyCase.story}</p></div>
-    ${DATA.financeStages.map((stage,si)=>`<section class="learning-stage"><div class="stage-head"><span class="eyebrow">Etapa ${si+1}</span><h3>${stage.title}</h3><p>${stage.desc}</p></div><div class="sequence">${stage.items.map((x,i)=>`<a class="sequence-item" href="${x.diagnostic?'#diagnostico/caixa-ruim':`#lesson/${x.slug}`}"><span class="num">${String(i+1).padStart(2,'0')}</span><div><h3>${x.title}</h3><p>${x.why}</p></div><span class="status">${x.kind}</span></a>`).join('')}</div></section>`).join('')}
-    <div class="finance-note"><strong>Como usar em treinamento</strong><p>Operação: priorize Base da informação e Rotina operacional. Gestão: conheça essa base e aprofunde Resultado, Caixa e Capital de Giro. O diagnóstico serve para praticar a conexão entre todas as ferramentas.</p></div>
+  const stats=progressStats();
+  const next=recommendedItem();
+  app.innerHTML=`${pageHero('Trilha de aprendizagem','Financeiro — do dado à decisão','Uma formação prática para entender como a informação financeira nasce, como deve ser validada e como chega até a análise e a decisão.',[['Início','#home'],['Trilha Financeiro','#financeiro']],`<span>5 módulos</span><span>13 aulas</span><span>1 diagnóstico prático</span>`)}
+  <div class="shell finance-wrap course-page">
+    <section class="course-overview"><div><span class="eyebrow">Seu progresso</span><h2>${stats.completed===stats.total?'Trilha concluída':'Continue de onde parou'}</h2><p>${stats.completed===stats.total?'Você concluiu todas as atividades. Use a trilha agora como material de revisão e consulta.':'O progresso é salvo neste dispositivo enquanto não temos login individual.'}</p></div><div class="course-overview-progress">${progressBar(stats.percent)}<span>${stats.completed}/${stats.total} atividades</span></div><a class="btn primary" href="${next?.href||'#financeiro'}">${stats.completed?'Continuar':'Começar'} →</a></section>
+    <div class="case-intro course-case"><span class="eyebrow">Caso contínuo</span><h3>${DATA.companyCase.name}</h3><p>${DATA.companyCase.description} ${DATA.companyCase.story}</p></div>
+    ${renderCourseModules()}
+    <div class="finance-note"><strong>Como usar esta trilha</strong><p>Se estiver em treinamento, siga os módulos em ordem. Se estiver trabalhando e precisar resolver uma dúvida, use a busca ou abra diretamente a aula necessária. Operação e gestão compartilham a mesma base, mas cada conteúdo deixa explícita a responsabilidade de quem alimenta e de quem analisa.</p></div>
   </div>`;
 }
 
@@ -78,7 +186,7 @@ function renderConcept(slug,d){
     ${section('aplicar','05 · Aplicação','Como escolher a data',renderFlow(d.decisionFlow))}
     ${section('validar','06 · Validação','Como saber se o lançamento faz sentido',renderValidation(d.validation))}
     ${section('responsabilidade','07 · Responsabilidade','Do lançamento à decisão',`${renderResponsibility(d)}<h4 style="margin-top:22px">Se a data estiver errada</h4>${renderCauseEffect(d.errorChain)}`)}
-    ${section('teste','08 · Aplicação','Resolva uma situação realista',`${renderExercise(d.exercise)}<h4 style="margin-top:24px">Continue por aqui</h4>${renderRelated(d.next)}`)}`;
+    ${section('teste','08 · Aplicação','Resolva uma situação realista',`${renderExercise(d.exercise)}`)}`;
   } else {
     body=`${commonStart}
     ${section('conceito','03 · Regra central','Classifique pelo que foi consumido',`<p class="lead">${termize(d.principle)}</p><div class="note"><strong>Por que importa</strong><p>${termize(d.why)}</p></div>`)}
@@ -86,9 +194,9 @@ function renderConcept(slug,d){
     ${section('aplicar','05 · Aplicação','Uma árvore mental para classificar',`${renderFlow(d.classificationTree)}<h4 style="margin-top:24px">Plano de contas x centro de custo</h4>${renderPairTable(d.accountVsCenter,['Dimensão','Pergunta','Exemplos'])}`)}
     ${section('validar','06 · Validação','Como saber se a classificação está boa',`${renderValidation(d.validation)}<h4 style="margin-top:24px">Erros recorrentes</h4>${renderList(d.commonMistakes)}`)}
     ${section('responsabilidade','07 · Responsabilidade','Quem registra e quem usa',`${renderResponsibility(d)}<h4 style="margin-top:22px">Quando a classificação erra</h4>${renderCauseEffect(d.errorChain)}`)}
-    ${section('teste','08 · Aplicação','Classifique usando o raciocínio',`${renderExercise(d.exercise)}<h4 style="margin-top:24px">Continue por aqui</h4>${renderRelated(d.next)}`)}`;
+    ${section('teste','08 · Aplicação','Classifique usando o raciocínio',`${renderExercise(d.exercise)}`)}`;
   }
-  app.innerHTML=`${pageHero('Conceito',d.title,d.summary,[['Início','#home'],['Financeiro','#financeiro'],[d.title,hrefFor(slug)]],`<span>${d.time}</span><span>${d.audience}</span>`)}<div class="shell article-shell">${body}</div>`;
+  app.innerHTML=`${pageHero('Conceito',d.title,d.summary,[['Início','#home'],['Financeiro','#financeiro'],[d.title,hrefFor(slug)]],`<span>${d.time}</span><span>${d.audience}</span>`)}${renderLearningTop(slug)}<div class="shell article-shell">${body}${renderLearningBottom(slug)}</div>`;
 }
 
 function renderProcedure(slug,d){
@@ -101,8 +209,8 @@ function renderProcedure(slug,d){
   ${section('validar','06 · Validação','O que conferir em cada etapa',`${renderPairTable(d.stageValidation,['Etapa','Critério'])}${renderValidation(d.validation)}`)}
   ${section('terminou','07 · Saída esperada','Como saber que terminou',`${renderChecklist(d.finishCriteria)}<h4 style="margin-top:22px">Sinais de que ainda não terminou</h4>${renderList(d.notReady)}`)}
   ${section('erro','08 · Consequência','Erros que parecem pequenos, mas chegam à gestão',`${renderList(d.mistakes)}<h4 style="margin-top:22px">Da falha à decisão</h4>${renderCauseEffect(d.errorChain)}${renderResponsibility(d)}`)}
-  ${section('teste','09 · Aplicação','Resolva uma situação operacional',`${renderExercise(d.exercise)}<h4 style="margin-top:24px">Depois desta rotina</h4>${renderRelated(d.next)}`)}`;
-  app.innerHTML=`${pageHero('Procedimento',d.title,d.summary,[['Início','#home'],['Financeiro','#financeiro'],[d.title,hrefFor(slug)]],`<span>${d.time}</span><span>${d.audience}</span>`)}<div class="shell article-shell">${body}</div>`;
+  ${section('teste','09 · Aplicação','Resolva uma situação operacional',`${renderExercise(d.exercise)}`)}`;
+  app.innerHTML=`${pageHero('Procedimento',d.title,d.summary,[['Início','#home'],['Financeiro','#financeiro'],[d.title,hrefFor(slug)]],`<span>${d.time}</span><span>${d.audience}</span>`)}${renderLearningTop(slug)}<div class="shell article-shell">${body}${renderLearningBottom(slug)}</div>`;
 }
 
 function renderDRE(slug,d){
@@ -116,8 +224,8 @@ function renderDRE(slug,d){
   ${section('caso','07 · Caso contínuo',DATA.companyCase.name,`${renderExample(d.caseExample)}${renderNextQuestion(d.nextQuestion)}`)}
   ${section('investigar','08 · Diagnóstico','Se acontecer isto, investigue aquilo',`${renderPairTable(d.investigations,['Sinal','Próxima investigação'])}<h4 style="margin-top:22px">O que NÃO concluir</h4>${renderList(d.notConclude)}`)}
   ${section('responsabilidade','09 · Responsabilidade','O relatório depende de quem alimenta e de quem interpreta',`${renderResponsibility(d)}<h4 style="margin-top:22px">Como um erro vira decisão errada</h4>${renderCauseEffect(d.errorChain)}`)}
-  ${section('teste','10 · Aplicação','Faça uma leitura sem resposta óbvia',`${renderExercise(d.exercise)}<h4 style="margin-top:24px">Continue estudando</h4>${renderRelated(d.next)}`)}`;
-  app.innerHTML=`${pageHero('Análise gerencial',d.title,d.summary,[['Início','#home'],['Financeiro','#financeiro'],[d.title,hrefFor(slug)]],`<span>${d.time}</span><span>${d.audience}</span>`)}<div class="shell article-shell">${body}</div>`;
+  ${section('teste','10 · Aplicação','Faça uma leitura sem resposta óbvia',`${renderExercise(d.exercise)}`)}`;
+  app.innerHTML=`${pageHero('Análise gerencial',d.title,d.summary,[['Início','#home'],['Financeiro','#financeiro'],[d.title,hrefFor(slug)]],`<span>${d.time}</span><span>${d.audience}</span>`)}${renderLearningTop(slug)}<div class="shell article-shell">${body}${renderLearningBottom(slug)}</div>`;
 }
 
 function renderCashFlow(slug,d){
@@ -130,8 +238,8 @@ function renderCashFlow(slug,d){
   ${section('caso','06 · Caso contínuo',DATA.companyCase.name,`${renderExample(d.caseExample)}<h4 style="margin-top:24px">Uma leitura simples de movimentos</h4>${renderPairTable(d.timeline,['Movimento','Efeito no caixa'])}${renderNextQuestion(d.nextQuestion)}`)}
   ${section('lucro','07 · Conceito-chave','Por que lucro e caixa podem andar separados',`${renderPairTable(d.profitVsCash,['Situação','Por que afeta diferente'])}<h4 style="margin-top:22px">O que NÃO concluir</h4>${renderList(d.notConclude)}`)}
   ${section('responsabilidade','08 · Responsabilidade','Quem mantém o fluxo confiável',renderResponsibility(d))}
-  ${section('teste','09 · Aplicação','Encontre o risco que o saldo final esconde',`${renderExercise(d.exercise)}<h4 style="margin-top:24px">Continue estudando</h4>${renderRelated(d.next)}`)}`;
-  app.innerHTML=`${pageHero('Análise financeira',d.title,d.summary,[['Início','#home'],['Financeiro','#financeiro'],[d.title,hrefFor(slug)]],`<span>${d.time}</span><span>${d.audience}</span>`)}<div class="shell article-shell">${body}</div>`;
+  ${section('teste','09 · Aplicação','Encontre o risco que o saldo final esconde',`${renderExercise(d.exercise)}`)}`;
+  app.innerHTML=`${pageHero('Análise financeira',d.title,d.summary,[['Início','#home'],['Financeiro','#financeiro'],[d.title,hrefFor(slug)]],`<span>${d.time}</span><span>${d.audience}</span>`)}${renderLearningTop(slug)}<div class="shell article-shell">${body}${renderLearningBottom(slug)}</div>`;
 }
 
 function renderIndicator(slug,d){
@@ -145,13 +253,13 @@ function renderIndicator(slug,d){
   ${section('cruzar','07 · Conexões','O que analisar junto — e por quê',renderCross(d.cross))}
   ${section('caso','08 · Caso contínuo',DATA.companyCase.name,renderExample(d.caseExample))}
   ${section('responsabilidade','09 · Responsabilidade','Quem garante o dado e quem toma decisão',renderResponsibility(d))}
-  ${section('teste','10 · Aplicação','Use evidência para escolher a hipótese',`${renderExercise(d.exercise)}<h4 style="margin-top:24px">Continue por aqui</h4>${renderRelated(d.next)}`)}`;
-  app.innerHTML=`${pageHero('Indicador',d.title,d.summary,[['Início','#home'],['Financeiro','#financeiro'],[d.title,hrefFor(slug)]],`<span>${d.time}</span><span>${d.audience}</span>`)}<div class="shell article-shell">${body}</div>`;
+  ${section('teste','10 · Aplicação','Use evidência para escolher a hipótese',`${renderExercise(d.exercise)}`)}`;
+  app.innerHTML=`${pageHero('Indicador',d.title,d.summary,[['Início','#home'],['Financeiro','#financeiro'],[d.title,hrefFor(slug)]],`<span>${d.time}</span><span>${d.audience}</span>`)}${renderLearningTop(slug)}<div class="shell article-shell">${body}${renderLearningBottom(slug)}</div>`;
 }
 
 function renderDiagnostic(){
   const d=DATA.diagnostic;
-  app.innerHTML=`${pageHero('Diagnóstico',d.title,d.summary,[['Início','#home'],['Financeiro','#financeiro'],[d.title,'#diagnostico/caixa-ruim']])}
+  app.innerHTML=`${pageHero('Prática aplicada',d.title,d.summary,[['Início','#home'],['Trilha Financeiro','#financeiro'],[d.title,'#diagnostico/caixa-ruim']])}${renderLearningTop('caixa-ruim')}
   <div class="shell article-shell">
     ${toc([['principio','Princípio'],['ordem','Por onde começar'],['caso','Caso'],['investigar','Hipóteses'],['concluir','Concluir']])}
     ${section('principio','01 · Comece certo','Caixa ruim é um sintoma, não uma causa',`<p class="diagnostic-intro">${termize(d.intro)}</p><div class="note amber"><strong>Não comece pela solução</strong><p>Empréstimo, corte, cobrança ou redução de estoque podem ser corretos — mas somente depois de identificar o mecanismo que explica a pressão.</p></div>`)}
@@ -159,6 +267,7 @@ function renderDiagnostic(){
     ${section('caso','03 · Exemplo','O mesmo sintoma pode ter mecanismos diferentes',`<div class="case-intro"><span class="eyebrow">${DATA.companyCase.name}</span><p>${termize(d.caseIntro)}</p></div>${renderPairTable(DATA.companyCase.base.slice(1),DATA.companyCase.base[0])}`)}
     <section id="investigar" class="article-section"><span class="eyebrow">04 · Investigação</span><h2>Teste hipótese por hipótese</h2>${d.branches.map((b,i)=>`<div class="diagnostic-branch"><div class="q">${i+1}. ${b.q}</div><p>${termize(b.why)}</p><div class="diagnostic-evidence"><div><strong>O que verificar</strong><p>${termize(b.verify)}</p></div><div><strong>Evidências que fortalecem</strong>${renderList(b.supports)}</div><div><strong>Evidências que enfraquecem</strong>${renderList(b.weakens)}</div></div><div class="diagnostic-links">${b.links.map(x=>`<a href="#lesson/${x[0]}">${x[1]} →</a>`).join('')}</div></div>`).join('')}</section>
     ${section('concluir','05 · Conclusão','Transforme o sintoma em uma causa acompanhável',`<p class="lead">${termize(d.finish)}</p><div class="validation-set"><div class="validation-row ok"><strong>Saída esperada</strong><p>Causa mais provável + evidência + ação + responsável + indicador + data de reavaliação.</p></div><div class="validation-row bad"><strong>Ainda está superficial</strong><p>“Precisamos melhorar o caixa”, “precisamos vender mais” ou “precisamos cortar custos” sem demonstrar a causa.</p></div></div>`)}
+    ${renderLearningBottom('caixa-ruim')}
   </div>`;
 }
 
@@ -177,8 +286,15 @@ function route(){
   closeMobileNav();
   hideTerm();
   if(h==='#financeiro')renderFinance();
-  else if(h.startsWith('#lesson/'))renderLesson(h.split('/')[1]);
-  else if(h==='#diagnostico/caixa-ruim')renderDiagnostic();
+  else if(h.startsWith('#lesson/')){
+    const slug=h.split('/')[1];
+    rememberLast(slug);
+    renderLesson(slug);
+  }
+  else if(h==='#diagnostico/caixa-ruim'){
+    rememberLast('caixa-ruim');
+    renderDiagnostic();
+  }
   else renderHome();
   window.scrollTo(0,0);
   app.focus({preventScroll:true});
@@ -221,6 +337,16 @@ overlay.addEventListener('click',e=>{if(e.target===overlay)closeSearch()});
 mobileMenuBtn.addEventListener('click',toggleMobileNav);
 
 document.addEventListener('click',e=>{
+  const complete=e.target.closest('[data-complete]');
+  if(complete){
+    const key=complete.dataset.complete;
+    markCompleted(key);
+    const next=complete.dataset.next||'#financeiro';
+    if(location.hash===next){route()}else{location.hash=next}
+    return;
+  }
+  const openSearchBtn=e.target.closest('[data-open-search]');
+  if(openSearchBtn){e.preventDefault();openSearch('');return}
   const help=e.target.closest('[data-term]');
   if(help){e.preventDefault();showTerm(help);return}
   if(!e.target.closest('#termPopover'))hideTerm();
