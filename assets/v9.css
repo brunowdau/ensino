@@ -107,3 +107,22 @@
   .lesson-nav{grid-template-columns:1fr}
   .lesson-nav-link.next{text-align:left}
 }
+
+/* V9.1 — laboratórios de aplicação */
+.lab-row{background:linear-gradient(90deg,rgba(52,85,116,.045),transparent 70%)}
+.lab-row .lesson-status{border-style:dashed;color:var(--blue);font-weight:700}
+.lab-stack{display:grid;gap:18px}
+.lab-question{border:1px solid var(--line);border-radius:14px;padding:20px;background:#fff}
+.lab-question.solved{border-color:#b8d7c0;background:#fbfdfb}
+.lab-q-head{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start;margin-bottom:14px}
+.lab-q-head>span{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#eef3f7;color:var(--blue);font-size:10px;font-weight:700}
+.lab-q-head h3{font-size:19px;line-height:1.25;margin:2px 0 0}
+.lab-question.solved .lab-q-head>span{background:#e9f5ec;color:#356443}
+.lab-question .exercise-options{margin-top:0}
+.lab-question .exercise-feedback{margin-top:12px;min-height:0}
+.lab-question.solved .exercise-feedback{color:#356443}
+@media(max-width:600px){
+  .lab-question{padding:16px}
+  .lab-q-head{grid-template-columns:30px 1fr;gap:9px}
+  .lab-q-head h3{font-size:17px}
+}
