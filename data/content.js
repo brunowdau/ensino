@@ -1,4 +1,4 @@
-window.ENSINO_V72 = {
+window.ENSINO_V9 = {
   glossary:{
     competencia:{title:'Competência',desc:'Período em que a receita ou despesa pertence economicamente, independentemente da data em que o dinheiro entrou ou saiu.',link:'caixa-x-competencia'},
     caixa:{title:'Caixa',desc:'Momento em que o dinheiro efetivamente entra ou sai das contas da empresa.',link:'fluxo-de-caixa'},
@@ -36,28 +36,31 @@ window.ENSINO_V72 = {
   },
 
   financeStages:[
-    {title:'Base da informação',desc:'Antes de analisar, aprenda como o dado precisa nascer.',items:[
+    {title:'Base da informação',focus:'Base comum',desc:'Antes de analisar, aprenda como o dado precisa nascer.',items:[
       {slug:'caixa-x-competencia',title:'Caixa x Competência',kind:'Conceito',why:'Entenda qual mês pertence à DRE e qual data pertence ao caixa.'},
       {slug:'plano-de-contas',title:'Plano de Contas',kind:'Conceito',why:'Classifique pela natureza correta para não distorcer a análise.'}
     ]},
-    {title:'Rotina operacional',desc:'Transforme movimentações do dia a dia em uma base confiável.',items:[
+    {title:'Rotina operacional',focus:'Essencial para operação',desc:'Transforme movimentações do dia a dia em uma base confiável.',items:[
       {slug:'contas-a-pagar',title:'Contas a Pagar',kind:'Procedimento',why:'Registre obrigações, vencimentos, pagamentos e competência sem perder rastreabilidade.'},
       {slug:'contas-a-receber',title:'Contas a Receber',kind:'Procedimento',why:'Mantenha a carteira confiável e diferencie prazo comercial de atraso.'},
       {slug:'conciliacao-bancaria',title:'Conciliação Bancária',kind:'Procedimento',why:'Garanta que banco e sistema contem a mesma história.'},
-      {slug:'fechamento-financeiro',title:'Fechamento Financeiro',kind:'Procedimento',why:'Valide o mês antes de transformar dado em decisão.'}
+      {slug:'fechamento-financeiro',title:'Fechamento Financeiro',kind:'Procedimento',why:'Valide o mês antes de transformar dado em decisão.'},
+      {checkpoint:true,slug:'qualidade-da-informacao',title:'Checkpoint — Qualidade da Informação',kind:'Checkpoint',why:'Use um fechamento fictício para decidir se a base realmente está pronta para análise.'}
     ]},
-    {title:'Entender resultado e caixa',desc:'Com a base confiável, interprete o que aconteceu com o negócio e com o dinheiro.',items:[
+    {title:'Entender resultado e caixa',focus:'Essencial para gestão',desc:'Com a base confiável, interprete o que aconteceu com o negócio e com o dinheiro.',items:[
       {slug:'dre-gerencial',title:'DRE Gerencial',kind:'Análise',why:'Entenda faturamento, margem, estrutura e resultado em sequência.'},
-      {slug:'fluxo-de-caixa',title:'Fluxo de Caixa',kind:'Análise',why:'Antecipe falta de dinheiro e separe operação de eventos extraordinários.'}
+      {slug:'fluxo-de-caixa',title:'Fluxo de Caixa',kind:'Análise',why:'Antecipe falta de dinheiro e separe operação de eventos extraordinários.'},
+      {checkpoint:true,slug:'resultado-e-caixa',title:'Checkpoint — Resultado x Caixa',kind:'Checkpoint',why:'Leia DRE e Fluxo juntos e escolha a próxima investigação sem confundir lucro com dinheiro.'}
     ]},
-    {title:'Capital de giro',desc:'Entenda por que uma empresa lucrativa pode crescer e ainda assim consumir caixa.',items:[
+    {title:'Capital de giro',focus:'Essencial para gestão',desc:'Entenda por que uma empresa lucrativa pode crescer e ainda assim consumir caixa.',items:[
       {slug:'pmr',title:'PMR',kind:'Indicador',why:'Quanto tempo a empresa leva para receber.'},
       {slug:'pmp',title:'PMP',kind:'Indicador',why:'Quanto tempo os fornecedores financiam a operação.'},
       {slug:'pme',title:'PME',kind:'Indicador',why:'Quanto tempo o capital permanece em estoque.'},
       {slug:'ciclo-financeiro',title:'Ciclo Financeiro',kind:'Indicador',why:'Quantos dias a empresa precisa financiar a operação.'},
-      {slug:'ncg',title:'NCG',kind:'Indicador',why:'Quanto recurso está preso na operação.'}
+      {slug:'ncg',title:'NCG',kind:'Indicador',why:'Quanto recurso está preso na operação.'},
+      {checkpoint:true,slug:'capital-de-giro',title:'Checkpoint — Capital de Giro',kind:'Checkpoint',why:'Conecte PMR, PMP, PME, Ciclo e NCG para explicar uma pressão real de caixa.'}
     ]},
-    {title:'Aplicar o raciocínio',desc:'Parta do sintoma e teste hipóteses antes de escolher a ação.',items:[
+    {title:'Aplicar o raciocínio',focus:'Prática integrada',desc:'Parta do sintoma e teste hipóteses antes de escolher a ação.',items:[
       {diagnostic:true,slug:'caixa-ruim',title:'Meu caixa está ruim',kind:'Diagnóstico',why:'Use DRE, Fluxo, prazos, Ciclo e NCG para descobrir a causa mais provável.'}
     ]}
   ],
@@ -74,6 +77,82 @@ window.ENSINO_V72 = {
     {terms:['pago antes de receber','descasamento prazo'],target:'#lesson/ciclo-financeiro'},
     {terms:['crescimento consome caixa','capital de giro','ncg'],target:'#lesson/ncg'}
   ],
+
+  checkpoints:{
+    'qualidade-da-informacao':{
+      title:'Checkpoint — Qualidade da Informação',
+      module:'Rotina operacional',
+      time:'10–15 min',
+      summary:'Antes de abrir a DRE, decida se o fechamento possui qualidade suficiente para ser analisado.',
+      objective:'Identificar pendências que tornam um fechamento aparentemente concluído ainda inadequado para análise gerencial.',
+      context:{
+        headers:['Situação encontrada no fechamento de junho','Status'],
+        rows:[
+          ['Energia de junho paga em julho, registrada com competência junho','Correto'],
+          ['R$ 2.800 de diferença entre banco e sistema compensados em “Ajustes”','Pendente'],
+          ['Microsoft 365 classificado em “Despesas Diversas” sem critério','Revisar'],
+          ['Três títulos de fornecedores sem vencimento cadastrado','Pendente'],
+          ['Renegociação de cliente feita por WhatsApp e não atualizada no contas a receber','Pendente']
+        ]
+      },
+      question:{
+        q:'Com essas informações, junho está pronto para a gestão analisar DRE e caixa?',
+        options:['Sim, porque o saldo geral já fecha','Não. Existem pendências de conciliação, classificação e carteira que podem distorcer a análise','Sim, desde que o gestor seja avisado verbalmente'],
+        answer:1,
+        feedback:'Fechamento não é apenas “bater saldo”. Diferença bancária, classificação genérica e carteiras desatualizadas comprometem a confiança do dado. Resolva ou documente materialmente as pendências antes da análise.'
+      },
+      review:[['caixa-x-competencia','Revisar competência'],['plano-de-contas','Revisar classificação'],['conciliacao-bancaria','Revisar conciliação'],['fechamento-financeiro','Revisar fechamento']]
+    },
+    'resultado-e-caixa':{
+      title:'Checkpoint — Resultado x Caixa',
+      module:'Entender resultado e caixa',
+      time:'10–15 min',
+      summary:'Use DRE e Fluxo ao mesmo tempo para não confundir desempenho econômico com movimento financeiro.',
+      objective:'Separar problema de resultado de problema de timing financeiro e escolher a próxima análise.',
+      context:{
+        headers:['Indicador','Maio','Junho'],
+        rows:[
+          ['Faturamento','R$ 1,00 mi','R$ 1,18 mi'],
+          ['Resultado operacional','R$ 92 mil','R$ 104 mil'],
+          ['Saldo final de caixa','R$ 310 mil','R$ 185 mil'],
+          ['Compra de máquina','R$ 0','R$ 95 mil'],
+          ['Contas a receber','R$ 390 mil','R$ 520 mil']
+        ]
+      },
+      question:{
+        q:'Qual leitura é mais adequada antes de propor corte de despesas?',
+        options:['A empresa está dando prejuízo e precisa cortar estrutura','O resultado continua positivo; a queda de caixa pode envolver investimento e maior capital preso em clientes, então a próxima investigação deve separar esses efeitos','Caixa baixo prova que a DRE está errada'],
+        answer:1,
+        feedback:'A DRE permanece positiva. O Fluxo mostra investimento e o contas a receber cresceu. O diagnóstico precisa avançar para timing e capital de giro antes de concluir que a estrutura é o problema.'
+      },
+      review:[['dre-gerencial','Revisar DRE'],['fluxo-de-caixa','Revisar Fluxo de Caixa'],['pmr','Revisar PMR']]
+    },
+    'capital-de-giro':{
+      title:'Checkpoint — Capital de Giro',
+      module:'Capital de giro',
+      time:'12–18 min',
+      summary:'Conecte prazos e NCG para explicar por que crescimento pode exigir dinheiro mesmo com resultado positivo.',
+      objective:'Usar PMR, PMP, PME, Ciclo Financeiro e NCG como um sistema, e não como indicadores isolados.',
+      context:{
+        headers:['Indicador','Antes','Agora'],
+        rows:[
+          ['PMR','32 dias','48 dias'],
+          ['PME','24 dias','38 dias'],
+          ['PMP','30 dias','31 dias'],
+          ['Ciclo Financeiro','26 dias','55 dias'],
+          ['NCG','R$ 330 mil','R$ 540 mil'],
+          ['Resultado operacional','R$ 105 mil','R$ 150 mil']
+        ]
+      },
+      question:{
+        q:'Qual diagnóstico possui maior sustentação nos dados?',
+        options:['O lucro caiu e explica a pressão de caixa','A operação passou a financiar muito mais dias e exigir mais capital, principalmente por recebimento e estoque, apesar do resultado positivo','O PMP aumentou demais e é a principal causa'],
+        answer:1,
+        feedback:'PMR e PME aumentaram fortemente, PMP quase não mudou, o Ciclo mais que dobrou e a NCG cresceu R$ 210 mil. Isso sustenta uma pressão de capital de giro, não uma queda de resultado.'
+      },
+      review:[['pmr','Revisar PMR'],['pme','Revisar PME'],['pmp','Revisar PMP'],['ciclo-financeiro','Revisar Ciclo'],['ncg','Revisar NCG']]
+    }
+  },
 
   lessons:{
     'caixa-x-competencia':{
@@ -564,6 +643,13 @@ window.ENSINO_V72 = {
       {q:'Houve investimento, dívida ou saída extraordinária?',why:'Máquina, obra, amortização ou distribuição podem reduzir caixa sem indicar problema operacional.',verify:'Separe movimentos operacionais de investimento, financiamento e eventos não recorrentes no Fluxo.',supports:['Saída relevante fora da operação normal.'],weakens:['Pressão continua mesmo sem eventos extraordinários.'],links:[['fluxo-de-caixa','Analisar Fluxo']]},
       {q:'O crescimento aumentou a necessidade de capital?',why:'Mais clientes a receber e estoque podem consumir caixa antes de o crescimento retornar em dinheiro.',verify:'Compare NCG atual x histórica e abra clientes, estoque e fornecedores.',supports:['NCG cresceu mais rápido que resultado.','Clientes e estoque subiram sem fornecedor acompanhar.'],weakens:['NCG permaneceu estável.'],links:[['ncg','Analisar NCG'],['ciclo-financeiro','Entender prazos']]}
     ],
-    finish:'Uma boa investigação termina com cinco definições: causa mais provável, evidência que sustenta a hipótese, ação, responsável e indicador/data para reavaliar. Se você não consegue definir esses cinco pontos, provavelmente ainda está tratando o sintoma.'
+    finish:'Uma boa investigação termina com cinco definições: causa mais provável, evidência que sustenta a hipótese, ação, responsável e indicador/data para reavaliar. Se você não consegue definir esses cinco pontos, provavelmente ainda está tratando o sintoma.',
+    exercise:{
+      q:'No caso da Indústria Horizonte, qual conclusão é mais bem sustentada pelo conjunto de evidências?',
+      context:{headers:['Evidência','Situação'],rows:[['Resultado operacional','Positivo e crescente'],['PMR','32 → 48 dias'],['PME','24 → 38 dias'],['PMP','30 → 31 dias'],['Ciclo Financeiro','26 → 55 dias'],['NCG','R$ 330 mil → R$ 540 mil']]},
+      options:['A principal causa é prejuízo na DRE','A pressão de caixa está fortemente associada ao alongamento do ciclo e ao aumento da NCG; a ação deve atacar recebimento/estoque e acompanhar esses indicadores','A única ação adequada é buscar empréstimo'],
+      answer:1,
+      feedback:'O conjunto de evidências aponta capital de giro: resultado positivo, ciclo muito mais longo e NCG maior. Crédito pode até financiar a necessidade, mas não substitui o diagnóstico e a melhoria dos mecanismos que estão consumindo caixa.'
+    }
   }
 };
