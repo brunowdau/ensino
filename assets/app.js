@@ -39,7 +39,7 @@ function renderNextQuestion(text){return text?`<div class="next-question"><stron
 function learningItems(){
   const items=[];
   (DATA.financeStages||[]).forEach((stage,stageIndex)=>{
-    (stage.items||[]).forEach(item=>items.push({...item,key:item.slug,stageIndex,stageTitle:stage.title,stageFocus:stage.focus||'',href:item.checkpoint?`#checkpoint/${item.slug}`:item.diagnostic?'#diagnostico/caixa-ruim':`#lesson/${item.slug}`,time:item.checkpoint?(DATA.checkpoints?.[item.slug]?.time||''):item.diagnostic?'Prática aplicada':(DATA.lessons[item.slug]?.time||'')}));
+    (stage.items||[]).forEach(item=>items.push({...item,key:item.slug,stageIndex,stageTitle:stage.title,stageFocus:stage.focus||'',href:item.lab?`#lab/${item.slug}`:item.checkpoint?`#checkpoint/${item.slug}`:item.diagnostic?'#diagnostico/caixa-ruim':`#lesson/${item.slug}`,time:item.lab?(DATA.labs?.[item.slug]?.time||''):item.checkpoint?(DATA.checkpoints?.[item.slug]?.time||''):item.diagnostic?'Prática aplicada':(DATA.lessons[item.slug]?.time||'')}));
   });
   return items;
 }
@@ -52,11 +52,11 @@ function markCompleted(key){if(!key||!isPassed(key))return false;const p=getProg
 function rememberLast(key){if(!learningItems().some(x=>x.key===key))return;const p=getProgress();p.lastVisited=key;saveProgress(p)}
 function progressStats(items=learningItems()){const done=new Set(getProgress().completed);const total=items.length;const completed=items.filter(x=>done.has(x.key)).length;return{total,completed,percent:total?Math.round((completed/total)*100):0}}
 function recommendedItem(){const items=learningItems(),p=getProgress(),done=new Set(p.completed);const last=items.find(x=>x.key===p.lastVisited);if(last&&!done.has(last.key))return last;return items.find(x=>!done.has(x.key))||items[0]}
-function learningPosition(key){const items=learningItems();const idx=items.findIndex(x=>x.key===key);if(idx<0)return null;const item=items[idx];const lessons=items.filter(x=>!x.checkpoint&&!x.diagnostic);const lessonIndex=lessons.findIndex(x=>x.key===key);return{items,idx,item,prev:items[idx-1]||null,next:items[idx+1]||null,lessonIndex,lessonTotal:lessons.length}}
+function learningPosition(key){const items=learningItems();const idx=items.findIndex(x=>x.key===key);if(idx<0)return null;const item=items[idx];const lessons=items.filter(x=>!x.checkpoint&&!x.diagnostic&&!x.lab);const lessonIndex=lessons.findIndex(x=>x.key===key);return{items,idx,item,prev:items[idx-1]||null,next:items[idx+1]||null,lessonIndex,lessonTotal:lessons.length}}
 function progressBar(percent,compact=false){return `<div class="course-progress ${compact?'compact':''}"><div class="course-progress-track"><span style="width:${percent}%"></span></div><strong>${percent}%</strong></div>`}
 function getViewMode(){try{return localStorage.getItem(VIEW_MODE_KEY)||'study'}catch(_){return'study'}}
 function applyViewMode(mode=getViewMode()){const safe=mode==='consult'?'consult':'study';try{localStorage.setItem(VIEW_MODE_KEY,safe)}catch(_){}app.classList.toggle('consult-mode',safe==='consult');document.querySelectorAll('[data-view-mode]').forEach(b=>b.classList.toggle('on',b.dataset.viewMode===safe))}
-function currentLearningKey(){const h=location.hash||'';if(h.startsWith('#lesson/'))return h.split('/')[1];if(h.startsWith('#checkpoint/'))return h.split('/')[1];if(h==='#diagnostico/caixa-ruim')return'caixa-ruim';return''}
+function currentLearningKey(){const h=location.hash||'';if(h.startsWith('#lesson/'))return h.split('/')[1];if(h.startsWith('#checkpoint/'))return h.split('/')[1];if(h.startsWith('#lab/'))return h.split('/')[1];if(h==='#diagnostico/caixa-ruim')return'caixa-ruim';return''}
 
 function renderExercise(ex){
   if(!ex)return'';
@@ -67,7 +67,7 @@ function renderExercise(ex){
 function renderLearningTop(key,allowConsult=true){
   const pos=learningPosition(key);if(!pos)return'';
   const stats=progressStats();
-  const label=pos.item.checkpoint?'Checkpoint':pos.item.diagnostic?'Prática final':`Aula ${pos.lessonIndex+1} de ${pos.lessonTotal}`;
+  const label=pos.item.lab?'Laboratório':pos.item.checkpoint?'Checkpoint':pos.item.diagnostic?'Prática final':`Aula ${pos.lessonIndex+1} de ${pos.lessonTotal}`;
   return `<div class="learning-strip"><div class="shell learning-strip-inner"><div class="learning-location"><a href="#financeiro">Trilha Financeiro</a><span>›</span><strong>Módulo ${pos.item.stageIndex+1}: ${pos.item.stageTitle}</strong><span>·</span><span>${label}</span></div><div class="learning-strip-tools">${allowConsult?`<div class="mode-switch" role="group" aria-label="Modo de uso"><button type="button" data-view-mode="study">Estudar</button><button type="button" data-view-mode="consult">Consultar</button></div>`:''}<div class="learning-strip-progress">${progressBar(stats.percent,true)}</div></div></div></div>`;
 }
 function renderQuickReference(d){
@@ -87,8 +87,8 @@ function renderLearningBottom(key){
 
 function courseDashboard(){
   const items=learningItems(),stats=progressStats(items),next=recommendedItem(),p=getProgress();
-  const lessons=items.filter(x=>!x.checkpoint&&!x.diagnostic).length,checkpoints=items.filter(x=>x.checkpoint).length;
-  return `<section class="learning-dashboard"><div class="course-card-main"><div class="course-card-top"><div><span class="eyebrow">Sua formação</span><h2>Financeiro — do dado à decisão</h2><p>Aprenda como o dado nasce, como validar a rotina e como transformar números em análise e diagnóstico.</p></div><span class="course-count">${DATA.financeStages.length} módulos · ${lessons} aulas · ${checkpoints} checkpoints · 1 prática final</span></div>${progressBar(stats.percent)}<div class="course-card-meta"><span>${stats.completed} de ${stats.total} atividades concluídas</span><span>Conclusão exige aplicação correta</span></div><div class="course-actions"><a class="btn primary" href="${next?.href||'#financeiro'}">${p.completed.length||p.lastVisited?'Continuar aprendizado':'Começar formação'} →</a><a class="btn secondary" href="#financeiro">Ver módulos</a></div></div><aside class="course-side"><span class="eyebrow">Consulta no trabalho</span><h3>Já conhece o tema?</h3><p>Abra a aula em modo Consulta ou pesquise a dúvida diretamente. A plataforma serve para aprender e também para apoiar a execução.</p><button type="button" data-open-search>Buscar um assunto →</button><a href="#diagnostico/caixa-ruim">Investigar um problema →</a></aside></section>`;
+  const lessons=items.filter(x=>!x.checkpoint&&!x.diagnostic&&!x.lab).length,checkpoints=items.filter(x=>x.checkpoint).length,labs=items.filter(x=>x.lab).length;
+  return `<section class="learning-dashboard"><div class="course-card-main"><div class="course-card-top"><div><span class="eyebrow">Sua formação</span><h2>Financeiro — do dado à decisão</h2><p>Aprenda como o dado nasce, como validar a rotina e como transformar números em análise e diagnóstico.</p></div><span class="course-count">${DATA.financeStages.length} módulos · ${lessons} aulas · ${checkpoints} checkpoints · ${labs} laboratórios · 1 prática final</span></div>${progressBar(stats.percent)}<div class="course-card-meta"><span>${stats.completed} de ${stats.total} atividades concluídas</span><span>Conclusão exige aplicação correta</span></div><div class="course-actions"><a class="btn primary" href="${next?.href||'#financeiro'}">${p.completed.length||p.lastVisited?'Continuar aprendizado':'Começar formação'} →</a><a class="btn secondary" href="#financeiro">Ver módulos</a></div></div><aside class="course-side"><span class="eyebrow">Consulta no trabalho</span><h3>Já conhece o tema?</h3><p>Abra a aula em modo Consulta ou pesquise a dúvida diretamente. A plataforma serve para aprender e também para apoiar a execução.</p><button type="button" data-open-search>Buscar um assunto →</button><a href="#diagnostico/caixa-ruim">Investigar um problema →</a></aside></section>`;
 }
 
 function renderHome(){
@@ -101,10 +101,10 @@ function renderCourseModules(){
   return (DATA.financeStages||[]).map((stage,si)=>{
     const stageItems=(stage.items||[]).map(x=>({...x,key:x.slug}));const stats=progressStats(stageItems);
     const rows=stageItems.map(item=>{
-      if(!item.checkpoint&&!item.diagnostic)lessonNo++;
-      const completed=done.has(item.slug);const d=item.checkpoint?DATA.checkpoints?.[item.slug]:item.diagnostic?DATA.diagnostic:DATA.lessons[item.slug];
-      const label=item.checkpoint?'Checkpoint':item.diagnostic?'Prática final':`Aula ${lessonNo}`;const meta=[item.kind,d?.time].filter(Boolean).join(' · ');
-      return `<a class="course-lesson-row ${completed?'completed':''} ${item.checkpoint?'checkpoint-row':''}" href="${item.checkpoint?`#checkpoint/${item.slug}`:item.diagnostic?'#diagnostico/caixa-ruim':`#lesson/${item.slug}`}"><span class="lesson-status">${completed?'✓':item.checkpoint?'◆':lessonNo}</span><div class="course-lesson-copy"><div class="course-lesson-kicker">${label} · ${meta}</div><strong>${item.title}</strong><p>${item.why}</p></div><span class="course-lesson-arrow">→</span></a>`;
+      if(!item.checkpoint&&!item.diagnostic&&!item.lab)lessonNo++;
+      const completed=done.has(item.slug);const d=item.lab?DATA.labs?.[item.slug]:item.checkpoint?DATA.checkpoints?.[item.slug]:item.diagnostic?DATA.diagnostic:DATA.lessons[item.slug];
+      const label=item.lab?'Laboratório':item.checkpoint?'Checkpoint':item.diagnostic?'Prática final':`Aula ${lessonNo}`;const meta=[item.kind,d?.time].filter(Boolean).join(' · ');
+      return `<a class="course-lesson-row ${completed?'completed':''} ${item.checkpoint?'checkpoint-row':''} ${item.lab?'lab-row':''}" href="${item.lab?`#lab/${item.slug}`:item.checkpoint?`#checkpoint/${item.slug}`:item.diagnostic?'#diagnostico/caixa-ruim':`#lesson/${item.slug}`}"><span class="lesson-status">${completed?'✓':item.lab?'◎':item.checkpoint?'◆':lessonNo}</span><div class="course-lesson-copy"><div class="course-lesson-kicker">${label} · ${meta}</div><strong>${item.title}</strong><p>${item.why}</p></div><span class="course-lesson-arrow">→</span></a>`;
     }).join('');
     return `<section class="course-module"><div class="course-module-head"><div><div class="module-labels"><span class="eyebrow">Módulo ${si+1}</span>${stage.focus?`<span class="focus-label">${stage.focus}</span>`:''}</div><h2>${stage.title}</h2><p>${stage.desc}</p></div><div class="module-progress"><span>${stats.completed}/${stats.total}</span>${progressBar(stats.percent,true)}</div></div><div class="course-lesson-list">${rows}</div></section>`;
   }).join('');
@@ -155,6 +155,26 @@ function renderLesson(slug){
   else renderCashFlow(slug,d);
 }
 
+
+function renderLab(slug,d){
+  if(!d){renderFinance();return}
+  const context=d.context?section('contexto','01 · Cenário','Leia os dados antes de decidir',renderPairTable(d.context.rows,d.context.headers)):'';
+  const questions=(d.questions||[]).map((q,i)=>`
+    <div class="lab-question" data-lab-question>
+      <div class="lab-q-head"><span>${String(i+1).padStart(2,'0')}</span><h3>${q.q}</h3></div>
+      <div class="exercise-options">${q.options.map((o,j)=>`<button type="button" data-lab-answer="${j}">${o}</button>`).join('')}</div>
+      <div class="exercise-feedback"></div>
+      <input type="hidden" data-lab-correct value="${q.answer}">
+      <input type="hidden" data-lab-feedback value="${esc(q.feedback)}">
+    </div>`).join('');
+  const body=`${toc([['objetivo','Objetivo'],['contexto','Contexto'],['decisoes','Decisões'],['sintese','Síntese']])}
+    ${section('objetivo','Laboratório','Agora é execução','<p class="lead">'+termize(d.intro)+'</p><div class="note"><strong>Critério de conclusão</strong><p>Você precisa acertar todas as decisões. Errou? Leia o feedback, ajuste o raciocínio e tente novamente.</p></div>')}
+    ${context}
+    ${section('decisoes','Prática','Resolva as decisões em sequência',`<div class="lab-stack" data-lab-root data-required="${(d.questions||[]).length}">${questions}</div>`)}
+    ${section('sintese','Fechamento','O que este laboratório quer consolidar','<p class="lead">'+termize(d.takeaway)+'</p>')}`;
+  app.innerHTML=`${pageHero('Laboratório',d.title,d.summary,[['Início','#home'],['Trilha Financeiro','#financeiro'],[d.title,`#lab/${slug}`]],`<span>${d.time}</span><span>Prática aplicada</span>`)}${renderLearningTop(slug,false)}<div class="shell article-shell"><div class="study-content">${body}</div>${renderLearningBottom(slug)}</div>`;
+}
+
 function renderCheckpoint(slug,d){
   if(!d){renderFinance();return}
   const body=`${toc([['objetivo','Objetivo'],['caso','Caso'],['decisao','Decisão'],['revisar','Revisar']])}${section('objetivo','01 · Checkpoint','O que este checkpoint verifica',`<p class="lead">${termize(d.objective)}</p><div class="note"><strong>Sem teoria nova</strong><p>O objetivo é verificar se você consegue combinar o que acabou de estudar.</p></div>`)}${section('caso','02 · Situação','Leia o caso antes de responder',renderPairTable(d.context.rows,d.context.headers))}${section('decisao','03 · Aplicação','Escolha a leitura mais consistente',renderExercise(d.question))}${section('revisar','04 · Se precisar revisar','Volte apenas ao ponto que ficou fraco',renderCross(d.review))}`;
@@ -170,6 +190,7 @@ function searchIndex(){
   const items=[];
   Object.entries(DATA.lessons||{}).forEach(([slug,d])=>items.push({title:d.title,sub:d.type==='procedure'?'Procedimento':d.type==='indicator'?'Indicador':d.type==='analysis'?'Análise':'Conceito',href:`#lesson/${slug}`,text:[d.title,d.summary,JSON.stringify(d)].join(' ')}));
   Object.entries(DATA.checkpoints||{}).forEach(([slug,d])=>items.push({title:d.title,sub:'Checkpoint',href:`#checkpoint/${slug}`,text:[d.title,d.summary,JSON.stringify(d)].join(' ')}));
+  Object.entries(DATA.labs||{}).forEach(([slug,d])=>items.push({title:d.title,sub:'Laboratório',href:`#lab/${slug}`,text:[d.title,d.summary,JSON.stringify(d)].join(' ')}));
   items.push({title:DATA.diagnostic.title,sub:'Diagnóstico',href:'#diagnostico/caixa-ruim',text:JSON.stringify(DATA.diagnostic)+' caixa negativo sem dinheiro lucro estoque crescimento'});
   items.push({title:'Financeiro — do dado à decisão',sub:'Trilha',href:'#financeiro',text:'financeiro competencia plano contas pagar receber conciliacao fechamento dre fluxo pmr pmp pme ciclo ncg'});
   return items;
@@ -188,6 +209,7 @@ function route(){
   if(h==='#financeiro')renderFinance();
   else if(h.startsWith('#lesson/')){const slug=h.split('/')[1];rememberLast(slug);renderLesson(slug);applyViewMode()}
   else if(h.startsWith('#checkpoint/')){const slug=h.split('/')[1];rememberLast(slug);renderCheckpoint(slug,DATA.checkpoints?.[slug]);app.classList.remove('consult-mode')}
+  else if(h.startsWith('#lab/')){const slug=h.split('/')[1];rememberLast(slug);renderLab(slug,DATA.labs?.[slug]);app.classList.remove('consult-mode')}
   else if(h==='#diagnostico/caixa-ruim'){rememberLast('caixa-ruim');renderDiagnostic();app.classList.remove('consult-mode')}
   else renderHome();
   window.scrollTo(0,0);app.focus({preventScroll:true});
@@ -210,6 +232,35 @@ document.addEventListener('click',e=>{
   if(!e.target.closest('#termPopover'))hideTerm();
   const jump=e.target.closest('[data-jump]');if(jump){e.preventDefault();document.getElementById(jump.dataset.jump)?.scrollIntoView({behavior:'smooth',block:'start'});return}
   const tocBtn=e.target.closest('[data-toc-toggle]');if(tocBtn){tocBtn.nextElementSibling?.classList.toggle('open');return}
+  const labAns=e.target.closest('[data-lab-answer]');
+  if(labAns){
+    const q=labAns.closest('[data-lab-question]');
+    const correct=Number(q.querySelector('[data-lab-correct]').value);
+    const feedback=q.querySelector('[data-lab-feedback]').value;
+    const chosen=Number(labAns.dataset.labAnswer);
+    q.querySelectorAll('[data-lab-answer]').forEach(b=>b.classList.remove('correct','wrong'));
+    if(chosen===correct){
+      labAns.classList.add('correct');
+      q.classList.add('solved');
+      q.querySelectorAll('[data-lab-answer]').forEach(b=>b.disabled=true);
+    }else{
+      labAns.classList.add('wrong');
+    }
+    q.querySelector('.exercise-feedback').textContent=feedback;
+    const root=q.closest('[data-lab-root]');
+    if(root){
+      const required=Number(root.dataset.required||0);
+      const solved=root.querySelectorAll('.lab-question.solved').length;
+      if(required>0&&solved===required){
+        markPassed(currentLearningKey());
+        const btn=document.querySelector('[data-complete]')||document.querySelector('.complete-btn');
+        if(btn){btn.disabled=false;btn.textContent='Concluir laboratório e continuar →';btn.setAttribute('data-complete',currentLearningKey());const pos=learningPosition(currentLearningKey());btn.setAttribute('data-next',pos?.next?.href||'#financeiro')}
+        const head=document.querySelector('.lesson-completion-head');
+        if(head)head.innerHTML='<span class="eyebrow">Domínio demonstrado</span><h2>Laboratório concluído</h2><p>Você tomou corretamente todas as decisões desta prática. Conclua para seguir na trilha.</p>';
+      }
+    }
+    return;
+  }
   const ans=e.target.closest('[data-answer]');
   if(ans){
     const box=ans.closest('[data-exercise]');const correct=Number(box.querySelector('[data-correct]').value);const feedback=box.querySelector('[data-feedback]').value;const chosen=Number(ans.dataset.answer);
