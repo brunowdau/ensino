@@ -45,7 +45,8 @@ window.ENSINO_V9 = {
       {slug:'contas-a-receber',title:'Contas a Receber',kind:'Procedimento',why:'Mantenha a carteira confiável e diferencie prazo comercial de atraso.'},
       {slug:'conciliacao-bancaria',title:'Conciliação Bancária',kind:'Procedimento',why:'Garanta que banco e sistema contem a mesma história.'},
       {slug:'fechamento-financeiro',title:'Fechamento Financeiro',kind:'Procedimento',why:'Valide o mês antes de transformar dado em decisão.'},
-      {checkpoint:true,slug:'qualidade-da-informacao',title:'Checkpoint — Qualidade da Informação',kind:'Checkpoint',why:'Use um fechamento fictício para decidir se a base realmente está pronta para análise.'}
+      {checkpoint:true,slug:'qualidade-da-informacao',title:'Checkpoint — Qualidade da Informação',kind:'Checkpoint',why:'Use um fechamento fictício para decidir se a base realmente está pronta para análise.'},
+      {lab:true,slug:'laboratorio-operacional',title:'Laboratório — Fechamento de Junho',kind:'Laboratório',why:'Resolva situações reais de competência, classificação, carteira e conciliação antes de liberar o mês para análise.'}
     ]},
     {title:'Entender resultado e caixa',focus:'Essencial para gestão',desc:'Com a base confiável, interprete o que aconteceu com o negócio e com o dinheiro.',items:[
       {slug:'dre-gerencial',title:'DRE Gerencial',kind:'Análise',why:'Entenda faturamento, margem, estrutura e resultado em sequência.'},
@@ -58,7 +59,8 @@ window.ENSINO_V9 = {
       {slug:'pme',title:'PME',kind:'Indicador',why:'Quanto tempo o capital permanece em estoque.'},
       {slug:'ciclo-financeiro',title:'Ciclo Financeiro',kind:'Indicador',why:'Quantos dias a empresa precisa financiar a operação.'},
       {slug:'ncg',title:'NCG',kind:'Indicador',why:'Quanto recurso está preso na operação.'},
-      {checkpoint:true,slug:'capital-de-giro',title:'Checkpoint — Capital de Giro',kind:'Checkpoint',why:'Conecte PMR, PMP, PME, Ciclo e NCG para explicar uma pressão real de caixa.'}
+      {checkpoint:true,slug:'capital-de-giro',title:'Checkpoint — Capital de Giro',kind:'Checkpoint',why:'Conecte PMR, PMP, PME, Ciclo e NCG para explicar uma pressão real de caixa.'},
+      {lab:true,slug:'laboratorio-gestao',title:'Laboratório — Diagnóstico Financeiro',kind:'Laboratório',why:'Receba um conjunto de indicadores e construa a leitura gerencial antes de escolher uma ação.'}
     ]},
     {title:'Aplicar o raciocínio',focus:'Prática integrada',desc:'Parta do sintoma e teste hipóteses antes de escolher a ação.',items:[
       {diagnostic:true,slug:'caixa-ruim',title:'Meu caixa está ruim',kind:'Diagnóstico',why:'Use DRE, Fluxo, prazos, Ciclo e NCG para descobrir a causa mais provável.'}
@@ -77,6 +79,51 @@ window.ENSINO_V9 = {
     {terms:['pago antes de receber','descasamento prazo'],target:'#lesson/ciclo-financeiro'},
     {terms:['crescimento consome caixa','capital de giro','ncg'],target:'#lesson/ncg'}
   ],
+
+
+  labs:{
+    'laboratorio-operacional':{
+      title:'Laboratório — Fechamento de Junho',
+      module:'Rotina operacional',
+      time:'20–30 min',
+      summary:'Assuma o papel do financeiro da Indústria Horizonte e decida se cada situação está tratada corretamente antes de liberar o fechamento.',
+      intro:'Aqui não existe uma única pergunta teórica. Você precisa tomar uma sequência de decisões como faria durante um fechamento real.',
+      questions:[
+        {q:'A conta de energia foi consumida em junho e paga em 08/julho. Em qual competência ela deve aparecer na DRE?',options:['Junho','Julho','Na data de emissão do boleto, independentemente do consumo'],answer:0,feedback:'A competência acompanha o período econômico: a energia foi consumida em junho. O pagamento em julho afeta o caixa de julho.'},
+        {q:'Uma cobrança de Google Ads foi lançada em “Tecnologia” apenas porque o fornecedor é Google. Qual tratamento é mais adequado?',options:['Manter: fornecedor define a conta','Reclassificar pela natureza do gasto, provavelmente Marketing/Comercial, e validar o centro de custo','Lançar em Despesas Diversas para evitar dúvida'],answer:1,feedback:'Plano de contas deve refletir a natureza econômica, não o nome do fornecedor. O centro de custo responde quem consumiu o recurso.'},
+        {q:'Banco e sistema diferem R$ 2.800. Para “fechar”, alguém lançou R$ 2.800 em Ajustes. O fechamento está conciliado?',options:['Sim, porque os saldos ficaram iguais','Não. A diferença precisa ser investigada e explicada; ajuste genérico não é conciliação','Sim, se o gestor for avisado verbalmente'],answer:1,feedback:'Conciliação é explicar a diferença, não escondê-la. Um ajuste genérico pode mascarar erro, duplicidade ou movimento não registrado.'},
+        {q:'Um cliente renegociou R$ 40 mil para 60 dias, mas o sistema continua com os vencimentos antigos. O que deve acontecer antes do fechamento?',options:['Nada, porque a negociação aconteceu fora do sistema','Atualizar a carteira conforme o processo e manter rastreabilidade da renegociação','Baixar os títulos e recriar sem histórico'],answer:1,feedback:'A carteira precisa refletir a condição real. Caso contrário, vencidos, PMR e projeção de caixa ficam distorcidos.'},
+        {q:'Ao final, ainda existem dois títulos sem vencimento, diferença bancária sem causa e uma despesa relevante em “Diversos”. Junho está pronto para análise gerencial?',options:['Sim, porque são poucos itens','Não. Pendências materiais de vencimento, conciliação e classificação ainda comprometem a base','Sim, desde que a DRE feche com lucro'],answer:1,feedback:'Fechamento confiável exige que pendências materiais estejam resolvidas ou formalmente explicadas. Resultado positivo não corrige qualidade ruim do dado.'}
+      ],
+      takeaway:'O operador não “alimenta sistema”; ele constrói a matéria-prima da análise. Competência, classificação, vencimento e conciliação errados se transformam em decisões erradas.'
+    },
+    'laboratorio-gestao':{
+      title:'Laboratório — Diagnóstico Financeiro',
+      module:'Capital de giro',
+      time:'25–35 min',
+      summary:'Assuma o papel do gestor e use DRE, Fluxo, PMR, PMP, PME, Ciclo e NCG para construir um diagnóstico coerente.',
+      intro:'Você receberá sinais que parecem contraditórios. O objetivo é distinguir resultado, caixa e capital de giro antes de propor uma ação.',
+      context:{headers:['Indicador','Antes','Agora'],rows:[
+        ['Receita mensal','R$ 1,00 mi','R$ 1,35 mi'],
+        ['Margem de contribuição','36%','31%'],
+        ['Resultado operacional','R$ 110 mil','R$ 150 mil'],
+        ['PMR','32 dias','48 dias'],
+        ['PME','24 dias','38 dias'],
+        ['PMP','30 dias','31 dias'],
+        ['Ciclo financeiro','26 dias','55 dias'],
+        ['NCG','R$ 330 mil','R$ 540 mil'],
+        ['Caixa disponível','R$ 380 mil','R$ 160 mil']
+      ]},
+      questions:[
+        {q:'Primeiro sinal: a receita cresceu 35%, mas a margem caiu de 36% para 31%. Qual leitura é mais adequada?',options:['Crescimento de receita prova melhora econômica','O crescimento veio com deterioração relativa de margem e exige abrir preço, custo, desconto, mix, frete e comissão','A queda da margem é irrelevante porque o resultado operacional aumentou'],answer:1,feedback:'Resultado absoluto maior não elimina deterioração relativa. A margem caiu cinco pontos e merece investigação própria.'},
+        {q:'PMR e PME aumentaram fortemente, enquanto PMP quase não mudou. O que isso faz com o Ciclo Financeiro?',options:['Encurta o ciclo','Alongará o período financiado pela empresa','Não muda porque o resultado operacional é positivo'],answer:1,feedback:'Clientes demoram mais para pagar e o estoque gira mais devagar, sem compensação relevante do fornecedor. O ciclo alonga.'},
+        {q:'A NCG subiu de R$ 330 mil para R$ 540 mil e o caixa caiu, mesmo com lucro. Qual mecanismo é mais consistente?',options:['Prejuízo escondido é a única explicação','Mais capital ficou preso em clientes e estoque durante o crescimento','O PMP de 31 dias é excessivamente alto'],answer:1,feedback:'A operação passou a exigir R$ 210 mil adicionais. Crescimento pode ser lucrativo e ao mesmo tempo consumir caixa.'},
+        {q:'Qual seria a pior primeira ação diante desse quadro?',options:['Abrir carteira de clientes e estoque para identificar onde o capital ficou preso','Simular redução de PMR/PME e impacto em Ciclo/NCG','Cortar despesas fixas de forma linear antes de identificar a causa da pressão'],answer:2,feedback:'Cortar estrutura sem diagnóstico pode atacar o lugar errado. A evidência aponta fortemente para capital de giro, embora margem também mereça investigação.'},
+        {q:'Qual síntese gerencial é mais completa?',options:['“Precisamos melhorar o caixa.”','“A empresa cresceu com resultado positivo, mas margem relativa piorou e o ciclo passou de 26 para 55 dias, elevando a NCG em R$ 210 mil. Devemos abrir clientes e estoque, atacar os componentes que mais explicam PMR/PME e acompanhar Ciclo, NCG e margem.”','“Precisamos vender mais para gerar caixa.”'],answer:1,feedback:'Um diagnóstico útil contém mecanismo, evidência, foco de ação e indicadores de acompanhamento — não apenas um sintoma.'}
+      ],
+      takeaway:'Gestão não é escolher um indicador vencedor. É construir uma cadeia de evidências até uma causa plausível e uma ação acompanhável.'
+    }
+  },
 
   checkpoints:{
     'qualidade-da-informacao':{
