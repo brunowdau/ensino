@@ -1,4 +1,4 @@
-const DATA = window.ENSINO_V72;
+const DATA = window.ENSINO_V9;
 const app = document.getElementById('app');
 const overlay = document.getElementById('searchOverlay');
 const searchInput = document.getElementById('searchInput');
