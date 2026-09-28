@@ -19,6 +19,7 @@ h1,h2,h3,h4{font-family:var(--title);color:var(--navy);line-height:1.04}
 .skip{position:fixed;left:12px;top:-60px;z-index:999;background:#fff;padding:10px 14px;border-radius:8px;box-shadow:var(--shadow)}
 .skip:focus{top:12px}
 .hidden{display:none!important}
+.term{border:0;background:var(--mint);color:var(--teal);border-radius:5px;padding:1px 4px;font:inherit;font-weight:700;display:inline;line-height:inherit}.term:hover{text-decoration:underline}
 
 /* app shell */
 .app{min-height:100vh}
