@@ -1,4 +1,4 @@
-window.ENSINO_V9 = {
+window.ENSINO = {
   glossary:{
     competencia:{title:'Competência',desc:'Período em que a receita ou despesa pertence economicamente, independentemente da data em que o dinheiro entrou ou saiu.',link:'caixa-x-competencia'},
     caixa:{title:'Caixa',desc:'Momento em que o dinheiro efetivamente entra ou sai das contas da empresa.',link:'fluxo-de-caixa'},
