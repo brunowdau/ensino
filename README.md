@@ -1,37 +1,62 @@
-# Ensino Lean
+# Ensino Lean — V11
 
-Primeira versão estrutural do `ensino.leancompany.com.br`.
+Plataforma de capacitação gerencial aplicada da Lean Company.
 
-## Objetivo
+## Status desta versão
 
-Plataforma externa de conhecimento da Lean Company para gestores e equipes operacionais dos clientes.
+A V11 consolida a arquitetura que vinha sendo construída nas versões anteriores e passa a operar com um único app shell, um único router e um único design system carregado em produção.
 
-- **Gestores:** interpretar, comparar, investigar, decidir e acompanhar.
-- **Operação:** executar, registrar, conferir, validar e reportar.
+### Estrutura principal
+- Início adaptativo
+- Trilhas
+- Resolver um problema
+- Biblioteca
+- Simuladores
+- Casos práticos
+- Meu progresso
+- Painel Lean local de demonstração
 
-## Estrutura da V1
+### Modelo pedagógico
+As aulas foram reorganizadas em cinco etapas:
+1. Entender
+2. Visualizar
+3. Aplicar
+4. Validar
+5. Demonstrar
 
-- Home com busca global e entrada por jornada.
-- 8 áreas de conhecimento.
-- 210 temas mapeados.
-- 10 trilhas por função.
-- Biblioteca de materiais.
-- Glossário.
-- Tutoriais operacionais.
-- Casos práticos.
-- Páginas individuais de conteúdo com o template editorial aprovado.
+O progresso trabalha com os estados:
+Conheceu → Praticou → Demonstrou → Aplicou → Validado.
 
-## Tecnologia
+### Recursos adicionados
+- Perfil por papel: operação, gestão e direção
+- Revisão espaçada
+- Aplicação na empresa
+- Registro local de validação com consultor
+- Biblioteca em formatos rápidos
+- Diagnóstico guiado por problema
+- Simuladores de margem, ponto de equilíbrio, capital de giro e fluxo projetado
+- Três casos práticos fictícios
+- Busca global por aprender, consultar e resolver
+- Painel Lean com eventos e dificuldades registradas localmente
 
-Site estático em HTML, CSS e JavaScript puro, sem backend nesta fase.
+## Persistência e acesso
 
-Arquivos principais:
+Nesta etapa, o progresso e os eventos continuam armazenados em `localStorage` no navegador.
 
-- `index.html` — shell da aplicação.
-- `assets/styles.css` — identidade visual e responsividade.
-- `assets/app.js` — navegação, busca, filtros e renderização.
-- `data/catalog.js` — catálogo de áreas, temas, trilhas e materiais.
+A publicação também continua pública via GitHub Pages durante a fase de evolução do produto.
 
-## Próxima fase
+A arquitetura já separa conteúdo, configuração de produto e aplicação para facilitar a futura migração para autenticação, banco de dados e domínio privado.
 
-Produção editorial dos conteúdos completos, conexão com `ferramentas.leancompany.com.br` e, quando necessário, autenticação/progresso via backend.
+## Produção
+
+GitHub Pages: https://brunowdau.github.io/ensino/
+
+## Arquivos ativos
+
+- `index.html`
+- `assets/v11.css`
+- `assets/v11.js`
+- `data/content.js`
+- `data/product-v11.js`
+
+Arquivos de versões anteriores permanecem no repositório apenas como histórico e não são carregados pela aplicação atual.
