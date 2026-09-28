@@ -2,9 +2,9 @@
 
 Plataforma de capacitação gerencial aplicada da Lean Company.
 
-## Status desta versão
+## Status
 
-A V11 consolida a arquitetura que vinha sendo construída nas versões anteriores e passa a operar com um único app shell, um único router e um único design system carregado em produção.
+A V11 consolida a arquitetura do produto e deixa de carregar as camadas visuais e de navegação das versões anteriores.
 
 ### Estrutura principal
 - Início adaptativo
@@ -16,40 +16,57 @@ A V11 consolida a arquitetura que vinha sendo construída nas versões anteriore
 - Meu progresso
 - Painel Lean local de demonstração
 
+### Formação Financeiro
+- 6 módulos
+- 19 aulas
+- 4 checkpoints
+- 2 laboratórios
+- 1 prática diagnóstica final
+
+A trilha agora cobre, além da base financeira e capital de giro:
+- Margem de Contribuição
+- Ponto de Equilíbrio
+- Precificação e Desconto
+- Orçado x Realizado
+- Forecast Financeiro
+- Plano de Ação Gerencial
+
 ### Modelo pedagógico
-As aulas foram reorganizadas em cinco etapas:
+Cada aula foi reorganizada em cinco etapas:
 1. Entender
 2. Visualizar
 3. Aplicar
 4. Validar
 5. Demonstrar
 
-O progresso trabalha com os estados:
+O mapa de competência utiliza:
 Conheceu → Praticou → Demonstrou → Aplicou → Validado.
 
-### Recursos adicionados
+### Recursos V11
+- Diagnóstico inicial de conhecimento
 - Perfil por papel: operação, gestão e direção
 - Revisão espaçada
-- Aplicação na empresa
+- Aplicação na empresa para todas as 19 aulas
 - Registro local de validação com consultor
-- Biblioteca em formatos rápidos
-- Diagnóstico guiado por problema
-- Simuladores de margem, ponto de equilíbrio, capital de giro e fluxo projetado
-- Três casos práticos fictícios
-- Busca global por aprender, consultar e resolver
-- Painel Lean com eventos e dificuldades registradas localmente
+- Biblioteca com 19 materiais rápidos
+- Diagnósticos guiados por problema
+- 5 simuladores: margem, ponto de equilíbrio, preço/margem-alvo, capital de giro e fluxo projetado
+- 3 casos práticos fictícios
+- Busca global separada por aprender, consultar e resolver
+- Feedback de conteúdo
+- Painel Lean local com eventos, erros e buscas
+- Menu lateral fixável, responsivo e navegável por teclado
+- Governança de versão e revisão do conteúdo
 
-## Persistência e acesso
+## Persistência e acesso nesta etapa
 
-Nesta etapa, o progresso e os eventos continuam armazenados em `localStorage` no navegador.
+O progresso, eventos, buscas, aplicações e validações continuam armazenados em `localStorage` no navegador.
 
-A publicação também continua pública via GitHub Pages durante a fase de evolução do produto.
+A publicação continua pública via GitHub Pages enquanto o produto ganha corpo. A futura camada de autenticação e sincronização poderá ser conectada a um backend como Supabase sem mudar a arquitetura pedagógica do produto.
 
-A arquitetura já separa conteúdo, configuração de produto e aplicação para facilitar a futura migração para autenticação, banco de dados e domínio privado.
+## Produção atual
 
-## Produção
-
-GitHub Pages: https://brunowdau.github.io/ensino/
+https://brunowdau.github.io/ensino/
 
 ## Arquivos ativos
 
@@ -59,4 +76,4 @@ GitHub Pages: https://brunowdau.github.io/ensino/
 - `data/content.js`
 - `data/product-v11.js`
 
-Arquivos de versões anteriores permanecem no repositório apenas como histórico e não são carregados pela aplicação atual.
+Arquivos antigos permanecem apenas como histórico e não são carregados pela aplicação atual.
