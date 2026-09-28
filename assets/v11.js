@@ -133,7 +133,7 @@
       if(n[3]&&n[3]!==lastGroup){navHtml+='<div class="nav-group">'+n[3]+'</div>';lastGroup=n[3]}
       navHtml+='<a href="#'+n[0]+'" data-nav="'+n[0]+'">'+icon(n[2])+'<span class="nav-label">'+n[1]+'</span><span class="nav-tip">'+n[1]+'</span></a>';
     });
-    root.innerHTML='<a class="skip" href="#view">Pular para o conteúdo</a><div class="app"><aside class="sidebar '+(state.sidebarPinned?"pinned":"")+'" id="sidebar"><a class="brand" href="#home"><span class="brand-mark">L</span><span class="brand-copy"><strong>Ensino Lean</strong><span>Lean Company</span></span></a><nav class="nav" aria-label="Navegação principal">'+navHtml+'</nav><div class="sidebar-footer"><button class="sidebar-toggle" type="button" data-pin>'+icon("pin")+'<span>'+(state.sidebarPinned?"Recolher menu":"Fixar menu aberto")+'</span></button><button class="profile-mini" type="button" data-profile style="background:none;border:0;width:100%;text-align:left"><span class="avatar">B</span><span class="profile-copy"><strong>'+esc((state.profile||{}).name||"Bruno")+'</strong><span>'+esc(role().short)+'</span></span></button></div></aside><div class="shell-main"><header class="topbar"><div class="top-left"><button class="mobile-menu" type="button" data-mobile-menu aria-label="Abrir menu">'+icon("menu")+'</button><div class="crumb"><strong id="crumbTitle">Ensino Lean</strong><span id="crumbSub">Capacitação gerencial aplicada</span></div></div><div class="top-actions"><button class="top-pill" type="button" data-profile>'+esc(role().label)+'</button><button class="top-btn" type="button" data-search>'+icon("search")+'<span>Buscar</span></button></div></header><main id="view" class="content" tabindex="-1"></main></div></div><div id="overlay" class="overlay" aria-hidden="true"></div>';
+    root.innerHTML='<a class="skip" href="#view">Pular para o conteúdo</a><div class="app"><aside class="sidebar '+(state.sidebarPinned?"pinned":"")+'" id="sidebar"><a class="brand" href="#home"><span class="brand-mark">L</span><span class="brand-copy"><strong>Ensino Lean</strong><span>Lean Company</span></span></a><nav class="nav" aria-label="Navegação principal">'+navHtml+'</nav><div class="sidebar-footer"><button class="sidebar-toggle" type="button" data-pin>'+icon("pin")+'<span>'+(state.sidebarPinned?"Recolher menu":"Fixar menu aberto")+'</span></button><button class="profile-mini" type="button" data-profile style="background:none;border:0;width:100%;text-align:left"><span class="avatar">B</span><span class="profile-copy"><strong>'+esc((state.profile||{}).name||"Bruno")+'</strong><span>'+esc(role().short)+'</span></span></button></div></aside><button class="side-scrim" type="button" data-side-scrim aria-label="Fechar menu"></button><div class="shell-main"><header class="topbar"><div class="top-left"><button class="mobile-menu" type="button" data-mobile-menu aria-label="Abrir menu">'+icon("menu")+'</button><div class="crumb"><strong id="crumbTitle">Ensino Lean</strong><span id="crumbSub">Capacitação gerencial aplicada</span></div></div><div class="top-actions"><button class="top-pill" type="button" data-profile>'+esc(role().label)+'</button><button class="top-btn" type="button" data-search>'+icon("search")+'<span>Buscar</span></button></div></header><main id="view" class="content" tabindex="-1"></main></div></div><div id="overlay" class="overlay" aria-hidden="true"></div>';
     document.body.classList.toggle("sidebar-pinned",!!state.sidebarPinned);
   }
   shell();
@@ -503,7 +503,7 @@
   }
 
   function updateRoute(){
-    closeModal();sidebar.classList.remove("open");
+    closeModal();sidebar.classList.remove("open");var sc=document.querySelector("[data-side-scrim]");if(sc)sc.classList.remove("open");
     var h=location.hash||"#home",kind=routeKind();setActive();
     if(kind==="home")renderHome();
     else if(kind==="trails")renderTrails();
@@ -524,13 +524,13 @@
 
   document.addEventListener("click",function(e){
     var el;
-    if((el=e.target.closest("[data-mobile-menu]"))){sidebar.classList.toggle("open");return}
+    if((el=e.target.closest("[data-mobile-menu]"))){sidebar.classList.toggle("open");document.querySelector("[data-side-scrim]")?.classList.toggle("open",sidebar.classList.contains("open"));return}\n    if((el=e.target.closest("[data-side-scrim]"))){sidebar.classList.remove("open");el.classList.remove("open");return}
     if((el=e.target.closest("[data-pin]"))){state.sidebarPinned=!state.sidebarPinned;save();document.body.classList.toggle("sidebar-pinned",state.sidebarPinned);sidebar.classList.toggle("pinned",state.sidebarPinned);el.querySelector("span").textContent=state.sidebarPinned?"Recolher menu":"Fixar menu aberto";return}
     if((el=e.target.closest("[data-profile]"))){profileModal(false);return}
     if((el=e.target.closest("[data-search]"))){searchModal("");return}
     if((el=e.target.closest("[data-close]"))){closeModal();return}
     if((el=e.target.closest("[data-role]"))){state.role=el.dataset.role;save();overlay.querySelectorAll("[data-role]").forEach(function(b){b.classList.toggle("selected",b===el)});var sv=overlay.querySelector("[data-save-role]");if(sv)sv.disabled=false;return}
-    if((el=e.target.closest("[data-save-role]"))){state.onboarded=true;save();closeModal();shell();view=document.getElementById("view");sidebar=document.getElementById("sidebar");overlay=document.getElementById("overlay");updateRoute();return}
+    if((el=e.target.closest("[data-save-role]"))){state.onboarded=true;save();closeModal();var rp=role();document.querySelectorAll(".top-pill[data-profile]").forEach(function(b){b.textContent=rp.label});var ps=document.querySelector(".profile-copy span");if(ps)ps.textContent=rp.short;updateRoute();return}
     if((el=e.target.closest("[data-run-search]"))){runSearch((overlay.querySelector("[data-global-search]")||{}).value||"");return}
     if((el=e.target.closest("[data-stage]"))){switchLessonStage(el.dataset.stage);return}
     if((el=e.target.closest("[data-term]"))){termModal(el.dataset.term);return}
