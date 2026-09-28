@@ -524,7 +524,8 @@
 
   document.addEventListener("click",function(e){
     var el;
-    if((el=e.target.closest("[data-mobile-menu]"))){sidebar.classList.toggle("open");document.querySelector("[data-side-scrim]")?.classList.toggle("open",sidebar.classList.contains("open"));return}\n    if((el=e.target.closest("[data-side-scrim]"))){sidebar.classList.remove("open");el.classList.remove("open");return}
+    if((el=e.target.closest("[data-mobile-menu]"))){sidebar.classList.toggle("open");document.querySelector("[data-side-scrim]")?.classList.toggle("open",sidebar.classList.contains("open"));return}
+    if((el=e.target.closest("[data-side-scrim]"))){sidebar.classList.remove("open");el.classList.remove("open");return}
     if((el=e.target.closest("[data-pin]"))){state.sidebarPinned=!state.sidebarPinned;save();document.body.classList.toggle("sidebar-pinned",state.sidebarPinned);sidebar.classList.toggle("pinned",state.sidebarPinned);el.querySelector("span").textContent=state.sidebarPinned?"Recolher menu":"Fixar menu aberto";return}
     if((el=e.target.closest("[data-profile]"))){profileModal(false);return}
     if((el=e.target.closest("[data-search]"))){searchModal("");return}
