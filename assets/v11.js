@@ -112,6 +112,7 @@
     if(h.indexOf("#checkpoint/")===0)return"checkpoint";
     if(h.indexOf("#lab/")===0)return"lab";
     if(h.indexOf("#diagnostico/")===0)return"diagnostic";
+    if(h==="#assessment")return"assessment";
     if(h.indexOf("#resolve")===0)return"resolve";
     if(h==="#library"||h.indexOf("#resource/")===0)return"library";
     if(h.indexOf("#simulators")===0)return"simulators";
@@ -150,6 +151,7 @@
   function setActive(){
     var k=routeKind(),active=k;
     if(["lesson","checkpoint","lab","diagnostic","review"].indexOf(k)>=0)active="trails";
+    if(k==="assessment")active="home";
     document.querySelectorAll("[data-nav]").forEach(function(a){
       var on=a.dataset.nav===active;if(on)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");
     });
@@ -201,9 +203,10 @@
     var st=courseStats(),next=nextItem(),due=dueReviews(),applied=Object.values(state.competencies).filter(function(c){return(c.level||0)>=4}).length,validated=Object.values(state.competencies).filter(function(c){return(c.level||0)>=5}).length;
     var first=st.done===0;
     var title=first?"Aprenda para executar. <span>Use para decidir.</span>":"Continue de onde parou. <span>O próximo passo está claro.</span>";
+    var assessmentDone=!!state.assessment;
     var nextTitle=next?itemTitle(next.slug):"Formação concluída";
     var problems=(PRODUCT.diagnoses||[]).slice(0,4).map(function(x){return'<a class="problem-card card" href="#resolve/'+x.id+'"><span class="problem-icon">'+icon(x.icon)+'</span><h3>'+esc(x.title)+'</h3><p>'+esc(x.desc)+'</p><span class="go">Investigar →</span></a>'}).join("");
-    view.innerHTML='<section class="home-welcome"><div class="welcome-main card"><div class="kicker">'+(first?"BEM-VINDO AO ENSINO LEAN":"SEU PAINEL")+'</div><h1>'+title+'</h1><p>'+(first?"Treinamento, consulta e aplicação gerencial em uma única base de conhecimento. Escolha uma trilha, comece por um problema real ou consulte um tema durante o trabalho.":"A plataforma organiza estudo, revisão e aplicação na empresa. Seu papel atual é "+esc(role().label)+".")+'</p><div class="welcome-actions"><a class="btn primary" href="'+(next?next.href:"#trails")+'">'+(first?"Começar formação":"Continuar: "+esc(nextTitle))+' →</a><a class="btn" href="#resolve">Resolver um problema</a><a class="btn" href="#library">Consultar biblioteca</a></div></div><aside class="resume-card card"><div class="kicker">PRÓXIMO PASSO</div><h2>'+esc(nextTitle)+'</h2><p>'+st.done+' de '+st.total+' atividades com domínio demonstrado.</p><div class="progress-track" style="margin-top:16px;background:rgba(255,255,255,.14)"><span style="width:'+st.percent+'%;background:#fff"></span></div><a class="btn ghost" style="color:#fff;border-color:rgba(255,255,255,.25)" href="'+(next?next.href:"#trails")+'">Abrir atividade →</a></aside></section>'+
+    view.innerHTML='<section class="home-welcome"><div class="welcome-main card"><div class="kicker">'+(first?"BEM-VINDO AO ENSINO LEAN":"SEU PAINEL")+'</div><h1>'+title+'</h1><p>'+(first?"Treinamento, consulta e aplicação gerencial em uma única base de conhecimento. Escolha uma trilha, comece por um problema real ou consulte um tema durante o trabalho.":"A plataforma organiza estudo, revisão e aplicação na empresa. Seu papel atual é "+esc(role().label)+".")+'</p><div class="welcome-actions"><a class="btn primary" href="'+(next?next.href:"#trails")+'">'+(first?"Começar formação":"Continuar: "+esc(nextTitle))+' →</a><a class="btn" href="#resolve">Resolver um problema</a>'+(!assessmentDone?'<a class="btn" href="#assessment">Diagnóstico inicial</a>':'')+'<a class="btn" href="#library">Consultar biblioteca</a></div></div><aside class="resume-card card"><div class="kicker">PRÓXIMO PASSO</div><h2>'+esc(nextTitle)+'</h2><p>'+st.done+' de '+st.total+' atividades com domínio demonstrado.</p><div class="progress-track" style="margin-top:16px;background:rgba(255,255,255,.14)"><span style="width:'+st.percent+'%;background:#fff"></span></div><a class="btn ghost" style="color:#fff;border-color:rgba(255,255,255,.25)" href="'+(next?next.href:"#trails")+'">Abrir atividade →</a></aside></section>'+
       '<section class="home-stat-row"><div class="home-stat card"><b>'+st.percent+'%</b><span>domínio demonstrado</span></div><div class="home-stat card"><b>'+applied+'</b><span>aplicações registradas</span></div><div class="home-stat card"><b>'+due.length+'</b><span>revisões para fazer</span></div><div class="home-stat card"><b>'+validated+'</b><span>aplicações validadas</span></div></section>'+
       (due.length?'<section class="section"><div class="review-card card"><div class="review-copy"><div class="kicker">RETENÇÃO</div><h3>Você tem '+due.length+' revisão'+(due.length>1?"ões":"")+' recomendada'+(due.length>1?"s":"")+'</h3><p>Revisões curtas reforçam conteúdos já demonstrados antes que sejam esquecidos.</p></div><a class="btn teal" href="#review/'+due[0]+'">Revisar agora →</a></div></section>':'')+
       '<section class="section"><div class="section-head"><div><div class="kicker">COMECE PELA DOR</div><h2>O que você precisa resolver agora?</h2><p>O Ensino Lean transforma o sintoma em uma sequência de investigação.</p></div><a class="text-link" href="#resolve">Ver diagnósticos →</a></div><div class="grid4">'+problems+'</div></section>'+
@@ -312,7 +315,7 @@
     meta(d.title,"Trilha Financeiro · "+(d.type==="procedure"?"Procedimento":d.type==="indicator"?"Indicador":d.type==="analysis"?"Análise":"Conceito"));
     var idx=lessonIndex(slug),items=learningItems(),prev=idx>0?items[idx-1]:null,next=idx>=0&&idx<items.length-1?items[idx+1]:null;
     currentStage="understand";
-    view.innerHTML='<div class="lesson-wrap"><section class="lesson-hero"><div class="lesson-intro card"><div class="kicker">'+(d.type==="procedure"?"PROCEDIMENTO":d.type==="indicator"?"INDICADOR":d.type==="analysis"?"ANÁLISE GERENCIAL":"CONCEITO")+'</div><h1>'+esc(d.title)+'</h1><p>'+termize(d.summary||"")+'</p><div class="lesson-meta"><span class="badge teal">'+esc(d.time||"")+'</span><span class="badge purple">'+esc(d.audience||"")+'</span><span class="badge">'+levelLabel(competency(slug).level||0)+'</span></div>'+levelStrip(slug)+'</div><aside class="lesson-visual card">'+lessonVisual(slug,d)+'</aside></section><div class="lesson-toolbar">'+stageButtons(currentStage)+'<span class="lesson-progress">Use as 5 etapas para aprender sem enfrentar uma página longa.</span></div><div id="lessonStage">'+lessonStageContent(slug,d,currentStage)+'</div><nav class="lesson-bottom">'+(prev?'<a class="card" style="padding:12px" href="'+prev.href+'"><span>Anterior</span><strong>← '+esc(prev.title)+'</strong></a>':'<span></span>')+(next?'<a class="card" style="padding:12px;text-align:right" href="'+next.href+'"><span>Próximo</span><strong>'+esc(next.title)+' →</strong></a>':'<a class="card" style="padding:12px;text-align:right" href="#progress"><span>Concluir</span><strong>Ver meu progresso →</strong></a>')+'</nav></div>';
+    view.innerHTML='<div class="lesson-wrap"><section class="lesson-hero"><div class="lesson-intro card"><div class="kicker">'+(d.type==="procedure"?"PROCEDIMENTO":d.type==="indicator"?"INDICADOR":d.type==="analysis"?"ANÁLISE GERENCIAL":"CONCEITO")+'</div><h1>'+esc(d.title)+'</h1><p>'+termize(d.summary||"")+'</p><div class="lesson-meta"><span class="badge teal">'+esc(d.time||"")+'</span><span class="badge purple">'+esc(d.audience||"")+'</span><span class="badge">'+levelLabel(competency(slug).level||0)+'</span><span class="badge">'+esc((PRODUCT.governance||{}).revision||"")+'</span></div>'+levelStrip(slug)+'</div><aside class="lesson-visual card">'+lessonVisual(slug,d)+'</aside></section><div class="lesson-toolbar">'+stageButtons(currentStage)+'<span class="lesson-progress">Use as 5 etapas para aprender sem enfrentar uma página longa.</span></div><div id="lessonStage">'+lessonStageContent(slug,d,currentStage)+'</div><nav class="lesson-bottom">'+(prev?'<a class="card" style="padding:12px" href="'+prev.href+'"><span>Anterior</span><strong>← '+esc(prev.title)+'</strong></a>':'<span></span>')+(next?'<a class="card" style="padding:12px;text-align:right" href="'+next.href+'"><span>Próximo</span><strong>'+esc(next.title)+' →</strong></a>':'<a class="card" style="padding:12px;text-align:right" href="#progress"><span>Concluir</span><strong>Ver meu progresso →</strong></a>')+'</nav><div class="card" style="margin-top:12px;padding:14px;display:flex;justify-content:space-between;gap:12px;align-items:center"><div><strong style="font-size:11px;color:var(--navy)">Este conteúdo resolveu sua dúvida?</strong><p style="font-size:10px;color:var(--muted);margin-top:2px">Seu feedback ajuda a priorizar melhorias do material.</p></div><div class="actions"><button class="btn" type="button" data-content-feedback="yes" data-feedback-slug="'+slug+'">Sim</button><button class="btn" type="button" data-content-feedback="no" data-feedback-slug="'+slug+'">Não</button></div></div></div>';
   }
   function switchLessonStage(stage){
     var h=location.hash.split("/"),slug=h[1],d=DATA.lessons&&DATA.lessons[slug];if(!d)return;
@@ -338,6 +341,22 @@
     var d=DATA.diagnostic||{};setLevel("caixa-ruim",1,{visitedAt:nowISO()});meta(d.title||"Diagnóstico financeiro","Prática final");
     var path=d.path?flowRows(d.path):"";
     view.innerHTML='<div class="lesson-wrap">'+pageHead("PRÁTICA FINAL",esc(d.title||"Diagnóstico Financeiro"),termize(d.summary||d.intro||""),'<a class="btn" href="#resolve/caixa">Usar diagnóstico guiado</a>')+'<section class="lesson-panel card"><h2>Construa uma cadeia de evidências</h2>'+path+exerciseBox("caixa-ruim",d.exercise)+'</section></div>';
+  }
+
+  function renderAssessment(){
+    meta("Diagnóstico inicial","Calibrar jornada");
+    var a=PRODUCT.assessment||{questions:[]};
+    var saved=state.assessment;
+    var qs=(a.questions||[]).map(function(q,i){
+      var chosen=saved&&saved.answers?saved.answers[i]:null;
+      return'<div class="exercise" data-assess-q="'+i+'"><div class="kicker">QUESTÃO '+(i+1)+'</div><h3>'+esc(q.q)+'</h3><div class="answers">'+q.options.map(function(o,oi){return'<button type="button" data-assess-answer="'+oi+'" class="'+(chosen===oi?"selected":"")+'">'+esc(o)+'</button>'}).join("")+'</div></div>';
+    }).join("");
+    var result="";
+    if(saved){
+      var label=saved.score<=2?"Comece pelos fundamentos":saved.score<=4?"Boa base — formalize e aplique":"Base forte — priorize aplicação e diagnóstico";
+      result='<div class="callout green"><strong>Resultado registrado</strong><p>'+saved.score+' de '+a.questions.length+' respostas corretas. '+label+'.</p></div>';
+    }
+    view.innerHTML=pageHead("DIAGNÓSTICO INICIAL",esc(a.title||"Diagnóstico inicial"),esc(a.desc||""),'<a class="btn" href="#trails">Ir para a trilha</a>')+'<div class="lesson-wrap"><section class="lesson-panel card"><h2>Calibre seu ponto de partida</h2><p>O diagnóstico não libera nem bloqueia conteúdo. Ele apenas ajuda a definir a intensidade da formação.</p><div data-assessment>'+qs+'</div><div class="actions" style="margin-top:14px"><button class="btn primary" type="button" data-finish-assessment>Calcular resultado</button></div><div id="assessmentResult" style="margin-top:12px">'+result+'</div></section></div>';
   }
 
   function renderResolve(){
@@ -395,6 +414,7 @@
   var sims=[
     {id:"margem",title:"Margem e desconto",desc:"Veja quanto um desconto consome da margem."},
     {id:"equilibrio",title:"Ponto de equilíbrio",desc:"Conecte margem, estrutura e lucro alvo."},
+    {id:"preco",title:"Preço e margem-alvo",desc:"Calcule o preço necessário para uma contribuição desejada."},
     {id:"capital",title:"Capital de giro",desc:"Simule PMR, PME, PMP e impacto estimado na NCG."},
     {id:"fluxo",title:"Fluxo projetado",desc:"Edite seis períodos e encontre o menor saldo."}
   ];
@@ -412,6 +432,9 @@
     }else if(id==="equilibrio"){
       form='<div class="fields"><div class="field"><label>Despesas fixas mensais (R$)</label><input data-sim="fixed" type="number" value="180000"></div><div class="field"><label>Margem de contribuição (%)</label><input data-sim="mcpct" type="number" value="32"></div><div class="field"><label>Lucro alvo mensal (R$)</label><input data-sim="target" type="number" value="80000"></div><div class="field"><label>Receita atual (R$)</label><input data-sim="revenue" type="number" value="700000"></div></div>';
       ass='Premissa: margem de contribuição percentual estável no intervalo simulado. Não substitui análise de mix, capacidade ou impostos específicos.';
+    }else if(id==="preco"){
+      form='<div class="fields"><div class="field"><label>Preço atual (R$)</label><input data-sim="currentPrice" type="number" value="100"></div><div class="field"><label>Custos variáveis em R$</label><input data-sim="fixedVar" type="number" value="70"></div><div class="field"><label>Impostos + comissão (% do preço)</label><input data-sim="varPct" type="number" value="12"></div><div class="field"><label>MC% desejada</label><input data-sim="targetMc" type="number" value="25"></div></div>';
+      ass='Premissas: custos variáveis em R$ permanecem constantes por unidade e impostos/comissão variam proporcionalmente ao preço. Valide a realidade da sua operação.';
     }else if(id==="capital"){
       form='<div class="fields"><div class="field"><label>Receita mensal (R$)</label><input data-sim="sales" type="number" value="1000000"></div><div class="field"><label>CMV / custos variáveis mensais (R$)</label><input data-sim="cmv" type="number" value="600000"></div><div class="field"><label>PMR atual (dias)</label><input data-sim="pmr1" type="number" value="48"></div><div class="field"><label>PMR cenário (dias)</label><input data-sim="pmr2" type="number" value="38"></div><div class="field"><label>PME atual (dias)</label><input data-sim="pme1" type="number" value="38"></div><div class="field"><label>PME cenário (dias)</label><input data-sim="pme2" type="number" value="30"></div><div class="field"><label>PMP atual (dias)</label><input data-sim="pmp1" type="number" value="31"></div><div class="field"><label>PMP cenário (dias)</label><input data-sim="pmp2" type="number" value="35"></div></div>';
       ass='Estimativa didática: Clientes ≈ Receita/30×PMR; Estoque ≈ CMV/30×PME; Fornecedores ≈ CMV/30×PMP; NCG estimada = Clientes + Estoque − Fornecedores.';
@@ -433,6 +456,9 @@
     }else if(id==="equilibrio"){
       var fixed=sval("fixed"),mcp=sval("mcpct")/100,target=sval("target"),rev=sval("revenue"),pe=mcp?fixed/mcp:0,goal=mcp?(fixed+target)/mcp:0,current=rev*mcp-fixed;
       out.innerHTML='<div class="result-grid"><div class="result-metric"><small>Ponto de equilíbrio</small><b>'+money(pe)+'</b></div><div class="result-metric"><small>Receita para lucro alvo</small><b>'+money(goal)+'</b></div><div class="result-metric"><small>Resultado no faturamento atual</small><b>'+money(current)+'</b></div><div class="result-metric"><small>Folga sobre equilíbrio</small><b>'+money(rev-pe)+'</b></div></div><div class="result-insight">O ponto de equilíbrio depende diretamente da estrutura fixa e da margem de contribuição. Aumentar receita sem preservar margem pode afastar, e não aproximar, o lucro alvo.</div>';
+    }else if(id==="preco"){
+      var cp=sval("currentPrice"),fv=sval("fixedVar"),vp=sval("varPct")/100,tm=sval("targetMc")/100,currentMc=cp-fv-cp*vp,currentPct=cp?currentMc/cp*100:0,den=1-vp-tm,needed=den>0?fv/den:0,gap=needed-cp;
+      out.innerHTML='<div class="result-grid"><div class="result-metric"><small>MC atual</small><b>'+money(currentMc)+'</b></div><div class="result-metric"><small>MC% atual</small><b>'+pct(currentPct)+'</b></div><div class="result-metric"><small>Preço para MC-alvo</small><b>'+money(needed)+'</b></div><div class="result-metric"><small>Diferença para preço atual</small><b>'+money(gap)+'</b></div></div><div class="result-insight">O preço calculado é uma referência econômica dentro das premissas informadas. Mercado, mix, capacidade e estratégia ainda precisam ser validados antes da decisão.</div>';
     }else if(id==="capital"){
       var sales=sval("sales"),cmv=sval("cmv"),pmr1=sval("pmr1"),pmr2=sval("pmr2"),pme1=sval("pme1"),pme2=sval("pme2"),pmp1=sval("pmp1"),pmp2=sval("pmp2");
       var ncg1=sales/30*pmr1+cmv/30*pme1-cmv/30*pmp1,ncg2=sales/30*pmr2+cmv/30*pme2-cmv/30*pmp2,delta=ncg2-ncg1,cycle1=pme1+pmr1-pmp1,cycle2=pme2+pmr2-pmp2;
@@ -490,7 +516,7 @@
   }
   function profileModal(onboarding){
     var roles=(PRODUCT.roles||[]).map(function(r){return'<button class="role-option '+(state.role===r.id?"selected":"")+'" type="button" data-role="'+r.id+'"><strong>'+esc(r.label)+'</strong><span>'+esc(r.desc)+'</span></button>'}).join("");
-    openModal('<div class="modal-head"><div><div class="kicker">'+(onboarding?"PERSONALIZAR EXPERIÊNCIA":"PERFIL")+'</div><h2>'+(onboarding?"Qual é seu papel principal?":"Seu perfil de aprendizado")+'</h2><p>O conteúdo continua o mesmo, mas a plataforma destaca execução, análise ou decisão conforme seu papel.</p></div>'+(!onboarding?'<button class="close" type="button" data-close>×</button>':'')+'</div><div class="role-options">'+roles+'</div><div class="actions" style="margin-top:16px"><button class="btn primary" type="button" data-save-role '+(!state.role?"disabled":"")+'>Continuar</button>'+(!onboarding?'<a class="btn" href="#consultant" data-close>Visão do consultor</a>':'')+'</div>');
+    openModal('<div class="modal-head"><div><div class="kicker">'+(onboarding?"PERSONALIZAR EXPERIÊNCIA":"PERFIL")+'</div><h2>'+(onboarding?"Qual é seu papel principal?":"Seu perfil de aprendizado")+'</h2><p>O conteúdo continua o mesmo, mas a plataforma destaca execução, análise ou decisão conforme seu papel. V'+esc((PRODUCT.governance||{}).version||"11.0")+' · revisão '+esc((PRODUCT.governance||{}).revision||"set/2026")+'.</p></div>'+(!onboarding?'<button class="close" type="button" data-close>×</button>':'')+'</div><div class="role-options">'+roles+'</div><div class="actions" style="margin-top:16px"><button class="btn primary" type="button" data-save-role '+(!state.role?"disabled":"")+'>Continuar</button>'+(!onboarding?'<a class="btn" href="#consultant" data-close>Visão do consultor</a>':'')+'</div>');
   }
   function searchModal(q){
     openModal('<div class="modal-head"><div><div class="kicker">BUSCA GLOBAL</div><h2>O que você quer aprender ou resolver?</h2><p>Os resultados são separados entre estudar, consultar e diagnosticar.</p></div><button class="close" type="button" data-close>×</button></div><div class="modal-search"><input aria-label="Buscar no Ensino Lean" data-global-search value="'+esc(q||"")+'" placeholder="Ex.: cliente demora a pagar; caixa caiu; DRE..."><button class="btn primary" type="button" data-run-search>Buscar</button></div><div id="searchResults" class="search-groups"></div>');
@@ -527,6 +553,7 @@
     else if(kind==="checkpoint")renderCheckpoint(h.split("/")[1]);
     else if(kind==="lab")renderLab(h.split("/")[1]);
     else if(kind==="diagnostic")renderDiagnostic();
+    else if(kind==="assessment")renderAssessment();
     else if(kind==="resolve")renderResolve();
     else if(kind==="library"){if(h.indexOf("#resource/")===0)renderResource(h.split("/")[1]);else renderLibrary()}
     else if(kind==="simulators")renderSimulators();
@@ -552,6 +579,9 @@
     if((el=e.target.closest("[data-stage]"))){switchLessonStage(el.dataset.stage);return}
     if((el=e.target.closest("[data-term]"))){termModal(el.dataset.term);return}
     if((el=e.target.closest("[data-lib-filter]"))){document.querySelectorAll("[data-lib-filter]").forEach(function(b){b.classList.remove("active")});el.classList.add("active");filterLibrary();return}
+    if((el=e.target.closest("[data-assess-answer]"))){var aq=el.closest("[data-assess-q]");aq.querySelectorAll("[data-assess-answer]").forEach(function(b){b.classList.remove("selected")});el.classList.add("selected");return}
+    if((el=e.target.closest("[data-finish-assessment]"))){var ass=PRODUCT.assessment||{questions:[]},answers=[],score=0,complete=true;(ass.questions||[]).forEach(function(q,i){var b=document.querySelector('[data-assess-q="'+i+'"] .selected');if(!b){complete=false;return}var ans=Number(b.dataset.assessAnswer);answers[i]=ans;if(ans===q.answer)score++});var ar=document.getElementById("assessmentResult");if(!complete){ar.innerHTML='<div class="callout amber"><strong>Falta responder</strong><p>Responda todas as questões antes de calcular o resultado.</p></div>';return}state.assessment={score:score,answers:answers,at:nowISO()};save();event("assessment",{score:score});var label=score<=2?"Comece pelos fundamentos e siga a trilha em ordem.":score<=4?"Você já possui uma boa base; use a trilha para formalizar e praticar.":"Sua base está forte; priorize aplicação, casos e diagnósticos sem deixar de formalizar os critérios.";ar.innerHTML='<div class="callout green"><strong>'+score+' de '+ass.questions.length+' corretas</strong><p>'+label+'</p></div>';return}
+    if((el=e.target.closest("[data-content-feedback]"))){event("content_feedback",{slug:el.dataset.feedbackSlug,value:el.dataset.contentFeedback});var wrap=el.closest(".card");if(wrap)wrap.innerHTML='<strong style="font-size:11px;color:var(--navy)">Obrigado pelo feedback.</strong><p style="font-size:10px;color:var(--muted);margin-top:2px">A resposta ficou registrada neste navegador.</p>';return}
     if((el=e.target.closest("[data-diag-answer]"))){var q=el.closest("[data-diag-q]");q.querySelectorAll("[data-diag-answer]").forEach(function(b){b.classList.remove("selected")});el.classList.add("selected");updateDiagnosis();return}
     if((el=e.target.closest("[data-answer]"))){
       var box=el.closest("[data-exercise]"),slug=box.dataset.exercise,correct=Number(el.dataset.correct),chosen=Number(el.dataset.answer),c=competency(slug);
