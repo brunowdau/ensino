@@ -329,6 +329,13 @@ window.ENSINO = {
           "title": "Plano de Ação Gerencial",
           "kind": "Procedimento",
           "why": "Feche o ciclo da análise com dono, prazo e indicador."
+        },
+        {
+          "checkpoint": true,
+          "slug": "rentabilidade-e-planejamento",
+          "title": "Checkpoint — Rentabilidade e Planejamento",
+          "kind": "Checkpoint",
+          "why": "Integre margem, equilíbrio, orçamento, forecast e ação em uma única decisão."
         }
       ]
     },
@@ -861,6 +868,75 @@ window.ENSINO = {
         [
           "ncg",
           "Revisar NCG"
+        ]
+      ]
+    },
+    "rentabilidade-e-planejamento": {
+      "title": "Checkpoint — Rentabilidade e Planejamento",
+      "module": "Rentabilidade e planejamento",
+      "time": "12–18 min",
+      "summary": "Conecte margem, ponto de equilíbrio, orçamento e forecast antes de transformar o desvio em plano de ação.",
+      "objective": "Distinguir crescimento de receita de qualidade econômica e escolher uma resposta que preserve referência de plano e antecedência de decisão.",
+      "context": {
+        "headers": [
+          "Indicador",
+          "Orçado",
+          "Realizado / Forecast"
+        ],
+        "rows": [
+          [
+            "Receita mensal",
+            "R$ 950 mil",
+            "R$ 1,00 mi realizado"
+          ],
+          [
+            "MC%",
+            "35%",
+            "29% realizado"
+          ],
+          [
+            "Despesas fixas",
+            "R$ 270 mil",
+            "R$ 275 mil realizado"
+          ],
+          [
+            "Forecast próximo mês",
+            "—",
+            "R$ 1,05 mi de receita e 29% de MC"
+          ],
+          [
+            "Lucro alvo",
+            "R$ 70 mil",
+            "Mantido"
+          ]
+        ]
+      },
+      "question": {
+        "q": "Qual sequência gerencial é mais consistente?",
+        "options": [
+          "Celebrar receita acima do orçamento e manter o forecast sem alterações.",
+          "Abrir os drivers da queda de margem, recalcular ponto de equilíbrio/receita para lucro alvo, preservar o orçamento original, atualizar o forecast e definir ação com responsável e prazo.",
+          "Cortar despesas fixas linearmente porque o resultado pode piorar."
+        ],
+        "answer": 1,
+        "feedback": "A receita acima do orçamento não elimina a deterioração da MC%. O caminho mais completo abre margem, mede o efeito sobre o equilíbrio, atualiza a expectativa futura sem apagar o orçamento e fecha com ação acompanhável."
+      },
+      "review": [
+        [
+          "margem-de-contribuicao",
+          "Revisar Margem de Contribuição"
+        ],
+        [
+          "ponto-de-equilibrio",
+          "Revisar Ponto de Equilíbrio"
+        ],
+        [
+          "orcado-realizado",
+          "Revisar Orçado x Realizado"
+        ],
+        [
+          "forecast-financeiro",
+          "Revisar Forecast"
         ]
       ]
     }
