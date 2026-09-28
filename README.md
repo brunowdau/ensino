@@ -1,79 +1,140 @@
-# Ensino Lean — V11
+# Ensino Lean — V12
 
 Plataforma de capacitação gerencial aplicada da Lean Company.
 
-## Status
+## Direção da V12
 
-A V11 consolida a arquitetura do produto e deixa de carregar as camadas visuais e de navegação das versões anteriores.
+A V12 mantém a arquitetura macro validada na V11 e profissionaliza a experiência em sete frentes:
 
-### Estrutura principal
-- Início adaptativo
-- Trilhas
-- Resolver um problema
-- Biblioteca
-- Simuladores
-- Casos práticos
-- Meu progresso
-- Painel Lean local de demonstração
+1. linguagem visual didática específica por tema;
+2. demonstração de competência mais rigorosa;
+3. diagnóstico adaptativo;
+4. casos práticos em formato de dossier;
+5. simuladores comparativos;
+6. personalização mais forte por função;
+7. arquitetura técnica modular.
 
-### Formação Financeiro
-- 6 módulos
-- 19 aulas
-- 4 checkpoints
-- 2 laboratórios
-- 1 prática diagnóstica final
+## Formação Financeiro
 
-A trilha agora cobre, além da base financeira e capital de giro:
-- Margem de Contribuição
-- Ponto de Equilíbrio
-- Precificação e Desconto
-- Orçado x Realizado
-- Forecast Financeiro
-- Plano de Ação Gerencial
+A trilha continua com:
+- 6 módulos;
+- 19 aulas;
+- 4 checkpoints;
+- 2 laboratórios;
+- 1 prática diagnóstica final.
 
-### Modelo pedagógico
-Cada aula foi reorganizada em cinco etapas:
+Cada uma das 19 aulas possui:
+- exercício base;
+- segunda aplicação de domínio;
+- elemento visual próprio;
+- atividade de aplicação na empresa;
+- formato de consulta na Biblioteca.
+
+## Modelo pedagógico
+
+Etapas da aula:
 1. Entender
 2. Visualizar
 3. Aplicar
 4. Validar
 5. Demonstrar
 
-O mapa de competência utiliza:
+Mapa de competência:
 Conheceu → Praticou → Demonstrou → Aplicou → Validado.
 
-### Recursos V11
-- Diagnóstico inicial de conhecimento
-- Perfil por papel: operação, gestão e direção
-- Revisão espaçada
-- Aplicação na empresa para todas as 19 aulas
-- Registro local de validação com consultor
-- Biblioteca com 19 materiais rápidos
-- Diagnósticos guiados por problema
-- 5 simuladores: margem, ponto de equilíbrio, preço/margem-alvo, capital de giro e fluxo projetado
-- 3 casos práticos fictícios
-- Busca global separada por aprender, consultar e resolver
-- Feedback de conteúdo
-- Painel Lean local com eventos, erros e buscas
-- Menu lateral fixável, responsivo e navegável por teclado
-- Governança de versão e revisão do conteúdo
+Na V12, “Demonstrou” exige duas aplicações corretas; uma única questão não é mais suficiente.
 
-## Persistência e acesso nesta etapa
+## Melhorias V12
 
-O progresso, eventos, buscas, aplicações e validações continuam armazenados em `localStorage` no navegador.
+### UX / UI
+- Home mais operacional para usuário recorrente;
+- prioridades de estudo, revisão e aplicação;
+- menos dependência de cards dentro das aulas;
+- conteúdo central em folhas editoriais;
+- textos auxiliares maiores;
+- menu lateral mantido e responsivo;
+- linguagem visual própria para cada uma das 19 aulas.
 
-A publicação continua pública via GitHub Pages enquanto o produto ganha corpo. A futura camada de autenticação e sincronização poderá ser conectada a um backend como Supabase sem mudar a arquitetura pedagógica do produto.
+### Personalização
+Perfis:
+- Financeiro operacional;
+- Gestor financeiro;
+- Direção / sócio.
 
-## Produção atual
+A função altera foco, ênfase e profundidade técnica exibida na aula.
+
+### Resolver um problema
+Os diagnósticos agora mostram uma pergunta por vez e adaptam a próxima etapa conforme a resposta.
+
+### Biblioteca
+Os formatos possuem experiências distintas:
+- Checklist;
+- Indicador;
+- Playbook;
+- Guia visual;
+- Lean Card.
+
+### Simuladores
+Cinco simuladores comparando:
+- Atual;
+- Cenário A;
+- Cenário B.
+
+Simuladores disponíveis:
+- Margem e desconto;
+- Ponto de equilíbrio;
+- Preço e margem-alvo;
+- Capital de giro;
+- Fluxo projetado.
+
+### Casos práticos
+Os três casos passaram a operar como dossiers:
+- contexto;
+- documentos/evidências;
+- decisões sequenciais;
+- debrief.
+
+### Progresso
+O painel destaca:
+- competências frágeis;
+- revisões pendentes;
+- aplicações pendentes;
+- nível de domínio.
+
+### Painel Lean
+A demonstração local mostra:
+- maturidade por bloco;
+- erros;
+- buscas;
+- aplicações;
+- validações;
+- atividade recente.
+
+## Arquitetura técnica
+
+A V12 não carrega os arquivos runtime da V11.
+
+Arquivos ativos:
+- `index.html`
+- `assets/v12.css`
+- `data/content.js`
+- `data/product-v12.js`
+- `assets/v12/core.js`
+- `assets/v12/components.js`
+- `assets/v12/learning.js`
+- `assets/v12/diagnostics.js`
+- `assets/v12/simulators.js`
+- `assets/v12/cases.js`
+- `assets/v12/analytics.js`
+- `assets/v12/app.js`
+
+## Persistência e publicação nesta etapa
+
+Conforme decisão do projeto:
+- progresso e eventos continuam em `localStorage`;
+- publicação continua pública no GitHub Pages durante a fase de desenvolvimento;
+- autenticação/backend e domínio privado ficam para uma etapa futura.
+
+## Publicação atual
 
 https://brunowdau.github.io/ensino/
-
-## Arquivos ativos
-
-- `index.html`
-- `assets/v11.css`
-- `assets/v11.js`
-- `data/content.js`
-- `data/product-v11.js`
-
-Arquivos antigos permanecem apenas como histórico e não são carregados pela aplicação atual.
