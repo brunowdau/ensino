@@ -259,6 +259,7 @@
       if(d.analysisSteps)core+=flowRows(d.analysisSteps);
       if(d.analysis)core+=flowRows(d.analysis);
       if(d.classificationTree)core+=flowRows(d.classificationTree);
+      if(d.decisionFlow)core+=flowRows(d.decisionFlow);
       return'<section class="lesson-panel card"><div class="kicker">02 · VISUALIZAR</div><h2>Transforme o conceito em um modelo mental</h2>'+lessonVisual(slug,d)+core+'</section>';
     }
     if(stage==="apply"){
