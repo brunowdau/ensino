@@ -140,6 +140,7 @@
   var view=document.getElementById("view");
   var sidebar=document.getElementById("sidebar");
   var overlay=document.getElementById("overlay");
+  var lastFocus=null;
 
   function meta(title,sub){
     document.getElementById("crumbTitle").textContent=title;
@@ -233,7 +234,7 @@
 
   function stageButtons(active){
     var a=[["understand","1 · Entender"],["visualize","2 · Visualizar"],["apply","3 · Aplicar"],["validate","4 · Validar"],["demonstrate","5 · Demonstrar"]];
-    return'<div class="stage-nav" role="tablist">'+a.map(function(x){return'<button type="button" data-stage="'+x[0]+'" class="'+(active===x[0]?"active":"")+'" role="tab">'+x[1]+'</button>'}).join("")+'</div>';
+    return'<div class="stage-nav" role="tablist">'+a.map(function(x){return'<button type="button" data-stage="'+x[0]+'" class="'+(active===x[0]?"active":"")+'" role="tab" aria-selected="'+(active===x[0]?"true":"false")+'">'+x[1]+'</button>'}).join("")+'</div>';
   }
   function lessonStageContent(slug,d,stage){
     if(stage==="understand"){
@@ -315,7 +316,7 @@
   }
   function switchLessonStage(stage){
     var h=location.hash.split("/"),slug=h[1],d=DATA.lessons&&DATA.lessons[slug];if(!d)return;
-    currentStage=stage;document.querySelectorAll("[data-stage]").forEach(function(b){b.classList.toggle("active",b.dataset.stage===stage)});
+    currentStage=stage;document.querySelectorAll("[data-stage]").forEach(function(b){var on=b.dataset.stage===stage;b.classList.toggle("active",on);b.setAttribute("aria-selected",on?"true":"false")});
     var box=document.getElementById("lessonStage");if(box)box.innerHTML=lessonStageContent(slug,d,stage);
     box&&box.scrollIntoView({behavior:"smooth",block:"start"});
   }
@@ -478,16 +479,21 @@
   }
 
   function openModal(html){
+    lastFocus=document.activeElement;
     overlay.innerHTML='<div class="modal" role="dialog" aria-modal="true">'+html+'</div>';overlay.classList.add("open");overlay.setAttribute("aria-hidden","false");
     setTimeout(function(){var x=overlay.querySelector("input,button");if(x)x.focus()},20);
   }
-  function closeModal(){overlay.classList.remove("open");overlay.setAttribute("aria-hidden","true");overlay.innerHTML=""}
+  function closeModal(){
+    var wasOpen=overlay.classList.contains("open");
+    overlay.classList.remove("open");overlay.setAttribute("aria-hidden","true");overlay.innerHTML="";
+    if(wasOpen&&lastFocus&&typeof lastFocus.focus==="function")setTimeout(function(){try{lastFocus.focus()}catch(_){}},0);
+  }
   function profileModal(onboarding){
     var roles=(PRODUCT.roles||[]).map(function(r){return'<button class="role-option '+(state.role===r.id?"selected":"")+'" type="button" data-role="'+r.id+'"><strong>'+esc(r.label)+'</strong><span>'+esc(r.desc)+'</span></button>'}).join("");
     openModal('<div class="modal-head"><div><div class="kicker">'+(onboarding?"PERSONALIZAR EXPERIÊNCIA":"PERFIL")+'</div><h2>'+(onboarding?"Qual é seu papel principal?":"Seu perfil de aprendizado")+'</h2><p>O conteúdo continua o mesmo, mas a plataforma destaca execução, análise ou decisão conforme seu papel.</p></div>'+(!onboarding?'<button class="close" type="button" data-close>×</button>':'')+'</div><div class="role-options">'+roles+'</div><div class="actions" style="margin-top:16px"><button class="btn primary" type="button" data-save-role '+(!state.role?"disabled":"")+'>Continuar</button>'+(!onboarding?'<a class="btn" href="#consultant" data-close>Visão do consultor</a>':'')+'</div>');
   }
   function searchModal(q){
-    openModal('<div class="modal-head"><div><div class="kicker">BUSCA GLOBAL</div><h2>O que você quer aprender ou resolver?</h2><p>Os resultados são separados entre estudar, consultar e diagnosticar.</p></div><button class="close" type="button" data-close>×</button></div><div class="modal-search"><input data-global-search value="'+esc(q||"")+'" placeholder="Ex.: cliente demora a pagar; caixa caiu; DRE..."><button class="btn primary" type="button" data-run-search>Buscar</button></div><div id="searchResults" class="search-groups"></div>');
+    openModal('<div class="modal-head"><div><div class="kicker">BUSCA GLOBAL</div><h2>O que você quer aprender ou resolver?</h2><p>Os resultados são separados entre estudar, consultar e diagnosticar.</p></div><button class="close" type="button" data-close>×</button></div><div class="modal-search"><input aria-label="Buscar no Ensino Lean" data-global-search value="'+esc(q||"")+'" placeholder="Ex.: cliente demora a pagar; caixa caiu; DRE..."><button class="btn primary" type="button" data-run-search>Buscar</button></div><div id="searchResults" class="search-groups"></div>');
     runSearch(q||"");
   }
   function runSearch(q){
@@ -534,8 +540,8 @@
 
   document.addEventListener("click",function(e){
     var el;
-    if((el=e.target.closest("[data-mobile-menu]"))){sidebar.classList.toggle("open");document.querySelector("[data-side-scrim]")?.classList.toggle("open",sidebar.classList.contains("open"));return}
-    if((el=e.target.closest("[data-side-scrim]"))){sidebar.classList.remove("open");el.classList.remove("open");return}
+    if((el=e.target.closest("[data-mobile-menu]"))){sidebar.classList.toggle("open");var isOpen=sidebar.classList.contains("open");el.setAttribute("aria-expanded",isOpen?"true":"false");document.querySelector("[data-side-scrim]")?.classList.toggle("open",isOpen);return}
+    if((el=e.target.closest("[data-side-scrim]"))){sidebar.classList.remove("open");el.classList.remove("open");var mb=document.querySelector("[data-mobile-menu]");if(mb)mb.setAttribute("aria-expanded","false");return}
     if((el=e.target.closest("[data-pin]"))){state.sidebarPinned=!state.sidebarPinned;save();document.body.classList.toggle("sidebar-pinned",state.sidebarPinned);sidebar.classList.toggle("pinned",state.sidebarPinned);el.querySelector("span").textContent=state.sidebarPinned?"Recolher menu":"Fixar menu aberto";return}
     if((el=e.target.closest("[data-profile]"))){profileModal(false);return}
     if((el=e.target.closest("[data-search]"))){searchModal("");return}
@@ -576,8 +582,12 @@
     if(e.target.matches("[data-sim],[data-inflow],[data-outflow]"))calculateSimulator(location.hash.split("/")[1]);
   });
   document.addEventListener("keydown",function(e){
-    if(e.key==="Escape"){closeModal();sidebar.classList.remove("open")}
+    if(e.key==="Escape"){closeModal();sidebar.classList.remove("open");var sc2=document.querySelector("[data-side-scrim]");if(sc2)sc2.classList.remove("open")}
     if(e.key==="/"&&!["INPUT","TEXTAREA"].includes(document.activeElement.tagName)){e.preventDefault();searchModal("")}
+    if(e.key==="Tab"&&overlay.classList.contains("open")){
+      var focusables=Array.from(overlay.querySelectorAll("button,a[href],input,textarea,select,[tabindex]:not([tabindex='-1'])")).filter(function(x){return !x.disabled&&x.offsetParent!==null});
+      if(focusables.length){var first=focusables[0],last=focusables[focusables.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}
+    }
     if(e.key==="Enter"&&overlay.classList.contains("open")&&document.activeElement.matches("[data-global-search]"))runSearch(document.activeElement.value);
   });
   overlay.addEventListener("click",function(e){if(e.target===overlay)closeModal()});
