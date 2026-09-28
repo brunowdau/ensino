@@ -213,7 +213,7 @@
       '<section class="section"><div class="section-head"><div><div class="kicker">FORMAÇÃO ATIVA</div><h2>Financeiro — do dado à decisão</h2><p>Da confiabilidade do dado ao diagnóstico de capital de giro.</p></div><a class="text-link" href="#trails">Abrir trilha →</a></div>'+roadmap()+'</section>';
   }
   function roadmap(){
-    return '<div class="card" style="padding:20px"><div class="grid4">'+(DATA.financeStages||[]).slice(0,4).map(function(s,i){
+    return '<div class="card" style="padding:20px"><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px">'+(DATA.financeStages||[]).map(function(s,i){
       var its=s.items||[],done=its.filter(function(x){return demonstrated(x.slug)}).length,p=its.length?Math.round(done/its.length*100):0;
       return'<div><span class="badge '+(p===100?"green":"purple")+'">Módulo '+(i+1)+'</span><h3 style="font-size:23px;margin-top:8px">'+esc(s.title)+'</h3><p style="font-size:10.5px;color:var(--muted);margin-top:4px">'+done+'/'+its.length+' atividades</p><div class="progress-track" style="margin-top:9px"><span style="width:'+p+'%"></span></div></div>';
     }).join("")+'</div></div>';
