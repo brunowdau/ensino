@@ -6,7 +6,7 @@
 
   const defs={
     margem:{
-      title:"Margem e desconto",desc:"Compare preço, desconto e custos em três cenários.",
+      title:"Margem e desconto",desc:"Compare preço, desconto e custos em três cenários.",better:"higher",
       fields:[
         ["price","Preço de venda (R$)",100,100,105],
         ["cost","Custo unitário (R$)",55,55,55],
@@ -18,7 +18,7 @@
       calc:x=>{const p=x.price*(1-x.discount/100),mc=p-x.cost-x.freight-p*x.commission/100-p*x.tax/100;return{primary:mc,secondary:p?mc/p*100:0,primaryLabel:"MC unitária",secondaryLabel:"MC%"}}
     },
     equilibrio:{
-      title:"Ponto de equilíbrio",desc:"Compare estrutura, margem e lucro alvo.",
+      title:"Ponto de equilíbrio",desc:"Compare estrutura, margem e lucro alvo.",better:"lower",
       fields:[
         ["fixed","Despesas fixas (R$)",180000,200000,180000],
         ["mcpct","MC% (%)",32,29,36],
@@ -28,7 +28,7 @@
       calc:x=>{const m=x.mcpct/100,pe=m?x.fixed/m:0,goal=m?(x.fixed+x.target)/m:0;return{primary:pe,secondary:goal,primaryLabel:"Ponto de equilíbrio",secondaryLabel:"Receita p/ lucro alvo"}}
     },
     preco:{
-      title:"Preço e margem-alvo",desc:"Teste quanto o preço precisa mudar para sustentar uma contribuição desejada.",
+      title:"Preço e margem-alvo",desc:"Teste quanto o preço precisa mudar para sustentar uma contribuição desejada.",better:"neutral",
       fields:[
         ["current","Preço atual (R$)",100,100,100],
         ["fixedVar","Custos variáveis em R$",70,72,68],
@@ -38,7 +38,7 @@
       calc:x=>{const den=1-x.varPct/100-x.targetMc/100,needed=den>0?x.fixedVar/den:0;return{primary:needed,secondary:needed-x.current,primaryLabel:"Preço necessário",secondaryLabel:"Diferença vs atual"}}
     },
     capital:{
-      title:"Capital de giro",desc:"Compare PMR, PME e PMP e veja o efeito estimado na NCG.",
+      title:"Capital de giro",desc:"Compare PMR, PME e PMP e veja o efeito estimado na NCG.",better:"lower",
       fields:[
         ["sales","Receita mensal (R$)",1000000,1000000,1100000],
         ["cmv","CMV / custos variáveis (R$)",600000,600000,650000],
@@ -49,7 +49,7 @@
       calc:x=>{const ncg=x.sales/30*x.pmr+x.cmv/30*x.pme-x.cmv/30*x.pmp,cycle=x.pme+x.pmr-x.pmp;return{primary:ncg,secondary:cycle,primaryLabel:"NCG estimada",secondaryLabel:"Ciclo (dias)"}}
     },
     fluxo:{
-      title:"Fluxo projetado",desc:"Compare três cenários simplificados de seis meses.",
+      title:"Fluxo projetado",desc:"Compare três cenários simplificados de seis meses.",better:"higher",
       fields:[
         ["initial","Saldo inicial (R$)",150000,150000,150000],
         ["inflow","Entradas médias/mês (R$)",240000,255000,225000],
@@ -76,7 +76,7 @@
   function recalc(id){
     const def=defs[id],out=document.getElementById("scenarioResults");if(!def||!out)return;
     const vals=scenarios.map(s=>def.calc(read(def,s[0]))),base=vals[0];
-    out.innerHTML='<div class="scenario-results">'+vals.map((v,i)=>{const delta=i===0?0:v.primary-base.primary;return'<div class="scenario-result '+(i===0?"base":"")+'"><span class="badge '+(i===0?"teal":"purple")+'">'+scenarios[i][1]+'</span><strong>'+formatMetric(def,"primary",v.primary)+'</strong><small>'+v.primaryLabel+'</small><div class="secondary"><b>'+formatMetric(def,"secondary",v.secondary)+'</b><span>'+v.secondaryLabel+'</span></div>'+(i?'<div class="delta '+(delta<0?"good":delta>0?"bad":"")+'">Δ '+A.money(delta)+' vs Atual</div>':'<div class="delta neutral">Base de comparação</div>')+'</div>'}).join("")+'</div>'+insight(id,vals);
+    out.innerHTML='<div class="scenario-results">'+vals.map((v,i)=>{const delta=i===0?0:v.primary-base.primary;const good=i===0?false:(def.better==="higher"?delta>0:def.better==="lower"?delta<0:false),bad=i===0?false:(def.better==="higher"?delta<0:def.better==="lower"?delta>0:false);return'<div class="scenario-result +(i===0?"base":"")+'"><span class="badge '+(i===0?"teal":"purple")+'">'+scenarios[i][1]+'</span><strong>'+formatMetric(def,"primary",v.primary)+'</strong><small>'+v.primaryLabel+'</small><div class="secondary"><b>'+formatMetric(def,"secondary",v.secondary)+'</b><span>'+v.secondaryLabel+'</span></div>'+(i?'<div class="delta '+(good?"good":bad?"bad":"neutral")+'">Δ '+A.money(delta)+' vs Atual</div>':'<div class="delta neutral">Base de comparação</div>')+'</div>'}).join("")+'</div>'+insight(id,vals);
   }
   function insight(id,v){
     const b=v[0],a=v[1],c=v[2];let t="";
