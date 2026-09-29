@@ -4,6 +4,21 @@
   const map={};A.MODEL.competencies.forEach(c=>(map[c.group]??=[]).push(c));
   return map;
  }
+ function interactiveModel(slug){
+  if(slug==="ciclo-financeiro")return '<div class="section"><div class="kicker">MODELO INTERATIVO</div><div class="tool-fields"><div class="field"><label>PME</label><input type="range" min="0" max="120" value="40" data-model="pme"></div><div class="field"><label>PMR</label><input type="range" min="0" max="120" value="50" data-model="pmr"></div><div class="field"><label>PMP</label><input type="range" min="0" max="120" value="35" data-model="pmp"></div></div><div class="callout green"><strong>Ciclo financeiro</strong><p id="interactiveResult">55 dias</p></div></div>';
+  if(slug==="ncg")return '<div class="section"><div class="kicker">MODELO INTERATIVO</div><div class="tool-fields"><div class="field"><label>Clientes</label><input type="number" value="320" data-model="clientes"></div><div class="field"><label>Estoque</label><input type="number" value="250" data-model="estoque"></div><div class="field"><label>Fornecedores</label><input type="number" value="210" data-model="fornecedores"></div></div><div class="callout green"><strong>NCG estimada</strong><p id="interactiveResult">360</p></div></div>';
+  if(slug==="margem-de-contribuicao")return '<div class="section"><div class="kicker">MODELO INTERATIVO</div><div class="tool-fields"><div class="field"><label>Receita</label><input type="number" value="100" data-model="receita"></div><div class="field"><label>Variáveis</label><input type="number" value="60" data-model="variaveis"></div></div><div class="callout green"><strong>Margem de contribuição</strong><p id="interactiveResult">40 · 40%</p></div></div>';
+  if(slug==="ponto-de-equilibrio")return '<div class="section"><div class="kicker">MODELO INTERATIVO</div><div class="tool-fields"><div class="field"><label>Estrutura fixa</label><input type="number" value="180" data-model="fixed"></div><div class="field"><label>MC%</label><input type="number" value="30" data-model="mc"></div></div><div class="callout green"><strong>Ponto de equilíbrio</strong><p id="interactiveResult">600</p></div></div>';
+  return "";
+ }
+ function updateInteractive(){
+  const slug=location.hash.split("/")[1]?.split("?")[0],out=document.getElementById("interactiveResult");if(!out)return;
+  const v=k=>Number(document.querySelector('[data-model="'+k+'"]')?.value||0);
+  if(slug==="ciclo-financeiro")out.textContent=(v("pme")+v("pmr")-v("pmp"))+" dias";
+  if(slug==="ncg")out.textContent=A.num(v("clientes")+v("estoque")-v("fornecedores"),0);
+  if(slug==="margem-de-contribuicao"){const mc=v("receita")-v("variaveis");out.textContent=A.num(mc,1)+" · "+A.num(v("receita")?mc/v("receita")*100:0,1)+"%"}
+  if(slug==="ponto-de-equilibrio")out.textContent=A.num(v("mc")?v("fixed")/(v("mc")/100):0,1);
+ }
  function quickRefs(slug,d){
   const resources=[];
   const lib=A.PRODUCT.library?.find(x=>x.slug===slug);
@@ -23,10 +38,10 @@
   return body;
  }
  function learnPane(slug,d,tab){
-  if(tab==="visual")return '<div class="lesson-pane"><h2>Modelo mental</h2><p>Use a representação visual para entender o mecanismo, não apenas memorizar a definição.</p>'+A.visual(slug)+(d.formula?A.callout("Fórmula",d.formula,"green"):"")+'</div>';
+  if(tab==="visual")return '<div class="lesson-pane"><h2>Modelo mental</h2><p>Use a representação visual para entender o mecanismo, não apenas memorizar a definição.</p>'+A.visual(slug)+interactiveModel(slug)+(d.formula?A.callout("Fórmula",d.formula,"green"):"")+'</div>';
   if(tab==="reference")return '<div class="lesson-pane">'+reference(slug,d)+'</div>';
-  const target=A.target(slug);
-  let main='<div class="lesson-pane"><h2>O que você precisa dominar</h2><p>'+A.esc(d.summary||"")+'</p><div class="role-target"><strong>'+A.esc(A.role().label)+' · nível esperado: '+A.esc(target)+'</strong><p>'+A.esc(A.roleText(slug))+'</p></div>'+A.quick(d.outcomes||d.quick||[]);
+  const target=A.target(slug),pre=A.MODEL.prerequisites?.[slug]||[];
+  let main='<div class="lesson-pane"><h2>O que você precisa dominar</h2><p>'+A.esc(d.summary||"")+'</p>'+(pre.length?'<div class="callout"><strong>Pré-requisitos</strong><p>'+pre.map(x=>A.title(x)).join(' · ')+'</p></div>':'')+'<div class="role-target"><strong>'+A.esc(A.role().label)+' · nível esperado: '+A.esc(target)+'</strong><p>'+A.esc(A.roleText(slug))+'</p></div>'+A.quick(d.outcomes||d.quick||[]);
   if(A.role().id==="operacao"){
     if(d.before)main+='<div class="section"><div class="kicker">ANTES DE EXECUTAR</div>'+A.quick(d.before)+'</div>';
     if(d.steps)main+='<div class="section"><div class="kicker">ROTEIRO</div>'+A.quick(d.steps.map(x=>Array.isArray(x)?x[0]+" — "+x[1]:x))+'</div>';
@@ -70,5 +85,6 @@
   const q=new URLSearchParams((location.hash.split("?")[1]||"")),tab=q.get("tab")||"learn";
   A.view.innerHTML='<div class="learn-layout"><aside class="competency-groups">'+Object.entries(map).map(([g,arr])=>'<section class="group-block surface"><h3>'+A.esc(g)+'</h3><div class="group-list">'+arr.map(c=>'<a class="'+(c.slug===slug?"active":"")+'" href="#learn/'+c.slug+'"><span>'+A.esc(c.title)+'</span><b>'+A.levelLabel(A.comp(c.slug).level||0)+'</b></a>').join("")+'</div></section>').join("")+'</aside><article class="learn-main surface"><div class="kicker">COMPETÊNCIA</div><h1>'+A.esc(d.title)+'</h1><p>'+A.esc(d.summary||"")+'</p><div class="lesson-tabs"><button class="'+(tab==="learn"?"active":"")+'" data-learn-tab="learn">Aprender</button><button class="'+(tab==="visual"?"active":"")+'" data-learn-tab="visual">Visualizar</button><button class="'+(tab==="reference"?"active":"")+'" data-learn-tab="reference">Consulta rápida</button></div><div id="lessonPane">'+learnPane(slug,d,tab)+'</div></article></div>';
  };
+ document.addEventListener("input",e=>{if(e.target.matches("[data-model]"))updateInteractive()});
  document.addEventListener("click",e=>{let b;if((b=e.target.closest("[data-learn-tab]"))){const slug=location.hash.split("/")[1]?.split("?")[0],d=A.lesson(slug);if(!d)return;document.querySelectorAll("[data-learn-tab]").forEach(x=>x.classList.toggle("active",x===b));document.getElementById("lessonPane").innerHTML=learnPane(slug,d,b.dataset.learnTab);return}if((b=e.target.closest("[data-favorite]"))){const on=A.toggleFavorite(b.dataset.favorite);b.textContent=on?"★ Salvo":"☆ Salvar";return}});
 })();
