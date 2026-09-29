@@ -9,7 +9,7 @@
   const lib=A.PRODUCT.library?.find(x=>x.slug===slug);
   if(lib)resources.push('<div class="context-tool"><strong>'+A.esc(lib.format)+'</strong><span>Consulta rápida durante o trabalho.</span><a href="#learn/'+slug+'?tab=reference">Abrir →</a></div>');
   resources.push('<div class="context-tool"><strong>Praticar</strong><span>Treine com feedback antes da demonstração.</span><a href="#practice/'+slug+'?mode=practice">Praticar →</a></div>');
-  resources.push('<div class="context-tool"><strong>Demonstrar</strong><span>Avaliação sem feedback imediato.</span><a href="#practice/'+slug+'?mode=demo">Demonstrar →</a></div>');
+  resources.push('<div class="context-tool"><strong>Demonstrar</strong><span>Avaliação sem feedback imediato.</span><a href="#practice/'+slug+'?mode=demo">Demonstrar →</a></div>');resources.push('<div class="context-tool"><strong>Salvar consulta</strong><span>'+(A.isFavorite(slug)?'Já está nos seus favoritos.':'Guarde este tema para acesso rápido.')+'</span><button class="text-link" type="button" data-favorite="'+slug+'">'+(A.isFavorite(slug)?'★ Salvo':'☆ Salvar')+'</button></div>');
   return '<div class="context-tools">'+resources.join("")+'</div>';
  }
  function reference(slug,d){
@@ -44,9 +44,9 @@
  }
  A.pages.home=()=>{
   A.meta("Início","Competência aplicada");
-  const p=A.progress(),next=A.nextCompetency(),pending=A.pendingApplications(),weak=A.weak(),sust=A.sustainedCount();
+  const p=A.progress(),next=A.nextCompetency(),pending=A.pendingApplications(),weak=A.weak(),sust=A.sustainedCount(),due=A.dueReviews();
   const routine=A.MODEL.routines[0],runs=(A.state.routines[routine.id]?.runs||[]).length;
-  const queue=[];
+  const queue=[];if(due[0])queue.push(["clock","Revisar "+due[0].title,"Reforço de retenção pendente.","#practice/"+due[0].slug+"?mode=review"]);
   if(weak[0])queue.push(['alert','Reforçar '+weak[0].title,weak[0].c.wrong+' erros registrados.','#practice/'+weak[0].slug+'?mode=practice']);
   if(pending[0])queue.push(['target','Aplicar '+pending[0].title,'Você já demonstrou; falta evidência real.','#evolve/apply/'+pending[0].slug]);
   if(next)queue.push(['learn','Continuar '+next.title,'Próxima competência ainda não demonstrada.','#learn/'+next.slug]);
@@ -70,5 +70,5 @@
   const q=new URLSearchParams((location.hash.split("?")[1]||"")),tab=q.get("tab")||"learn";
   A.view.innerHTML='<div class="learn-layout"><aside class="competency-groups">'+Object.entries(map).map(([g,arr])=>'<section class="group-block surface"><h3>'+A.esc(g)+'</h3><div class="group-list">'+arr.map(c=>'<a class="'+(c.slug===slug?"active":"")+'" href="#learn/'+c.slug+'"><span>'+A.esc(c.title)+'</span><b>'+A.levelLabel(A.comp(c.slug).level||0)+'</b></a>').join("")+'</div></section>').join("")+'</aside><article class="learn-main surface"><div class="kicker">COMPETÊNCIA</div><h1>'+A.esc(d.title)+'</h1><p>'+A.esc(d.summary||"")+'</p><div class="lesson-tabs"><button class="'+(tab==="learn"?"active":"")+'" data-learn-tab="learn">Aprender</button><button class="'+(tab==="visual"?"active":"")+'" data-learn-tab="visual">Visualizar</button><button class="'+(tab==="reference"?"active":"")+'" data-learn-tab="reference">Consulta rápida</button></div><div id="lessonPane">'+learnPane(slug,d,tab)+'</div></article></div>';
  };
- document.addEventListener("click",e=>{const b=e.target.closest("[data-learn-tab]");if(!b)return;const slug=location.hash.split("/")[1]?.split("?")[0],d=A.lesson(slug);if(!d)return;document.querySelectorAll("[data-learn-tab]").forEach(x=>x.classList.toggle("active",x===b));document.getElementById("lessonPane").innerHTML=learnPane(slug,d,b.dataset.learnTab)});
+ document.addEventListener("click",e=>{let b;if((b=e.target.closest("[data-learn-tab]"))){const slug=location.hash.split("/")[1]?.split("?")[0],d=A.lesson(slug);if(!d)return;document.querySelectorAll("[data-learn-tab]").forEach(x=>x.classList.toggle("active",x===b));document.getElementById("lessonPane").innerHTML=learnPane(slug,d,b.dataset.learnTab);return}if((b=e.target.closest("[data-favorite]"))){const on=A.toggleFavorite(b.dataset.favorite);b.textContent=on?"★ Salvo":"☆ Salvar";return}});
 })();
