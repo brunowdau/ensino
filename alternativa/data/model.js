@@ -290,3 +290,30 @@ window.ENSINO_ALT = {
     {id:"fluxo",title:"Fluxo projetado"}
   ]
 };
+window.ENSINO_ALT.prerequisites = {
+  "plano-de-contas":["caixa-x-competencia"],
+  "contas-a-pagar":["plano-de-contas"],
+  "contas-a-receber":["plano-de-contas"],
+  "conciliacao-bancaria":["contas-a-pagar","contas-a-receber"],
+  "fechamento-financeiro":["conciliacao-bancaria"],
+  "dre-gerencial":["fechamento-financeiro"],
+  "fluxo-de-caixa":["fechamento-financeiro"],
+  "pmr":["contas-a-receber"],
+  "pmp":["contas-a-pagar"],
+  "pme":["fechamento-financeiro"],
+  "ciclo-financeiro":["pmr","pmp","pme"],
+  "ncg":["ciclo-financeiro"],
+  "margem-de-contribuicao":["dre-gerencial"],
+  "ponto-de-equilibrio":["margem-de-contribuicao"],
+  "precificacao":["margem-de-contribuicao"],
+  "orcado-realizado":["dre-gerencial"],
+  "forecast-financeiro":["orcado-realizado","fluxo-de-caixa"],
+  "plano-de-acao-gerencial":["dre-gerencial"]
+};
+window.ENSINO_ALT.governance = {
+  owner:"Lean Company",
+  version:"2.0-alt",
+  reviewedAt:"2026-09",
+  defaultReviewCycleDays:180,
+  status:"Em validação com clientes"
+};
