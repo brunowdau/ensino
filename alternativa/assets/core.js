@@ -7,7 +7,7 @@
  A.norm=v=>String(v||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
  A.money=v=>Number(v||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0});
  A.num=(v,d=1)=>Number(v||0).toLocaleString("pt-BR",{maximumFractionDigits:d});
- A.now=()=>new Date().toISOString();
+ A.now=()=>new Date().toISOString();A.addDays=d=>{const x=new Date();x.setDate(x.getDate()+d);return x.toISOString()};
  A.icon=name=>'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+({
   home:'<path d="M3 10.5 12 3l9 7.5v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 19.5z"/><path d="M9 21v-7h6v7"/>',
   learn:'<path d="M4 5h6v14H4zM14 5h6v14h-6z"/><path d="M10 8h4M10 16h4"/>',
@@ -42,7 +42,7 @@
  A.nextCompetency=()=>A.MODEL.competencies.find(x=>(A.comp(x.slug).level||0)<3)||A.MODEL.competencies.at(-1);
  A.pendingApplications=()=>A.MODEL.competencies.filter(x=>{const c=A.comp(x.slug);return c.demoPass&&!c.applied});
  A.weak=()=>A.MODEL.competencies.map(x=>({...x,c:A.comp(x.slug)})).filter(x=>x.c.wrong>=2).sort((a,b)=>b.c.wrong-a.c.wrong);
- A.sustainedCount=()=>A.MODEL.competencies.filter(x=>A.comp(x.slug).sustained).length;
+ A.sustainedCount=()=>A.MODEL.competencies.filter(x=>A.comp(x.slug).sustained).length;A.dueReviews=()=>A.MODEL.competencies.filter(x=>{const c=A.comp(x.slug);return c.demoPass&&c.reviewDue&&new Date(c.reviewDue).getTime()<=Date.now()});A.state.favorites=A.state.favorites||[];A.isFavorite=slug=>A.state.favorites.includes(slug);A.toggleFavorite=slug=>{const i=A.state.favorites.indexOf(slug);if(i>=0)A.state.favorites.splice(i,1);else A.state.favorites.push(slug);A.save();return i<0};
  A.roleText=slug=>{
    const target=A.target(slug),map={
     executar:"Execute a rotina corretamente e com rastreabilidade.",
